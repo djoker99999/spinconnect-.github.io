@@ -1370,6 +1370,64 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
+    /* NOUVEAU: Conteneur pour les panneaux bonus et dettes payées côte à côte */
+    .bonus-paid-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 25px auto;
+      max-width: 1200px;
+      flex-wrap: wrap;
+    }
+
+    .bonus-paid-item {
+      flex: 1;
+      min-width: 300px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bonus-paid-item h3 {
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      text-transform: uppercase;
+    }
+
+    .bonus-paid-count {
+      font-size: 3em;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .bonus-item {
+      border: 2px solid var(--primary-color);
+    }
+
+    .bonus-item h3 {
+      color: var(--primary-color);
+    }
+
+    .bonus-item .bonus-paid-count {
+      color: var(--primary-color);
+    }
+
+    .paid-item {
+      border: 2px solid var(--success-color);
+    }
+
+    .paid-item h3 {
+      color: var(--success-color);
+    }
+
+    .paid-item .bonus-paid-count {
+      color: var(--success-color);
+    }
+
     @media (max-width: 768px) {
       .game-container {
         padding: 25px;
@@ -1466,6 +1524,14 @@
       .balance-input {
         flex-direction: column;
         align-items: flex-start;
+      }
+
+      .bonus-paid-container {
+        flex-direction: column;
+      }
+
+      .bonus-paid-item {
+        min-width: auto;
       }
     }
 
@@ -1679,10 +1745,18 @@
       </div>
     </div>
 
-    <!-- Compteur de roses payées -->
-    <div class="paid-roses-counter">
-      <h4>💰 Roses Payées</h4>
-      <div class="paid-roses-count" id="paidRosesCount">0</div>
+    <!-- NOUVEAU: Conteneur pour les panneaux bonus et dettes payées côte à côte -->
+    <div class="bonus-paid-container">
+      <div class="bonus-paid-item bonus-item">
+        <h3>🎁 Roses Bonus</h3>
+        <div class="bonus-paid-count" id="bonusRosesCount">0</div>
+        <div>Roses gagnées en bonus</div>
+      </div>
+      <div class="bonus-paid-item paid-item">
+        <h3>💰 Roses Payées</h3>
+        <div class="bonus-paid-count" id="paidRosesCount">0</div>
+        <div>Roses payées aux joueurs</div>
+      </div>
     </div>
 
     <!-- Tableau des dettes avec barre de recherche -->
@@ -2313,6 +2387,7 @@
           jackpotProgressMin: document.getElementById('jackpotProgressMin'),
           debtsTableContainer: document.getElementById('debtsTableContainer'),
           paidRosesCount: document.getElementById('paidRosesCount'),
+          bonusRosesCount: document.getElementById('bonusRosesCount'),
           queueDisplay: document.getElementById('queueDisplay'),
           menuToggle: document.getElementById('menuToggle'),
           menuDropdown: document.getElementById('menuDropdown'),
@@ -2610,6 +2685,7 @@
         this.updateLastUserDisplay();
         this.updateJackpotProgress();
         this.updatePaidRosesCounter();
+        this.updateBonusRosesCounter();
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
         document.getElementById('resultContainer').classList.add('hidden');
@@ -2977,6 +3053,10 @@
 
       updatePaidRosesCounter() {
         this.elements.paidRosesCount.textContent = this.state.paidRoses;
+      }
+
+      updateBonusRosesCounter() {
+        this.elements.bonusRosesCount.textContent = this.state.bonusRoses;
       }
 
       updateMyBalanceDisplay() {
@@ -3513,6 +3593,7 @@
           this.state.rosesCount += 1;
           this.state.jackpotAmount += 1;
           this.state.bonusRoses += 1; // Ajouter au compteur de bonus
+          this.updateBonusRosesCounter();
           this.updateBonusDisplay();
           this.elements.message.textContent = `🌹 +1 rose ajoutée au bonus !`;
           
@@ -3662,6 +3743,7 @@
           this.updateDebtsTable();
           this.updateDebtsPanel();
           this.updatePaidRosesCounter();
+          this.updateBonusRosesCounter();
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
           this.removeWinClasses();
@@ -3722,6 +3804,7 @@
           this.updateDebtsTable();
           this.updateDebtsPanel();
           this.updatePaidRosesCounter();
+          this.updateBonusRosesCounter();
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
           this.updateQueueIndicator();
@@ -3867,6 +3950,7 @@
         this.updateDebtsTable();
         this.updateDebtsPanel();
         this.updatePaidRosesCounter();
+        this.updateBonusRosesCounter();
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
         this.removeWinClasses();
