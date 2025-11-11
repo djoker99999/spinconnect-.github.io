@@ -38,7 +38,7 @@
     }
 
     .game-container {
-      max-width: 1400px; /* Augmenté pour plus d'espace */
+      max-width: 1400px;
       width: 100%;
       background: var(--dark-bg);
       border-radius: var(--border-radius);
@@ -179,12 +179,12 @@
       gap: 20px;
       margin: 40px 0;
       perspective: 1000px;
-      flex-wrap: nowrap; /* Assure que les symboles restent sur une ligne */
+      flex-wrap: nowrap;
     }
 
     .symbol-wheel {
-      width: 150px; /* Augmenté la taille */
-      height: 200px; /* Augmenté la taille */
+      width: 150px;
+      height: 200px;
       background: linear-gradient(145deg, #2c3e50, #34495e);
       border-radius: 12px;
       display: flex;
@@ -266,8 +266,8 @@
     }
 
     .symbol-image {
-      width: 120px; /* Augmenté la taille */
-      height: 120px; /* Augmenté la taille */
+      width: 120px;
+      height: 120px;
       object-fit: contain;
       filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
     }
@@ -487,10 +487,10 @@
       color: var(--primary-color);
     }
 
-    /* Tableau des dettes avec barre de recherche - AGRANDI */
+    /* Tableau des dettes avec barre de recherche */
     .debts-history {
       margin: 25px auto;
-      max-width: 1200px; /* Augmenté la largeur */
+      max-width: 1200px;
       background: rgba(0, 0, 0, 0.5);
       border-radius: 15px;
       padding: 20px;
@@ -654,8 +654,8 @@
 
     .lock-body {
       width: 100%;
-      max-width: 1200px; /* Augmenté pour accommoder les symboles plus grands */
-      height: 250px; /* Augmenté la hauteur */
+      max-width: 1200px;
+      height: 250px;
       background: linear-gradient(145deg, #8B4513, #A0522D);
       margin: 0 auto 25px;
       border-radius: 10px;
@@ -715,7 +715,7 @@
     /* Panneau des dettes déplaçable */
     .debts-panel {
       position: fixed;
-      width: 450px; /* Augmenté la taille */
+      width: 450px;
       background: rgba(0, 0, 0, 0.9);
       border-radius: 15px;
       padding: 20px;
@@ -723,7 +723,7 @@
       z-index: 200;
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      max-height: 550px; /* Augmenté la hauteur */
+      max-height: 550px;
       overflow-y: auto;
     }
 
@@ -973,20 +973,6 @@
       50% { transform: scale(1.1); }
     }
 
-    /* Nouveau style pour le texte au-dessus des symboles */
-    .game-instruction {
-      font-size: 2em;
-      font-weight: bold;
-      color: white;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      margin: 20px 0;
-      text-align: center;
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
     /* Styles pour les éléments du panneau des dettes */
     .user-turn-item {
       display: flex;
@@ -1142,32 +1128,35 @@
       transform: scale(1.05);
     }
 
-    /* Compteur de dettes payées */
-    .paid-debts-counter {
+    /* Compteur de roses payées */
+    .paid-roses-counter {
       margin: 15px auto;
       padding: 15px;
       background: rgba(39, 174, 96, 0.2);
       border-radius: 10px;
       border: 2px solid var(--success-color);
       max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .paid-debts-counter h4 {
+    .paid-roses-counter h4 {
       color: var(--success-color);
       margin-bottom: 10px;
       font-size: 1.2em;
     }
 
-    .paid-debts-count {
+    .paid-roses-count {
       font-size: 2em;
       font-weight: bold;
       color: var(--success-color);
     }
 
-    /* NOUVEAU: Panneau Mes gains - AGRANDI */
+    /* NOUVEAU: Panneau Mes gains */
     .my-balance-panel {
       position: fixed;
-      width: 450px; /* Augmenté la taille */
+      width: 450px;
       background: rgba(0, 0, 0, 0.9);
       border-radius: 15px;
       padding: 20px;
@@ -1175,7 +1164,7 @@
       z-index: 200;
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      max-height: 550px; /* Augmenté la hauteur */
+      max-height: 550px;
       overflow-y: auto;
     }
 
@@ -1330,6 +1319,57 @@
       transform: scale(1.05);
     }
 
+    /* NOUVEAU: Panneau Bonus */
+    .bonus-panel {
+      position: fixed;
+      width: 450px;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      border: 2px solid var(--primary-color);
+      z-index: 200;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      max-height: 550px;
+      overflow-y: auto;
+    }
+
+    .bonus-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      cursor: move;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .bonus-panel h3 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      font-size: 1.3em;
+      text-transform: uppercase;
+    }
+
+    .bonus-display {
+      font-size: 2.5em;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--primary-color);
+    }
+
+    .bonus-info {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.1em;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
     @media (max-width: 768px) {
       .game-container {
         padding: 25px;
@@ -1371,7 +1411,7 @@
         align-items: center;
       }
 
-      .debts-panel, .my-balance-panel {
+      .debts-panel, .my-balance-panel, .bonus-panel {
         width: 90%;
         left: 5% !important;
         right: 5% !important;
@@ -1404,10 +1444,6 @@
 
       .jackpot-progress-label {
         font-size: 0.9em;
-      }
-
-      .game-instruction {
-        font-size: 1.5em;
       }
 
       .debts-search {
@@ -1472,10 +1508,6 @@
         margin: 8px 0;
         width: 100%;
       }
-
-      .game-instruction {
-        font-size: 1.2em;
-      }
     }
   </style>
 </head>
@@ -1507,7 +1539,7 @@
     </div>
   </div>
 
-  <!-- NOUVEAU: Panneau Mes gains - AGRANDI -->
+  <!-- NOUVEAU: Panneau Mes gains -->
   <div class="my-balance-panel hidden" id="myBalancePanel">
     <div class="my-balance-panel-header" id="myBalancePanelHeader">
       <h3>💰 Mes Gains</h3>
@@ -1533,7 +1565,23 @@
     </div>
   </div>
 
-  <!-- Panneau des dettes déplaçable - AGRANDI -->
+  <!-- NOUVEAU: Panneau Bonus -->
+  <div class="bonus-panel hidden" id="bonusPanel">
+    <div class="bonus-panel-header" id="bonusPanelHeader">
+      <h3>🎁 Bonus</h3>
+      <button class="close-panel" id="closeBonusPanel">✕</button>
+    </div>
+    
+    <div class="bonus-display" id="bonusDisplay">
+      0 🌹
+    </div>
+    
+    <div class="bonus-info" id="bonusInfo">
+      Roses gagnées en bonus
+    </div>
+  </div>
+
+  <!-- Panneau des dettes déplaçable -->
   <div class="debts-panel hidden" id="debtsPanel">
     <div class="debts-panel-header" id="debtsPanelHeader">
       <h3>📋 Dettes en cours</h3>
@@ -1571,9 +1619,6 @@
       </div>
     </div>
     
-    <!-- Nouveau texte au-dessus des symboles -->
-    <div class="game-instruction">Alignez 6 Symboles et Gagnez Le Symbole et La Récompense</div>
-    
     <div class="lock-body">
       <div class="lock-container" id="lockContainer">
         <!-- Les roues de symboles seront générées ici -->
@@ -1583,11 +1628,11 @@
     <!-- Barre de progression du jackpot sous les symboles -->
     <div class="jackpot-progress">
       <div class="jackpot-progress-info">
-        <div class="jackpot-progress-label">BONUS ACTUEL</div>
-        <div class="jackpot-progress-amount" id="jackpotProgressAmount">250 🌹</div>
+        <div class="jackpot-progress-label">BONUS</div>
+        <div class="jackpot-progress-amount" id="jackpotProgressAmount">864 🌹</div>
       </div>
       <div class="jackpot-progress-bar">
-        <div class="jackpot-progress-fill" id="jackpotProgressFill" style="width: 25%"></div>
+        <div class="jackpot-progress-fill" id="jackpotProgressFill" style="width: 0%"></div>
       </div>
       <div class="jackpot-progress-min" id="jackpotProgressMin">Visible à 1000 🌹</div>
     </div>
@@ -1634,13 +1679,13 @@
       </div>
     </div>
 
-    <!-- Compteur de dettes payées -->
-    <div class="paid-debts-counter">
-      <h4>💰 Dettes Payées</h4>
-      <div class="paid-debts-count" id="paidDebtsCount">0</div>
+    <!-- Compteur de roses payées -->
+    <div class="paid-roses-counter">
+      <h4>💰 Roses Payées</h4>
+      <div class="paid-roses-count" id="paidRosesCount">0</div>
     </div>
 
-    <!-- Tableau des dettes avec barre de recherche - AGRANDI -->
+    <!-- Tableau des dettes avec barre de recherche -->
     <div class="debts-history">
       <h3>📋 Dettes en cours</h3>
       <div class="debts-search">
@@ -1711,6 +1756,7 @@
         <h4>Mes gains</h4>
         <div class="menu-buttons">
           <button class="menu-button" id="menuMyBalance">💰 Mes Gains</button>
+          <button class="menu-button" id="menuBonus">🎁 Bonus</button>
         </div>
       </div>
     </div>
@@ -1724,32 +1770,30 @@
     // CONFIGURATION DU JEU
     // =============================================
     const GAME_CONFIG = {
-      INITIAL_JACKPOT: 250,
+      INITIAL_JACKPOT: 864,
       BONUS_INTERVAL: 20,
       MIN_JACKPOT_VISIBLE: 1000,
-      SYMBOL_COUNT: 10, // Changé de 11 à 10 (symbole 6 supprimé)
+      SYMBOL_COUNT: 10,
       DIFFICULTY: 6,
       COINS_PER_ROSE: 1,
       PARTIAL_GAINS: {
         4: 10,
         5: 50
       },
-      ROSE_TO_TURNS_RATE: 2, // 1 rose = 2 tours
-      ROSE_ADD_INTERVAL: 2, // Ajouter une rose au solde personnel tous les 2 tours
-      JACKPOT_ROSE_INTERVAL: 50, // Ajouter une rose au jackpot tous les 50 tours
-      // NOUVELLES VALEURS DES SYMBOLES
+      ROSE_TO_TURNS_RATE: 2,
+      ROSE_ADD_INTERVAL: 2,
+      JACKPOT_ROSE_INTERVAL: 50,
       SYMBOL_VALUES: {
-        0: 90,   // Symbole 1
-        1: 200,  // Symbole 2
-        2: 100,  // Symbole 3
-        3: 10,   // Symbole 4
-        4: 0,    // Symbole 5
-        // Symbole 6 supprimé
-        5: 1000, // Symbole 7
-        6: 100,  // Symbole 8
-        7: 2000, // Symbole 9
-        8: 899,  // Symbole 10
-        9: 2988  // Symbole 11
+        0: 90,
+        1: 200,
+        2: 100,
+        3: 10,
+        4: 0,
+        5: 1000,
+        6: 100,
+        7: 2000,
+        8: 899,
+        9: 2988
       }
     };
 
@@ -1896,7 +1940,6 @@
             name: 'Symbole 5',
             value: 0
           },
-          // Symbole 6 supprimé
           { 
             type: 'symbol7', 
             image: 'https://i.ibb.co/2fBDM0x/symbol7.png', 
@@ -1929,7 +1972,6 @@
           }
         ];
         
-        // Images spéciales pour les cases 2, 3, 4, 5, 6
         this.specialImages = [
           {
             type: 'special1',
@@ -1953,15 +1995,11 @@
       }
 
       getRandomSymbol(position = 0) {
-        // Pour la case 1 (position 0), on exclut les images spéciales
         if (position === 0) {
           return Math.floor(Math.random() * this.symbolTypes.length);
         }
         
-        // Pour les cases 2, 3, 4, 5, 6 (positions 1-5), on a une chance sur 10 d'avoir une image spéciale
         if (position >= 1 && position <= 5 && Math.random() < 0.1) {
-          // Retourne un index négatif pour identifier l'image spéciale
-          // -1 pour la première image spéciale, -2 pour la deuxième, etc.
           return -1 - Math.floor(Math.random() * this.specialImages.length);
         }
         
@@ -1974,7 +2012,6 @@
           img.src = symbol.image;
         });
         
-        // Précharger les images spéciales
         this.specialImages.forEach(special => {
           const img = new Image();
           img.src = special.image;
@@ -1982,13 +2019,11 @@
       }
 
       getSymbolData(index, position = 0) {
-        // Si index est négatif, c'est une image spéciale
         if (index < 0) {
           const specialIndex = Math.abs(index) - 1;
           if (specialIndex < this.specialImages.length) {
             return this.specialImages[specialIndex];
           }
-          // Fallback si l'index spécial est invalide
           return this.symbolTypes[0];
         }
         
@@ -1996,7 +2031,6 @@
       }
 
       getSymbolValue(index) {
-        // Si index est négatif, c'est une image spéciale (valeur 0)
         if (index < 0) {
           return 0;
         }
@@ -2009,7 +2043,6 @@
         const symbolPositions = {};
         
         symbols.forEach((symbolIndex, position) => {
-          // Pour les images spéciales, on les traite comme des symboles uniques
           let symbolName;
           if (symbolIndex < 0) {
             const specialIndex = Math.abs(symbolIndex) - 1;
@@ -2239,25 +2272,26 @@
           bonusCounter: 0,
           gainsHistory: [],
           remainingTurns: 0,
-          spinQueue: [], // File d'attente ordonnée
+          spinQueue: [],
           isProcessingQueue: false,
           isFastMode: false,
           isSuperSpeedMode: false,
           isUltraSpeedMode: false,
           lastUsername: "Personne",
           debts: [],
-          paidDebts: [], // Stockage des dettes payées
+          paidRoses: 0, // Compteur de roses payées
           currentDebtSearch: '',
-          userTurns: {}, // Stockage des tours par utilisateur
+          userTurns: {},
           debtSort: 'amount-desc',
           debtFilter: '',
           sortByAmount: false,
           sortByDate: false,
-          roseCounter: 0, // Compteur pour l'ajout de roses
-          jackpotRoseCounter: 0, // Compteur pour l'ajout de roses au jackpot
-          currentExchangeUser: null, // Utilisateur actuel pour l'échange
-          currentExchangeMaxRoses: 0, // Maximum de roses disponibles pour l'échange
-          myBalance: 0 // Solde personnel
+          roseCounter: 0,
+          jackpotRoseCounter: 0,
+          currentExchangeUser: null,
+          currentExchangeMaxRoses: 0,
+          myBalance: 0,
+          bonusRoses: 0 // Roses gagnées en bonus
         };
 
         this.initializeDOM();
@@ -2265,7 +2299,6 @@
       }
 
       initializeDOM() {
-        // Références aux éléments DOM
         this.elements = {
           lockContainer: document.getElementById('lockContainer'),
           spinBtn: document.getElementById('spinBtn'),
@@ -2279,7 +2312,7 @@
           jackpotProgressFill: document.getElementById('jackpotProgressFill'),
           jackpotProgressMin: document.getElementById('jackpotProgressMin'),
           debtsTableContainer: document.getElementById('debtsTableContainer'),
-          paidDebtsCount: document.getElementById('paidDebtsCount'), // Compteur de dettes payées
+          paidRosesCount: document.getElementById('paidRosesCount'),
           queueDisplay: document.getElementById('queueDisplay'),
           menuToggle: document.getElementById('menuToggle'),
           menuDropdown: document.getElementById('menuDropdown'),
@@ -2288,8 +2321,7 @@
           sortByAmountBtn: document.getElementById('sortByAmountBtn'),
           sortByDateBtn: document.getElementById('sortByDateBtn'),
           lastUserDisplay: document.getElementById('lastUserDisplay'),
-          lastUserDebtInfo: document.getElementById('lastUserDebtInfo'), // Info dette du dernier utilisateur
-          // Éléments pour le panneau des dettes déplaçable
+          lastUserDebtInfo: document.getElementById('lastUserDebtInfo'),
           debtsPanel: document.getElementById('debtsPanel'),
           debtsPanelContent: document.getElementById('debtsPanelContent'),
           debtSortSelect: document.getElementById('debtSortSelect'),
@@ -2297,7 +2329,6 @@
           doubleTurnsBtn: document.getElementById('doubleTurnsBtn'),
           resetDebtsBtn: document.getElementById('resetDebtsBtn'),
           closeDebtsPanel: document.getElementById('closeDebtsPanel'),
-          // Éléments pour l'échange de roses
           roseExchangeContainer: document.getElementById('roseExchangeContainer'),
           roseExchangeInfo: document.getElementById('roseExchangeInfo'),
           roseExchangeAmount: document.getElementById('roseExchangeAmount'),
@@ -2306,7 +2337,6 @@
           exchangeTurns: document.getElementById('exchangeTurns'),
           roseExchangeConfirm: document.getElementById('roseExchangeConfirm'),
           roseExchangeCancel: document.getElementById('roseExchangeCancel'),
-          // Éléments pour le panneau Mes gains
           myBalancePanel: document.getElementById('myBalancePanel'),
           myBalancePanelHeader: document.getElementById('myBalancePanelHeader'),
           balanceDisplay: document.getElementById('balanceDisplay'),
@@ -2314,36 +2344,30 @@
           balanceAddBtn: document.getElementById('balanceAddBtn'),
           balanceSubtractBtn: document.getElementById('balanceSubtractBtn'),
           balanceResetBtn: document.getElementById('balanceResetBtn'),
-          closeMyBalancePanel: document.getElementById('closeMyBalancePanel')
+          closeMyBalancePanel: document.getElementById('closeMyBalancePanel'),
+          bonusPanel: document.getElementById('bonusPanel'),
+          bonusPanelHeader: document.getElementById('bonusPanelHeader'),
+          bonusDisplay: document.getElementById('bonusDisplay'),
+          bonusInfo: document.getElementById('bonusInfo'),
+          closeBonusPanel: document.getElementById('closeBonusPanel')
         };
       }
 
       setupEventListeners() {
-        // Événements de base
         document.getElementById('spinBtn').addEventListener('click', () => this.addToQueue());
         document.getElementById('mode1').addEventListener('click', () => this.setAttackMode(1));
         document.getElementById('mode10').addEventListener('click', () => this.setAttackMode(10));
         document.getElementById('mode30').addEventListener('click', () => this.setAttackMode(30));
 
-        // Événements du menu
         this.setupMenuEvents();
-
-        // Événements des panneaux
         this.setupPanelEvents();
-
-        // Événements de recherche de dettes
         this.setupDebtSearchEvents();
-
-        // Événements pour l'échange de roses
         this.setupRoseExchangeEvents();
-
-        // Événements pour le panneau Mes gains
         this.setupMyBalanceEvents();
+        this.setupBonusEvents();
 
-        // Raccourcis clavier
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
 
-        // Sauvegarde automatique
         setInterval(() => {
           if (!this.state.isSpinning && this.state.attempts > 0) {
             this.saveGame(true);
@@ -2358,7 +2382,6 @@
           this.elements.menuDropdown.classList.toggle('show');
         });
 
-        // Fermer le menu en cliquant à l'extérieur
         document.addEventListener('click', (e) => {
           if (!this.elements.menuToggle.contains(e.target) && 
               !this.elements.menuDropdown.contains(e.target)) {
@@ -2366,7 +2389,6 @@
           }
         });
 
-        // Boutons du menu
         document.getElementById('menuSuperSpeed').addEventListener('click', () => this.toggleSuperSpeedMode());
         document.getElementById('menuUltraSpeed').addEventListener('click', () => this.toggleUltraSpeedMode());
         document.getElementById('menuSpeed').addEventListener('click', () => this.toggleSpeedMode());
@@ -2378,28 +2400,27 @@
         document.getElementById('menuClearData').addEventListener('click', () => this.clearSave());
         document.getElementById('menuAddDebt').addEventListener('click', () => this.addDebtManually());
         document.getElementById('menuResetDebts').addEventListener('click', () => this.resetDebts());
-        // Bouton pour ouvrir le panneau Mes gains
         document.getElementById('menuMyBalance').addEventListener('click', () => this.toggleMyBalancePanel());
+        document.getElementById('menuBonus').addEventListener('click', () => this.toggleBonusPanel());
       }
 
       setupPanelEvents() {
-        // Fermer le panneau des dettes
         this.elements.closeDebtsPanel.addEventListener('click', () => {
           document.getElementById('debtsPanel').classList.add('hidden');
         });
 
-        // Fermer le panneau Mes gains
         this.elements.closeMyBalancePanel.addEventListener('click', () => {
           document.getElementById('myBalancePanel').classList.add('hidden');
         });
 
-        // Rendre le panneau des dettes déplaçable
+        this.elements.closeBonusPanel.addEventListener('click', () => {
+          document.getElementById('bonusPanel').classList.add('hidden');
+        });
+
         this.makePanelDraggable('debtsPanel', 'debtsPanelHeader');
-
-        // Rendre le panneau Mes gains déplaçable
         this.makePanelDraggable('myBalancePanel', 'myBalancePanelHeader');
+        this.makePanelDraggable('bonusPanel', 'bonusPanelHeader');
 
-        // Événements pour le tri et le filtrage des dettes
         this.elements.debtSortSelect.addEventListener('change', (e) => {
           this.state.debtSort = e.target.value;
           this.updateDebtsPanel();
@@ -2410,12 +2431,10 @@
           this.updateDebtsPanel();
         });
 
-        // Événement pour le bouton de double tours
         this.elements.doubleTurnsBtn.addEventListener('click', () => {
           this.doubleTurnsForUser();
         });
 
-        // Événement pour le bouton de réinitialisation des dettes
         this.elements.resetDebtsBtn.addEventListener('click', () => {
           this.resetDebts();
         });
@@ -2439,7 +2458,6 @@
           }
         });
 
-        // Événements pour les boutons de tri
         this.elements.sortByAmountBtn.addEventListener('click', () => {
           this.state.sortByAmount = !this.state.sortByAmount;
           this.state.sortByDate = false;
@@ -2454,7 +2472,6 @@
       }
 
       setupRoseExchangeEvents() {
-        // Événements pour l'échange de roses
         this.elements.roseExchangeAmount.addEventListener('input', (e) => {
           this.updateRoseExchangeResult();
         });
@@ -2473,9 +2490,7 @@
         });
       }
 
-      // Configuration des événements pour le panneau Mes gains
       setupMyBalanceEvents() {
-        // Événements pour les boutons du panneau Mes gains
         this.elements.balanceAddBtn.addEventListener('click', () => {
           this.addToBalance();
         });
@@ -2488,12 +2503,15 @@
           this.resetBalance();
         });
         
-        // Entrée pour valider le montant
         this.elements.balanceAmount.addEventListener('keypress', (e) => {
           if (e.key === 'Enter') {
             this.addToBalance();
           }
         });
+      }
+
+      setupBonusEvents() {
+        // Pas d'événements spécifiques pour le panneau bonus pour l'instant
       }
 
       makePanelDraggable(panelId, headerId) {
@@ -2562,10 +2580,15 @@
           this.toggleMyBalancePanel();
         }
         
+        if (e.key === 'b' || e.key === 'B') {
+          this.toggleBonusPanel();
+        }
+        
         if (e.key === 'Escape') {
           this.elements.menuDropdown.classList.remove('show');
           this.hideRoseExchange();
           this.elements.myBalancePanel.classList.add('hidden');
+          this.elements.bonusPanel.classList.add('hidden');
         }
       }
 
@@ -2575,19 +2598,20 @@
         this.state.jackpotAmount = GAME_CONFIG.INITIAL_JACKPOT;
         this.state.bonusCounter = 0;
         this.state.remainingTurns = 0;
-        this.state.spinQueue = []; // Réinitialiser la file d'attente
-        this.state.userTurns = {}; // Réinitialiser les tours par utilisateur
-        this.state.roseCounter = 0; // Réinitialiser le compteur de roses
-        this.state.jackpotRoseCounter = 0; // Réinitialiser le compteur de roses du jackpot
+        this.state.spinQueue = [];
+        this.state.userTurns = {};
+        this.state.roseCounter = 0;
+        this.state.jackpotRoseCounter = 0;
         this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
         
         this.updateDisplay();
         this.updateStats();
         this.updateQueueIndicator();
         this.updateLastUserDisplay();
-        this.updateJackpotProgress(); // Mettre à jour la barre de progression
-        this.updatePaidDebtsCounter(); // Mettre à jour le compteur de dettes payées
-        this.updateMyBalanceDisplay(); // Mettre à jour l'affichage du solde
+        this.updateJackpotProgress();
+        this.updatePaidRosesCounter();
+        this.updateMyBalanceDisplay();
+        this.updateBonusDisplay();
         document.getElementById('resultContainer').classList.add('hidden');
         this.elements.message.textContent = `Nouvelle partie ! Le bonus commence à ${GAME_CONFIG.INITIAL_JACKPOT} roses. Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques !`;
         this.elements.spinBtn.disabled = false;
@@ -2607,7 +2631,6 @@
       }
 
       addToQueue() {
-        // Ajouter un élément à la file d'attente avec l'utilisateur et le nombre de tours
         const queueItem = {
           username: this.state.lastUsername,
           turns: this.state.attackMode,
@@ -2616,7 +2639,6 @@
         
         this.state.spinQueue.push(queueItem);
         
-        // Ajouter les tours à l'utilisateur actuel
         if (!this.state.userTurns[this.state.lastUsername]) {
           this.state.userTurns[this.state.lastUsername] = 0;
         }
@@ -2639,15 +2661,12 @@
         this.state.isProcessingQueue = true;
         this.elements.spinBtn.disabled = false;
         
-        // Prendre le premier élément de la file d'attente (FIFO)
         const queueItem = this.state.spinQueue.shift();
         const turnsToProcess = Math.min(queueItem.turns, 1);
         
-        // Mettre à jour l'utilisateur actuel
         this.state.lastUsername = queueItem.username;
         this.updateLastUserDisplay();
         
-        // Réduire les tours de l'utilisateur actuel
         if (this.state.userTurns[queueItem.username]) {
           this.state.userTurns[queueItem.username] -= turnsToProcess;
           if (this.state.userTurns[queueItem.username] <= 0) {
@@ -2655,7 +2674,6 @@
           }
         }
         
-        // Si l'élément a encore des tours, le remettre en file d'attente
         if (queueItem.turns > 1) {
           queueItem.turns -= 1;
           this.state.spinQueue.unshift(queueItem);
@@ -2678,7 +2696,6 @@
         } else {
           this.state.isProcessingQueue = false;
           const matchingInfo = this.symbols.countMatchingSymbols(this.state.symbols);
-          // Message caché en blanc
           this.elements.message.textContent = ` `;
         }
       }
@@ -2697,8 +2714,8 @@
         this.state.remainingTurns = 0;
         
         this.handleRoseBonus();
-        this.handleRoseAddition(); // Gérer l'ajout de roses au solde personnel tous les 2 tours
-        this.handleJackpotRoseAddition(); // Gérer l'ajout de roses au jackpot tous les 50 tours
+        this.handleRoseAddition();
+        this.handleJackpotRoseAddition();
         
         if (this.checkWin()) {
           this.playSymbolSound();
@@ -2718,7 +2735,6 @@
               this.state.rosesCount += partialGainAmount;
               this.state.jackpotAmount += partialGainAmount;
               
-              // Ajouter automatiquement une dette
               this.addDebt(
                 this.state.lastUsername,
                 'auto',
@@ -2824,12 +2840,10 @@
         const winningSymbol = this.symbols.getSymbolData(this.state.lastWinningSymbol);
         const symbolValue = this.symbols.getSymbolValue(this.state.lastWinningSymbol);
         
-        // Calculer le gain total : jackpot + valeur du symbole
         const totalGain = this.state.jackpotAmount + symbolValue;
         
         this.elements.message.textContent = `🎉 JACKPOT ! ${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s ! 🎉`;
         
-        // Ajouter automatiquement une dette pour le jackpot
         this.addDebt(
           this.state.lastUsername,
           'auto',
@@ -2852,7 +2866,6 @@
         
         this.state.rosesCount += totalGain;
         
-        // Réinitialiser le jackpot
         this.state.jackpotAmount = GAME_CONFIG.INITIAL_JACKPOT;
         
         this.saveGame(true);
@@ -2930,18 +2943,14 @@
         this.saveGame(false);
       }
 
-      // Mettre à jour l'indicateur de file d'attente
       updateQueueIndicator() {
-        // Calculer le nombre total de tours dans la file d'attente
         const totalTurns = this.state.spinQueue.reduce((total, item) => total + item.turns, 0);
         this.elements.queueDisplay.textContent = totalTurns;
       }
 
-      // Mettre à jour l'affichage du dernier utilisateur
       updateLastUserDisplay() {
         this.elements.lastUserDisplay.innerHTML = `Dernier joueur: ${this.state.lastUsername}`;
         
-        // Calculer et afficher le total des dettes du dernier utilisateur
         const userDebts = this.state.debts.filter(debt => debt.username === this.state.lastUsername);
         let totalDebtRoses = 0;
         userDebts.forEach(debt => {
@@ -2951,11 +2960,9 @@
         this.elements.lastUserDebtInfo.textContent = `Dettes: ${totalDebtRoses} 🌹`;
       }
 
-      // Mettre à jour la barre de progression du jackpot
       updateJackpotProgress() {
         this.elements.jackpotProgressAmount.textContent = `${this.state.jackpotAmount} 🌹`;
         
-        // Calculer le pourcentage de progression
         const progressPercentage = Math.min(100, (this.state.jackpotAmount / GAME_CONFIG.MIN_JACKPOT_VISIBLE) * 100);
         this.elements.jackpotProgressFill.style.width = `${progressPercentage}%`;
         
@@ -2968,17 +2975,14 @@
         }
       }
 
-      // Mettre à jour le compteur de dettes payées
-      updatePaidDebtsCounter() {
-        this.elements.paidDebtsCount.textContent = this.state.paidDebts.length;
+      updatePaidRosesCounter() {
+        this.elements.paidRosesCount.textContent = this.state.paidRoses;
       }
 
-      // Mettre à jour l'affichage du solde personnel
       updateMyBalanceDisplay() {
         const balance = this.state.myBalance;
         this.elements.balanceDisplay.textContent = `${balance} 🌹`;
         
-        // Appliquer la couleur appropriée selon le solde
         if (balance > 0) {
           this.elements.balanceDisplay.className = 'balance-display balance-positive';
         } else if (balance < 0) {
@@ -2988,10 +2992,13 @@
         }
       }
 
+      updateBonusDisplay() {
+        this.elements.bonusDisplay.textContent = `${this.state.bonusRoses} 🌹`;
+      }
+
       updateDebtsTable() {
         let filteredDebts = this.state.debts;
         
-        // Filtrer les dettes selon la recherche
         if (this.state.currentDebtSearch) {
           const searchTerm = this.state.currentDebtSearch.toLowerCase();
           filteredDebts = this.state.debts.filter(debt => 
@@ -2999,14 +3006,12 @@
           );
         }
         
-        // Trier les dettes
         if (this.state.sortByAmount) {
           filteredDebts.sort((a, b) => b.totalRoses - a.totalRoses);
         } else if (this.state.sortByDate) {
           filteredDebts.sort((a, b) => new Date(b.date) - new Date(a.date));
         }
         
-        // Supprimer les dettes avec 0 rose
         filteredDebts = filteredDebts.filter(debt => debt.totalRoses > 0);
         
         if (filteredDebts.length === 0) {
@@ -3014,7 +3019,6 @@
           return;
         }
 
-        // Regrouper les dettes par utilisateur
         const userDebts = {};
         
         filteredDebts.forEach(debt => {
@@ -3081,11 +3085,9 @@
         });
       }
 
-      // Mettre à jour le panneau des dettes déplaçable
       updateDebtsPanel() {
         let filteredDebts = [...this.state.debts];
         
-        // Appliquer le filtre par nom
         if (this.state.debtFilter) {
           const filterTerm = this.state.debtFilter.toLowerCase();
           filteredDebts = filteredDebts.filter(debt => 
@@ -3093,7 +3095,6 @@
           );
         }
         
-        // Appliquer le tri
         switch(this.state.debtSort) {
           case 'amount-desc':
             filteredDebts.sort((a, b) => b.totalRoses - a.totalRoses);
@@ -3112,10 +3113,8 @@
             break;
         }
         
-        // Supprimer les dettes avec 0 rose
         filteredDebts = filteredDebts.filter(debt => debt.totalRoses > 0);
         
-        // Regrouper les dettes par utilisateur
         const userDebts = {};
         
         filteredDebts.forEach(debt => {
@@ -3153,7 +3152,6 @@
         
         this.elements.debtsPanelContent.innerHTML = html;
         
-        // Ajouter les événements pour les boutons d'échange dans le panneau
         document.querySelectorAll('#debtsPanelContent .exchange-rose-btn').forEach(button => {
           button.addEventListener('click', (e) => {
             const username = e.target.getAttribute('data-username');
@@ -3161,11 +3159,9 @@
           });
         });
         
-        // Mettre à jour le bouton de double tours
         this.updateDoubleTurnsButton();
       }
 
-      // Mettre à jour le bouton de double tours
       updateDoubleTurnsButton() {
         const lastUserDebt = this.getLastUserDebt();
         
@@ -3179,11 +3175,9 @@
         }
       }
 
-      // Obtenir la dette du dernier utilisateur
       getLastUserDebt() {
         if (this.state.debts.length === 0) return null;
         
-        // Regrouper les dettes par utilisateur
         const userDebts = {};
         
         this.state.debts.forEach(debt => {
@@ -3201,7 +3195,6 @@
           userDebts[debt.username].lastDate = debt.date;
         });
         
-        // Trouver l'utilisateur avec la date la plus récente
         let lastUser = null;
         let lastDate = new Date(0);
         
@@ -3216,9 +3209,7 @@
         return lastUser;
       }
 
-      // Afficher l'interface d'échange de roses
       showRoseExchange(username) {
-        // Trouver toutes les dettes de l'utilisateur
         const userDebts = this.state.debts.filter(debt => debt.username === username);
         
         if (userDebts.length === 0) {
@@ -3226,7 +3217,6 @@
           return;
         }
         
-        // Calculer le total des roses
         let totalRoses = 0;
         userDebts.forEach(debt => {
           totalRoses += debt.totalRoses || 0;
@@ -3237,25 +3227,20 @@
           return;
         }
         
-        // Stocker les informations d'échange
         this.state.currentExchangeUser = username;
         this.state.currentExchangeMaxRoses = totalRoses;
         
-        // Mettre à jour l'interface d'échange
         this.elements.roseExchangeInfo.textContent = `${username} a ${totalRoses} rose${totalRoses > 1 ? 's' : ''} disponibles`;
         this.elements.roseExchangeAmount.value = 1;
         this.elements.roseExchangeAmount.max = totalRoses;
         this.elements.roseExchangeSlider.value = 1;
         this.elements.roseExchangeSlider.max = totalRoses;
         
-        // Mettre à jour le résultat
         this.updateRoseExchangeResult();
         
-        // Afficher l'interface d'échange
         this.elements.roseExchangeContainer.style.display = 'flex';
       }
 
-      // Mettre à jour le résultat de l'échange
       updateRoseExchangeResult() {
         const rosesToExchange = parseInt(this.elements.roseExchangeAmount.value) || 1;
         const turnsToAdd = rosesToExchange * GAME_CONFIG.ROSE_TO_TURNS_RATE;
@@ -3263,7 +3248,6 @@
         this.elements.exchangeTurns.textContent = turnsToAdd;
       }
 
-      // Confirmer l'échange de roses
       confirmRoseExchange() {
         const rosesToExchange = parseInt(this.elements.roseExchangeAmount.value) || 1;
         
@@ -3272,10 +3256,8 @@
           return;
         }
         
-        // Calculer le nombre de tours à ajouter
         const turnsToAdd = rosesToExchange * GAME_CONFIG.ROSE_TO_TURNS_RATE;
         
-        // Réduire les roses de la dette la plus récente
         const userDebts = this.state.debts.filter(debt => debt.username === this.state.currentExchangeUser);
         const sortedDebts = userDebts.sort((a, b) => new Date(b.date) - new Date(a.date));
         let remainingRoses = rosesToExchange;
@@ -3290,10 +3272,8 @@
           }
         }
         
-        // Supprimer les dettes avec 0 rose
         this.cleanupZeroRosesDebts();
         
-        // Ajouter les tours à la file d'attente
         const queueItem = {
           username: this.state.currentExchangeUser,
           turns: turnsToAdd,
@@ -3301,7 +3281,6 @@
         };
         this.state.spinQueue.push(queueItem);
         
-        // Ajouter les tours à l'utilisateur
         if (!this.state.userTurns[this.state.currentExchangeUser]) {
           this.state.userTurns[this.state.currentExchangeUser] = 0;
         }
@@ -3314,7 +3293,6 @@
         
         this.elements.message.textContent = `🔄 ${this.state.currentExchangeUser} a échangé ${rosesToExchange} rose${rosesToExchange > 1 ? 's' : ''} contre ${turnsToAdd} tour${turnsToAdd > 1 ? 's' : ''} !`;
         
-        // Masquer l'interface d'échange
         this.hideRoseExchange();
         
         if (!this.state.isProcessingQueue && this.state.spinQueue.length > 0) {
@@ -3322,19 +3300,16 @@
         }
       }
 
-      // Masquer l'interface d'échange de roses
       hideRoseExchange() {
         this.elements.roseExchangeContainer.style.display = 'none';
         this.state.currentExchangeUser = null;
         this.state.currentExchangeMaxRoses = 0;
       }
 
-      // Supprimer les dettes avec 0 rose
       cleanupZeroRosesDebts() {
         this.state.debts = this.state.debts.filter(debt => debt.totalRoses > 0);
       }
 
-      // Relancer le double de tours pour le dernier utilisateur
       doubleTurnsForUser() {
         const lastUserDebt = this.getLastUserDebt();
         
@@ -3345,7 +3320,6 @@
         
         const doubleTurns = lastUserDebt.totalRoses * GAME_CONFIG.ROSE_TO_TURNS_RATE;
         
-        // Ajouter les tours à la file d'attente
         const queueItem = {
           username: lastUserDebt.username,
           turns: doubleTurns,
@@ -3353,7 +3327,6 @@
         };
         this.state.spinQueue.push(queueItem);
         
-        // Ajouter les tours à l'utilisateur
         if (!this.state.userTurns[lastUserDebt.username]) {
           this.state.userTurns[lastUserDebt.username] = 0;
         }
@@ -3400,6 +3373,13 @@
         }
       }
 
+      toggleBonusPanel() {
+        this.elements.bonusPanel.classList.toggle('hidden');
+        if (!this.elements.bonusPanel.classList.contains('hidden')) {
+          this.updateBonusDisplay();
+        }
+      }
+
       // Méthodes de gestion des dettes
       addDebt(username, userId, amount, reason, totalRoses = 0) {
         const debt = {
@@ -3415,7 +3395,7 @@
         this.state.debts.push(debt);
         this.updateDebtsTable();
         this.updateDebtsPanel();
-        this.updateLastUserDisplay(); // Mettre à jour l'affichage du dernier utilisateur
+        this.updateLastUserDisplay();
         this.saveGame(true);
         
         return debt;
@@ -3438,46 +3418,33 @@
       }
 
       markUserDebtAsPaid(username) {
-        // MODIFICATION: Supprimer la confirmation popup et marquer directement comme payé
-        // Récupérer toutes les dettes de cet utilisateur avant de les supprimer
         const userDebts = this.state.debts.filter(debt => debt.username === username);
         
-        // Calculer le total des roses à retirer du solde
         let totalRosesToPay = 0;
         userDebts.forEach(debt => {
           totalRosesToPay += debt.totalRoses || 0;
         });
         
-        // Retirer les roses du solde personnel
         this.state.myBalance -= totalRosesToPay;
+        this.state.paidRoses += totalRosesToPay; // Ajouter au compteur de roses payées
         this.updateMyBalanceDisplay();
+        this.updatePaidRosesCounter();
         
-        // Ajouter les dettes à l'historique des dettes payées
-        userDebts.forEach(debt => {
-          this.state.paidDebts.push({
-            ...debt,
-            paidDate: new Date().toLocaleString('fr-FR')
-          });
-        });
-        
-        // Supprimer toutes les dettes de cet utilisateur
         this.state.debts = this.state.debts.filter(debt => debt.username !== username);
         
         this.elements.message.textContent = `✅ Toutes les dettes de ${username} ont été marquées comme payées ! ${totalRosesToPay} roses ont été retirées de votre solde.`;
         this.updateDebtsTable();
         this.updateDebtsPanel();
-        this.updateLastUserDisplay(); // Mettre à jour l'affichage du dernier utilisateur
-        this.updatePaidDebtsCounter(); // Mettre à jour le compteur
+        this.updateLastUserDisplay();
         this.saveGame(true);
       }
 
-      // Réinitialiser toutes les dettes
       resetDebts() {
         if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment réinitialiser TOUTES les dettes ?\n\nCette action est IRRÉVERSIBLE !')) {
           this.state.debts = [];
           this.updateDebtsTable();
           this.updateDebtsPanel();
-          this.updateLastUserDisplay(); // Mettre à jour l'affichage du dernier utilisateur
+          this.updateLastUserDisplay();
           this.saveGame(true);
           this.elements.message.textContent = '🗑️ Toutes les dettes ont été réinitialisées !';
         }
@@ -3488,7 +3455,6 @@
         debtsHistory.style.display = debtsHistory.style.display === 'none' ? 'block' : 'none';
       }
 
-      // Afficher/masquer le panneau des dettes déplaçable
       toggleDebtsPanel() {
         this.elements.debtsPanel.classList.toggle('hidden');
         if (!this.elements.debtsPanel.classList.contains('hidden')) {
@@ -3510,7 +3476,6 @@
         const symbolGroups = {};
         
         this.state.symbols.forEach((symbolIndex, position) => {
-          // Pour les images spéciales, on les traite comme des symboles uniques
           let symbolName;
           if (symbolIndex < 0) {
             const specialIndex = Math.abs(symbolIndex) - 1;
@@ -3547,6 +3512,8 @@
         if (this.state.bonusCounter % GAME_CONFIG.BONUS_INTERVAL === 0) {
           this.state.rosesCount += 1;
           this.state.jackpotAmount += 1;
+          this.state.bonusRoses += 1; // Ajouter au compteur de bonus
+          this.updateBonusDisplay();
           this.elements.message.textContent = `🌹 +1 rose ajoutée au bonus !`;
           
           this.updateStats();
@@ -3554,7 +3521,6 @@
         }
       }
 
-      // Nouvelle méthode pour gérer l'ajout de roses au solde personnel tous les 2 tours
       handleRoseAddition() {
         this.state.roseCounter++;
         
@@ -3567,7 +3533,6 @@
         }
       }
 
-      // Méthode pour gérer l'ajout de roses au jackpot tous les 50 tours
       handleJackpotRoseAddition() {
         this.state.jackpotRoseCounter++;
         
@@ -3663,10 +3628,9 @@
       }
 
       clearSave() {
-        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' jackpots dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• ' + this.state.paidDebts.length + ' dettes payées\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n\nCette action est IRRÉVERSIBLE !')) {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' jackpots dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• ' + this.state.paidRoses + ' roses payées\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.bonusRoses + ' roses en bonus\n\nCette action est IRRÉVERSIBLE !')) {
           this.storage.clearSave();
           
-          // Réinitialiser toutes les variables
           this.state.attempts = 0;
           this.state.currentGameAttempts = 0;
           this.state.rosesCount = 0;
@@ -3674,21 +3638,21 @@
           this.state.bonusCounter = 0;
           this.state.gainsHistory = [];
           this.state.remainingTurns = 0;
-          this.state.spinQueue = []; // Réinitialiser la file d'attente
+          this.state.spinQueue = [];
           this.state.lastUsername = "Personne";
           this.state.debts = [];
-          this.state.paidDebts = []; // Réinitialiser les dettes payées
+          this.state.paidRoses = 0;
           this.state.currentDebtSearch = '';
-          this.state.userTurns = {}; // Réinitialiser les tours par utilisateur
+          this.state.userTurns = {};
           this.state.debtSort = 'amount-desc';
           this.state.debtFilter = '';
           this.state.sortByAmount = false;
           this.state.sortByDate = false;
-          this.state.roseCounter = 0; // Réinitialiser le compteur de roses
-          this.state.jackpotRoseCounter = 0; // Réinitialiser le compteur de roses du jackpot
-          this.state.myBalance = 0; // Réinitialiser le solde personnel
+          this.state.roseCounter = 0;
+          this.state.jackpotRoseCounter = 0;
+          this.state.myBalance = 0;
+          this.state.bonusRoses = 0;
           
-          // Réinitialiser l'affichage
           this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
           this.updateDisplay();
           this.updateStats();
@@ -3697,8 +3661,9 @@
           this.updateLastUserDisplay();
           this.updateDebtsTable();
           this.updateDebtsPanel();
-          this.updatePaidDebtsCounter(); // Mettre à jour le compteur
-          this.updateMyBalanceDisplay(); // Mettre à jour l'affichage du solde
+          this.updatePaidRosesCounter();
+          this.updateMyBalanceDisplay();
+          this.updateBonusDisplay();
           this.removeWinClasses();
           
           this.elements.message.textContent = '🗑️ Toutes les données ont été effacées ! Vous repartez de zéro.';
@@ -3707,7 +3672,6 @@
 
       // Méthodes de sauvegarde
       saveGame(showNotification = true) {
-        // Supprimer les dettes avec 0 rose avant sauvegarde
         this.cleanupZeroRosesDebts();
         
         const saveData = {
@@ -3718,12 +3682,13 @@
           bonusCounter: this.state.bonusCounter,
           gainsHistory: this.state.gainsHistory,
           lastUsername: this.state.lastUsername,
-          debts: this.state.debts, // Sauvegarder uniquement les dettes
-          paidDebts: this.state.paidDebts, // Sauvegarder les dettes payées
-          userTurns: this.state.userTurns, // Sauvegarder les tours par utilisateur
-          roseCounter: this.state.roseCounter, // Sauvegarder le compteur de roses
-          jackpotRoseCounter: this.state.jackpotRoseCounter, // Sauvegarder le compteur de roses du jackpot
-          myBalance: this.state.myBalance // Sauvegarder le solde personnel
+          debts: this.state.debts,
+          paidRoses: this.state.paidRoses,
+          userTurns: this.state.userTurns,
+          roseCounter: this.state.roseCounter,
+          jackpotRoseCounter: this.state.jackpotRoseCounter,
+          myBalance: this.state.myBalance,
+          bonusRoses: this.state.bonusRoses
         };
         
         return this.storage.saveGame(saveData, showNotification);
@@ -3740,27 +3705,27 @@
           this.state.bonusCounter = savedData.bonusCounter || 0;
           this.state.gainsHistory = savedData.gainsHistory || [];
           this.state.lastUsername = savedData.lastUsername || "Personne";
-          this.state.debts = savedData.debts || []; // Charger les dettes
-          this.state.paidDebts = savedData.paidDebts || []; // Charger les dettes payées
-          this.state.userTurns = savedData.userTurns || {}; // Charger les tours par utilisateur
-          this.state.roseCounter = savedData.roseCounter || 0; // Charger le compteur de roses
-          this.state.jackpotRoseCounter = savedData.jackpotRoseCounter || 0; // Charger le compteur de roses du jackpot
-          this.state.myBalance = savedData.myBalance || 0; // Charger le solde personnel
+          this.state.debts = savedData.debts || [];
+          this.state.paidRoses = savedData.paidRoses || 0;
+          this.state.userTurns = savedData.userTurns || {};
+          this.state.roseCounter = savedData.roseCounter || 0;
+          this.state.jackpotRoseCounter = savedData.jackpotRoseCounter || 0;
+          this.state.myBalance = savedData.myBalance || 0;
+          this.state.bonusRoses = savedData.bonusRoses || 0;
           
-          // CORRECTION : Réinitialiser les compteurs de tours restants
           this.state.remainingTurns = 0;
-          this.state.spinQueue = []; // Réinitialiser la file d'attente
+          this.state.spinQueue = [];
           
-          // Supprimer les dettes avec 0 rose
           this.cleanupZeroRosesDebts();
           
           this.updateLastUserDisplay();
           this.updateDebtsTable();
           this.updateDebtsPanel();
-          this.updatePaidDebtsCounter(); // Mettre à jour le compteur
-          this.updateMyBalanceDisplay(); // Mettre à jour l'affichage du solde
-          this.updateQueueIndicator(); // Mettre à jour l'affichage de la file d'attente
-          this.updateJackpotProgress(); // Mettre à jour la barre de progression
+          this.updatePaidRosesCounter();
+          this.updateMyBalanceDisplay();
+          this.updateBonusDisplay();
+          this.updateQueueIndicator();
+          this.updateJackpotProgress();
           
           setTimeout(() => {
             this.elements.message.textContent = `Bon retour ! Vous avez ${this.state.rosesCount} roses totales et ${this.state.gainsHistory.length} jackpot(s) gagné(s) !`;
@@ -3777,7 +3742,6 @@
         this.state.lastUsername = action.username || 'Anonyme';
         this.updateLastUserDisplay();
         
-        // Ajouter les tours à la file d'attente ordonnée
         const queueItem = {
           username: this.state.lastUsername,
           turns: 0,
@@ -3814,7 +3778,6 @@
         if (queueItem.turns > 0) {
           this.state.spinQueue.push(queueItem);
           
-          // Ajouter les tours à l'utilisateur
           if (!this.state.userTurns[this.state.lastUsername]) {
             this.state.userTurns[this.state.lastUsername] = 0;
           }
@@ -3839,17 +3802,14 @@
 
       // Méthodes audio
       playSymbolSound() {
-        // Implémentation simplifiée - à compléter avec les vrais fichiers audio
         console.log('Jouer le son des symboles');
       }
 
       playSpinSound() {
-        // Implémentation simplifiée - à compléter avec les vrais fichiers audio
         console.log('Jouer le son de rotation');
       }
 
       showReward() {
-        // Implémentation de la fenêtre de récompense
         const winningSymbol = this.symbols.getSymbolData(this.state.lastWinningSymbol);
         const symbolValue = this.symbols.getSymbolValue(this.state.lastWinningSymbol);
         const totalGain = this.state.jackpotAmount + symbolValue;
@@ -3906,8 +3866,9 @@
         this.updateLastUserDisplay();
         this.updateDebtsTable();
         this.updateDebtsPanel();
-        this.updatePaidDebtsCounter(); // Mettre à jour le compteur
-        this.updateMyBalanceDisplay(); // Mettre à jour l'affichage du solde
+        this.updatePaidRosesCounter();
+        this.updateMyBalanceDisplay();
+        this.updateBonusDisplay();
         this.removeWinClasses();
         
         this.symbols.preloadImages();
@@ -3924,7 +3885,7 @@
     // =============================================
     window.addEventListener('load', () => {
       const game = new JackpotGame();
-      window.jackpotGame = game; // Exposer le jeu globalement pour le débogage
+      window.jackpotGame = game;
       game.start();
     });
   </script>
