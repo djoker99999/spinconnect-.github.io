@@ -1,0 +1,3932 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎰 Jackpot des Symboles Mystères</title>
+  <style>
+    /* Variables CSS pour une maintenance plus facile */
+    :root {
+      --primary-color: #feca57;
+      --secondary-color: #ff6b9d;
+      --background-gradient: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      --success-color: #27ae60;
+      --danger-color: #e74c3c;
+      --warning-color: #f39c12;
+      --info-color: #3498db;
+      --dark-bg: rgba(0, 0, 0, 0.7);
+      --border-radius: 20px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: var(--background-gradient);
+      color: #fff;
+      text-align: center;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game-container {
+      max-width: 1400px; /* Augmenté pour plus d'espace */
+      width: 100%;
+      background: var(--dark-bg);
+      border-radius: var(--border-radius);
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+      border: 3px solid rgba(255, 215, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-container::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      background: linear-gradient(45deg, #ffd700, #ff6b9d, #c44569, #ffd700);
+      border-radius: 25px;
+      z-index: -1;
+      animation: borderGlow 3s linear infinite;
+    }
+
+    @keyframes borderGlow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .title-section {
+      margin-bottom: 20px;
+    }
+
+    .queue-display {
+      font-size: 3.5em;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .queue-label {
+      font-size: 1.4em;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 5px;
+    }
+
+    /* Affichage du dernier utilisateur */
+    .last-user-display {
+      font-size: 2em;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      margin: 15px 0;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      border: 2px solid var(--primary-color);
+    }
+
+    /* Barre de progression du jackpot */
+    .jackpot-progress {
+      margin: 25px auto;
+      width: 90%;
+      height: 70px;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      border-radius: 10px;
+      border: 2px solid var(--primary-color);
+    }
+
+    .jackpot-progress-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .jackpot-progress-label {
+      font-size: 1em;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+
+    .jackpot-progress-amount {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: gold;
+      text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    }
+
+    .jackpot-progress-bar {
+      flex: 1;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      margin: 0 25px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .jackpot-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--danger-color), var(--warning-color), var(--primary-color));
+      border-radius: 12px;
+      transition: width 0.5s ease;
+      position: relative;
+    }
+
+    .jackpot-progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: progressShine 2s infinite;
+    }
+
+    @keyframes progressShine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .jackpot-progress-min {
+      font-size: 0.9em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .lock-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px 0;
+      perspective: 1000px;
+      flex-wrap: nowrap; /* Assure que les symboles restent sur une ligne */
+    }
+
+    .symbol-wheel {
+      width: 150px; /* Augmenté la taille */
+      height: 200px; /* Augmenté la taille */
+      background: linear-gradient(145deg, #2c3e50, #34495e);
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3.5em;
+      font-weight: bold;
+      color: var(--primary-color);
+      box-shadow: 
+        inset 0 0 10px rgba(0, 0, 0, 0.5),
+        0 5px 15px rgba(0, 0, 0, 0.3);
+      border: 3px solid var(--primary-color);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .symbol-wheel:hover {
+      transform: translateY(-5px);
+    }
+
+    .symbol-wheel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+      pointer-events: none;
+    }
+
+    .symbol-wheel::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary-color);
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    .symbol-wheel.winning {
+      animation: winPulse 0.5s ease-in-out 3;
+      background: linear-gradient(145deg, #ffd700, #ffed4e);
+      color: white;
+      border-color: #ffd700;
+    }
+
+    .symbol-wheel.partial-win {
+      background: linear-gradient(145deg, #ffd700, #ffed4e);
+      border-color: #ffd700;
+      animation: partialWinPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes partialWinPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes winPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .symbol-wheel.spinning {
+      animation: spinSymbol 0.1s linear infinite;
+    }
+
+    .symbol-wheel.fast-spin {
+      animation: spinSymbol 0.03s linear infinite;
+    }
+
+    @keyframes spinSymbol {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+    }
+
+    .symbol-image {
+      width: 120px; /* Augmenté la taille */
+      height: 120px; /* Augmenté la taille */
+      object-fit: contain;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    }
+
+    .attack-modes {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .attack-modes-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .attack-mode-btn {
+      padding: 20px 25px;
+      font-size: 20px;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      transition: var(--transition);
+      backdrop-filter: blur(5px);
+      min-width: 150px;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .attack-mode-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .attack-mode-btn.active {
+      background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+      border-color: #fff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    .attack-mode-image {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+    }
+
+    .controls {
+      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .main-controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    button {
+      padding: 18px 35px;
+      margin: 5px;
+      font-size: 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, var(--secondary-color), #c44569);
+      color: #fff;
+      transition: var(--transition);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    button:disabled:hover::before {
+      left: -100%;
+    }
+
+    #spinBtn {
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      font-size: 22px;
+      padding: 20px 45px;
+    }
+
+    #spinBtn:hover {
+      background: linear-gradient(45deg, #2ecc71, var(--success-color));
+    }
+
+    #speedBtn {
+      background: linear-gradient(45deg, var(--info-color), #2980b9);
+      font-size: 18px;
+      padding: 18px 30px;
+    }
+
+    #speedBtn:hover {
+      background: linear-gradient(45deg, #2980b9, var(--info-color));
+    }
+
+    #speedBtn.active {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      animation: pulseSpeed 1s infinite;
+    }
+
+    @keyframes pulseSpeed {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    #message {
+      margin: 25px 0;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .result-box {
+      background: linear-gradient(135deg, rgba(39, 174, 96, 0.9), rgba(46, 204, 113, 0.9));
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 25px 0;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      margin: 8px 15px;
+    }
+
+    .stat-value {
+      font-size: 2em;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    /* Tableau des dettes avec barre de recherche - AGRANDI */
+    .debts-history {
+      margin: 25px auto;
+      max-width: 1200px; /* Augmenté la largeur */
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      border: 2px solid var(--danger-color);
+    }
+
+    .debts-history h3 {
+      color: var(--danger-color);
+      margin-bottom: 20px;
+      font-size: 1.5em;
+      text-transform: uppercase;
+    }
+
+    .debts-search {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .debts-search input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--danger-color);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.1em;
+      min-width: 200px;
+    }
+
+    .debts-search input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .debts-search button {
+      padding: 12px 18px;
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+      transition: var(--transition);
+    }
+
+    .debts-search button:hover {
+      background: linear-gradient(45deg, #c0392b, var(--danger-color));
+    }
+
+    .debts-table {
+      width: 100%;
+      border-collapse: collapse;
+      max-height: 350px;
+      overflow-y: auto;
+      display: block;
+    }
+
+    /* Barre de défilement stylisée pour les tableaux */
+    .debts-table::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    .debts-table::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+    }
+
+    .debts-table::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      border-radius: 6px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .debts-table::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, #c0392b, var(--danger-color));
+    }
+
+    .debts-table thead {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .debts-table th {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      color: white;
+      padding: 12px;
+      text-align: center;
+      font-size: 1.2em;
+      text-transform: uppercase;
+    }
+
+    .debts-table td {
+      padding: 15px;
+      text-align: center;
+      color: white;
+      border-bottom: 1px solid rgba(231, 76, 60, 0.3);
+      font-size: 1.2em;
+    }
+
+    .debts-table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .debts-table .user-roses {
+      color: var(--primary-color);
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+
+    .no-debts {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 25px;
+      font-style: italic;
+      font-size: 1.3em;
+    }
+
+    .pay-debt-btn {
+      padding: 10px 15px;
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: var(--transition);
+    }
+
+    .pay-debt-btn:hover {
+      background: linear-gradient(45deg, #2ecc71, var(--success-color));
+      transform: scale(1.05);
+    }
+
+    .exchange-rose-btn {
+      padding: 10px 15px;
+      background: linear-gradient(45deg, #9b59b6, #8e44ad);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: var(--transition);
+      margin-left: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .exchange-rose-btn:hover {
+      background: linear-gradient(45deg, #8e44ad, #9b59b6);
+      transform: scale(1.05);
+    }
+
+    .exchange-rose-btn:disabled {
+      background: #555;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .lock-body {
+      width: 100%;
+      max-width: 1200px; /* Augmenté pour accommoder les symboles plus grands */
+      height: 250px; /* Augmenté la hauteur */
+      background: linear-gradient(145deg, #8B4513, #A0522D);
+      margin: 0 auto 25px;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .speed-indicator {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 15px;
+      font-size: 0.9em;
+      font-weight: bold;
+      display: none;
+    }
+
+    /* Indicateur de sauvegarde */
+    .save-indicator {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 1em;
+      font-weight: bold;
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 10000;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .save-indicator.show {
+      opacity: 1;
+    }
+
+    /* Couleurs pour chaque symbole */
+    .symbol-wheel[data-symbol="1"] { border-color: #9b59b6; }
+    .symbol-wheel[data-symbol="2"] { border-color: #e74c3c; }
+    .symbol-wheel[data-symbol="3"] { border-color: #f39c12; }
+    .symbol-wheel[data-symbol="4"] { border-color: #34495e; }
+    .symbol-wheel[data-symbol="5"] { border-color: #7f8c8d; }
+    .symbol-wheel[data-symbol="7"] { border-color: #8e44ad; }
+    .symbol-wheel[data-symbol="8"] { border-color: #d35400; }
+    .symbol-wheel[data-symbol="9"] { border-color: #16a085; }
+    .symbol-wheel[data-symbol="10"] { border-color: #2980b9; }
+    .symbol-wheel[data-symbol="11"] { border-color: #f1c40f; }
+
+    /* Panneau des dettes déplaçable */
+    .debts-panel {
+      position: fixed;
+      width: 450px; /* Augmenté la taille */
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      border: 2px solid var(--danger-color);
+      z-index: 200;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      max-height: 550px; /* Augmenté la hauteur */
+      overflow-y: auto;
+    }
+
+    /* Barre de défilement stylisée pour le panneau des dettes */
+    .debts-panel::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .debts-panel::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+
+    .debts-panel::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      border-radius: 5px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .debts-panel::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, #c0392b, var(--danger-color));
+    }
+
+    .debts-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      cursor: move;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .debts-panel h3 {
+      color: var(--danger-color);
+      margin-bottom: 20px;
+      font-size: 1.3em;
+      text-transform: uppercase;
+    }
+
+    .debts-panel-filters {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .debts-panel-filters select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--danger-color);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1em;
+    }
+
+    .debts-panel-filters option {
+      background: #1a1a2e;
+    }
+
+    .double-turns-btn {
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: var(--transition);
+    }
+
+    .double-turns-btn:hover {
+      background: linear-gradient(45deg, #2ecc71, var(--success-color));
+      transform: scale(1.05);
+    }
+
+    .double-turns-btn:disabled {
+      background: #555;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Indicateur de connexion WebSocket */
+    .websocket-status {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 1em;
+      font-weight: bold;
+      z-index: 10000;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: var(--transition);
+    }
+
+    .websocket-connected {
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      color: white;
+    }
+
+    .websocket-disconnected {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      color: white;
+    }
+
+    .websocket-connecting {
+      background: linear-gradient(45deg, var(--warning-color), #e67e22);
+      color: white;
+    }
+
+    /* Menu principal */
+    .main-menu {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
+
+    .menu-toggle {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      border-radius: 25px;
+      padding: 15px 30px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: var(--transition);
+    }
+
+    .menu-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .menu-dropdown {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      width: 350px;
+      background: var(--dark-bg);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--primary-color);
+      display: none;
+    }
+
+    .menu-dropdown.show {
+      display: block;
+    }
+
+    .menu-section {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .menu-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .menu-section h4 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
+
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu-button {
+      padding: 12px 18px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: left;
+    }
+
+    .menu-button:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(5px);
+    }
+
+    .menu-button.active {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      border-color: white;
+    }
+
+    .win-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--primary-color);
+      opacity: 0;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(1000px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .win-text {
+      font-size: 5em;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-shadow: 0 0 20px rgba(254, 202, 87, 0.8);
+      animation: textPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes textPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Nouveau style pour le texte au-dessus des symboles */
+    .game-instruction {
+      font-size: 2em;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      margin: 20px 0;
+      text-align: center;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Styles pour les éléments du panneau des dettes */
+    .user-turn-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-name {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .user-turns {
+      color: var(--danger-color);
+      font-weight: bold;
+    }
+
+    /* Style pour le sélecteur de roses */
+    .rose-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .rose-selector select {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid var(--primary-color);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    /* Interface d'échange de roses */
+    .rose-exchange-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .rose-exchange-panel {
+      background: var(--dark-bg);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      border: 3px solid var(--primary-color);
+      box-shadow: 0 0 30px rgba(254, 202, 87, 0.5);
+    }
+
+    .rose-exchange-header {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      text-align: center;
+    }
+
+    .rose-exchange-info {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    .rose-exchange-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .rose-exchange-input {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .rose-exchange-input label {
+      font-size: 1.2em;
+      color: var(--primary-color);
+    }
+
+    .rose-exchange-input input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--primary-color);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    .rose-exchange-slider {
+      width: 100%;
+      margin: 15px 0;
+    }
+
+    .rose-exchange-result {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      text-align: center;
+      font-size: 1.3em;
+    }
+
+    .rose-exchange-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .rose-exchange-confirm {
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .rose-exchange-confirm:hover {
+      transform: scale(1.05);
+    }
+
+    .rose-exchange-cancel {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .rose-exchange-cancel:hover {
+      transform: scale(1.05);
+    }
+
+    /* Compteur de dettes payées */
+    .paid-debts-counter {
+      margin: 15px auto;
+      padding: 15px;
+      background: rgba(39, 174, 96, 0.2);
+      border-radius: 10px;
+      border: 2px solid var(--success-color);
+      max-width: 300px;
+    }
+
+    .paid-debts-counter h4 {
+      color: var(--success-color);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+
+    .paid-debts-count {
+      font-size: 2em;
+      font-weight: bold;
+      color: var(--success-color);
+    }
+
+    /* NOUVEAU: Panneau Mes gains - AGRANDI */
+    .my-balance-panel {
+      position: fixed;
+      width: 450px; /* Augmenté la taille */
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      border: 2px solid var(--info-color);
+      z-index: 200;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      max-height: 550px; /* Augmenté la hauteur */
+      overflow-y: auto;
+    }
+
+    /* Barre de défilement stylisée pour le panneau Mes gains */
+    .my-balance-panel::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .my-balance-panel::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+
+    .my-balance-panel::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, var(--info-color), #2980b9);
+      border-radius: 5px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .my-balance-panel::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, #2980b9, var(--info-color));
+    }
+
+    .my-balance-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      cursor: move;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .my-balance-panel h3 {
+      color: var(--info-color);
+      margin-bottom: 20px;
+      font-size: 1.3em;
+      text-transform: uppercase;
+    }
+
+    .balance-display {
+      font-size: 2.5em;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .balance-positive {
+      color: var(--success-color);
+    }
+
+    .balance-negative {
+      color: var(--danger-color);
+    }
+
+    .balance-zero {
+      color: var(--primary-color);
+    }
+
+    .balance-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .balance-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .balance-input label {
+      font-size: 1.1em;
+      color: var(--primary-color);
+      min-width: 100px;
+    }
+
+    .balance-input input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--info-color);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.1em;
+      text-align: center;
+    }
+
+    .balance-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .balance-add-btn {
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      transition: var(--transition);
+      flex: 1;
+    }
+
+    .balance-add-btn:hover {
+      background: linear-gradient(45deg, #2ecc71, var(--success-color));
+      transform: scale(1.05);
+    }
+
+    .balance-subtract-btn {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      transition: var(--transition);
+      flex: 1;
+    }
+
+    .balance-subtract-btn:hover {
+      background: linear-gradient(45deg, #c0392b, var(--danger-color));
+      transform: scale(1.05);
+    }
+
+    .balance-reset-btn {
+      background: linear-gradient(45deg, var(--warning-color), #e67e22);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      transition: var(--transition);
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .balance-reset-btn:hover {
+      background: linear-gradient(45deg, #e67e22, var(--warning-color));
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .game-container {
+        padding: 25px;
+        margin: 15px;
+      }
+      
+      .queue-display {
+        font-size: 2.8em;
+      }
+      
+      .symbol-wheel {
+        width: 100px;
+        height: 150px;
+      }
+      
+      .symbol-image {
+        width: 80px;
+        height: 80px;
+      }
+      
+      button {
+        padding: 15px 30px;
+        font-size: 18px;
+      }
+      
+      #spinBtn {
+        font-size: 20px;
+        padding: 18px 35px;
+      }
+
+      .attack-mode-btn {
+        padding: 15px 20px;
+        font-size: 16px;
+        min-width: 120px;
+      }
+
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .debts-panel, .my-balance-panel {
+        width: 90%;
+        left: 5% !important;
+        right: 5% !important;
+      }
+
+      .websocket-status {
+        top: 15px;
+        font-size: 0.9em;
+        padding: 10px 20px;
+      }
+
+      .main-menu {
+        width: 90%;
+        bottom: 20px;
+      }
+
+      .menu-dropdown {
+        width: 100%;
+        left: 0;
+      }
+
+      .jackpot-progress {
+        height: 60px;
+        padding: 0 15px;
+      }
+
+      .jackpot-progress-amount {
+        font-size: 1.5em;
+      }
+
+      .jackpot-progress-label {
+        font-size: 0.9em;
+      }
+
+      .game-instruction {
+        font-size: 1.5em;
+      }
+
+      .debts-search {
+        flex-direction: column;
+      }
+
+      .debts-search input {
+        min-width: auto;
+      }
+
+      .rose-exchange-panel {
+        width: 95%;
+        padding: 20px;
+      }
+
+      .rose-exchange-input {
+        flex-direction: column;
+      }
+
+      .balance-input {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .symbol-wheel {
+        width: 80px;
+        height: 120px;
+      }
+      
+      .symbol-image {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .lock-container {
+        gap: 10px;
+      }
+
+      .attack-modes {
+        gap: 8px;
+      }
+
+      .attack-mode-btn {
+        padding: 12px 15px;
+        font-size: 14px;
+        min-width: 90px;
+      }
+
+      .jackpot-progress {
+        height: 55px;
+        flex-direction: column;
+        padding: 8px;
+      }
+
+      .jackpot-progress-info {
+        align-items: center;
+      }
+
+      .jackpot-progress-bar {
+        margin: 8px 0;
+        width: 100%;
+      }
+
+      .game-instruction {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Indicateur de statut WebSocket -->
+  <div class="websocket-status" id="websocketStatus">Connexion en cours...</div>
+
+  <!-- Panneau d'échange de roses -->
+  <div class="rose-exchange-container" id="roseExchangeContainer">
+    <div class="rose-exchange-panel">
+      <h2 class="rose-exchange-header">🌹 Échange de Roses</h2>
+      <div class="rose-exchange-info" id="roseExchangeInfo">
+        Échangez vos roses contre des tours de jeu
+      </div>
+      <div class="rose-exchange-controls">
+        <div class="rose-exchange-input">
+          <label for="roseExchangeAmount">Nombre de roses à échanger :</label>
+          <input type="number" id="roseExchangeAmount" min="1" value="1">
+        </div>
+        <input type="range" id="roseExchangeSlider" class="rose-exchange-slider" min="1" value="1">
+        <div class="rose-exchange-result" id="roseExchangeResult">
+          Vous obtiendrez : <span id="exchangeTurns">2</span> tours
+        </div>
+      </div>
+      <div class="rose-exchange-buttons">
+        <button class="rose-exchange-confirm" id="roseExchangeConfirm">Confirmer l'échange</button>
+        <button class="rose-exchange-cancel" id="roseExchangeCancel">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOUVEAU: Panneau Mes gains - AGRANDI -->
+  <div class="my-balance-panel hidden" id="myBalancePanel">
+    <div class="my-balance-panel-header" id="myBalancePanelHeader">
+      <h3>💰 Mes Gains</h3>
+      <button class="close-panel" id="closeMyBalancePanel">✕</button>
+    </div>
+    
+    <div class="balance-display" id="balanceDisplay">
+      0 🌹
+    </div>
+    
+    <div class="balance-controls">
+      <div class="balance-input">
+        <label for="balanceAmount">Montant :</label>
+        <input type="number" id="balanceAmount" value="1">
+      </div>
+      
+      <div class="balance-buttons">
+        <button class="balance-add-btn" id="balanceAddBtn">Ajouter</button>
+        <button class="balance-subtract-btn" id="balanceSubtractBtn">Retirer</button>
+      </div>
+      
+      <button class="balance-reset-btn" id="balanceResetBtn">Réinitialiser le solde</button>
+    </div>
+  </div>
+
+  <!-- Panneau des dettes déplaçable - AGRANDI -->
+  <div class="debts-panel hidden" id="debtsPanel">
+    <div class="debts-panel-header" id="debtsPanelHeader">
+      <h3>📋 Dettes en cours</h3>
+      <button class="close-panel" id="closeDebtsPanel">✕</button>
+    </div>
+    <div class="debts-panel-filters">
+      <select id="debtSortSelect">
+        <option value="amount-desc">Trier par montant (décroissant)</option>
+        <option value="amount-asc">Trier par montant (croissant)</option>
+        <option value="date-desc">Trier par date (récent)</option>
+        <option value="date-asc">Trier par date (ancien)</option>
+        <option value="name">Trier par nom</option>
+      </select>
+      <input type="text" id="debtFilterInput" placeholder="Filtrer par nom...">
+    </div>
+    <div id="debtsPanelContent">
+      <div class="no-debts">Aucune dette enregistrée</div>
+    </div>
+    <button class="double-turns-btn" id="doubleTurnsBtn">🔄 Relancer le double de tours</button>
+    <button class="double-turns-btn" id="resetDebtsBtn" style="background: linear-gradient(45deg, var(--danger-color), #c0392b); margin-top: 8px;">🗑️ Réinitialiser dettes</button>
+  </div>
+
+  <div class="game-container">
+    <!-- Section titre remplacée par l'affichage de la file d'attente -->
+    <div class="title-section">
+      <div class="queue-display" id="queueDisplay">0</div>
+      <div class="queue-label">Tours en attente</div>
+    </div>
+    
+    <!-- Affichage du dernier utilisateur avec le nombre de roses dans ses dettes -->
+    <div class="last-user-display" id="lastUserDisplay">
+      Dernier joueur: Personne
+      <div id="lastUserDebtInfo" style="font-size: 0.8em; margin-top: 5px; color: var(--primary-color);">
+        Dettes: 0 🌹
+      </div>
+    </div>
+    
+    <!-- Nouveau texte au-dessus des symboles -->
+    <div class="game-instruction">Alignez 6 Symboles et Gagnez Le Symbole et La Récompense</div>
+    
+    <div class="lock-body">
+      <div class="lock-container" id="lockContainer">
+        <!-- Les roues de symboles seront générées ici -->
+      </div>
+    </div>
+
+    <!-- Barre de progression du jackpot sous les symboles -->
+    <div class="jackpot-progress">
+      <div class="jackpot-progress-info">
+        <div class="jackpot-progress-label">BONUS ACTUEL</div>
+        <div class="jackpot-progress-amount" id="jackpotProgressAmount">250 🌹</div>
+      </div>
+      <div class="jackpot-progress-bar">
+        <div class="jackpot-progress-fill" id="jackpotProgressFill" style="width: 25%"></div>
+      </div>
+      <div class="jackpot-progress-min" id="jackpotProgressMin">Visible à 1000 🌹</div>
+    </div>
+
+    <div class="attack-modes">
+      <div class="attack-modes-row">
+        <button id="mode1" class="attack-mode-btn active">
+          <img src="https://i.ibb.co/WNXDxn2y/IMG-7354-Photoroom.png" alt="Rose - 1 tour" class="attack-mode-image">
+          <div>1 tour</div>
+        </button>
+        <button id="mode10" class="attack-mode-btn">
+          <img src="https://i.ibb.co/7JsBRrCn/IMG-5885.png" alt="Rosa - 10 tours" class="attack-mode-image">
+          <div>10 tours</div>
+        </button>
+        <button id="mode30" class="attack-mode-btn">
+          <img src="https://i.ibb.co/8DMJ0cxy/IMG-7355-Photoroom.png" alt="Donuts - 30 tours" class="attack-mode-image">
+          <div>30 tours</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Contrôles principaux -->
+    <div class="main-controls">
+      <button id="spinBtn">Tourner les rouleaux</button>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="stats">
+      <div class="stat-item">
+        <div>Tours totaux</div>
+        <div class="stat-value" id="attemptsCount">0</div>
+      </div>
+      <div class="stat-item">
+        <div>Tours cette partie</div>
+        <div class="stat-value" id="currentGameAttempts">0</div>
+      </div>
+      <div class="stat-item">
+        <div>Roses totales</div>
+        <div class="stat-value" id="rosesCount">0</div>
+      </div>
+      <div class="stat-item">
+        <div>Prochain bonus</div>
+        <div class="stat-value" id="nextBonus">20</div>
+      </div>
+    </div>
+
+    <!-- Compteur de dettes payées -->
+    <div class="paid-debts-counter">
+      <h4>💰 Dettes Payées</h4>
+      <div class="paid-debts-count" id="paidDebtsCount">0</div>
+    </div>
+
+    <!-- Tableau des dettes avec barre de recherche - AGRANDI -->
+    <div class="debts-history">
+      <h3>📋 Dettes en cours</h3>
+      <div class="debts-search">
+        <input type="text" id="debtSearchInput" placeholder="Rechercher un utilisateur...">
+        <button id="debtSearchButton">🔍</button>
+        <button id="sortByAmountBtn" class="sort-btn">Trier par montant</button>
+        <button id="sortByDateBtn" class="sort-btn">Trier par date</button>
+      </div>
+      <div id="debtsTableContainer">
+        <div class="no-debts">Aucune dette enregistrée</div>
+      </div>
+    </div>
+
+    <div id="message">Prêt à jouer ? Alignez 6 symboles identiques pour remporter le jackpot !</div>
+
+    <div id="resultContainer" class="hidden result-box">
+      <h3>🎉 JACKPOT GAGNÉ !</h3>
+      <p id="winMessage">Vous avez aligné les 6 symboles !</p>
+      <p id="attemptsResult">Nombre de tours : 0</p>
+      <p id="winningSymbol">Symbole gagnant : </p>
+      <p id="jackpotWin" class="jackpot-amount">+ 0 🌹</p>
+    </div>
+
+    <div class="speed-indicator" id="speedIndicator">VITESSE RAPIDE</div>
+  </div>
+
+  <!-- Menu principal -->
+  <div class="main-menu">
+    <button class="menu-toggle" id="menuToggle">☰ Contrôle du jeu</button>
+    <div class="menu-dropdown" id="menuDropdown">
+      <div class="menu-section">
+        <h4>Contrôles de jeu</h4>
+        <div class="menu-buttons">
+          <button class="menu-button" id="menuSuperSpeed">⚡ Super Vitesse</button>
+          <button class="menu-button" id="menuUltraSpeed">🚀 Ultra Vitesse</button>
+          <button class="menu-button" id="menuSpeed">⏩ Accélérer</button>
+        </div>
+      </div>
+      
+      <div class="menu-section">
+        <h4>Gestion du Jackpot</h4>
+        <div class="menu-buttons">
+          <button class="menu-button" id="menuIncreaseJackpot">➕ Augmenter Jackpot</button>
+          <button class="menu-button" id="menuDecreaseJackpot">➖ Diminuer Jackpot</button>
+          <button class="menu-button" id="menuSetJackpot">🎯 Définir Jackpot</button>
+          <button class="menu-button" id="menuResetJackpot">🔄 Réinitialiser Jackpot</button>
+        </div>
+      </div>
+      
+      <div class="menu-section">
+        <h4>Gestion des données</h4>
+        <div class="menu-buttons">
+          <button class="menu-button" id="menuResetRewards">🔄 Réinitialiser Récompenses</button>
+          <button class="menu-button" id="menuClearData">🗑️ Effacer données</button>
+        </div>
+      </div>
+      
+      <div class="menu-section">
+        <h4>Gestion des utilisateurs</h4>
+        <div class="menu-buttons">
+          <button class="menu-button" id="menuAddDebt">➕ Ajouter dette</button>
+          <button class="menu-button" id="menuResetDebts">🗑️ Réinitialiser dettes</button>
+        </div>
+      </div>
+      
+      <!-- NOUVEAU: Section Mes gains -->
+      <div class="menu-section">
+        <h4>Mes gains</h4>
+        <div class="menu-buttons">
+          <button class="menu-button" id="menuMyBalance">💰 Mes Gains</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicateur de sauvegarde -->
+  <div class="save-indicator" id="saveIndicator">💾 Sauvegarde automatique</div>
+
+  <script>
+    // =============================================
+    // CONFIGURATION DU JEU
+    // =============================================
+    const GAME_CONFIG = {
+      INITIAL_JACKPOT: 250,
+      BONUS_INTERVAL: 20,
+      MIN_JACKPOT_VISIBLE: 1000,
+      SYMBOL_COUNT: 10, // Changé de 11 à 10 (symbole 6 supprimé)
+      DIFFICULTY: 6,
+      COINS_PER_ROSE: 1,
+      PARTIAL_GAINS: {
+        4: 10,
+        5: 50
+      },
+      ROSE_TO_TURNS_RATE: 2, // 1 rose = 2 tours
+      ROSE_ADD_INTERVAL: 2, // Ajouter une rose au solde personnel tous les 2 tours
+      JACKPOT_ROSE_INTERVAL: 50, // Ajouter une rose au jackpot tous les 50 tours
+      // NOUVELLES VALEURS DES SYMBOLES
+      SYMBOL_VALUES: {
+        0: 90,   // Symbole 1
+        1: 200,  // Symbole 2
+        2: 100,  // Symbole 3
+        3: 10,   // Symbole 4
+        4: 0,    // Symbole 5
+        // Symbole 6 supprimé
+        5: 1000, // Symbole 7
+        6: 100,  // Symbole 8
+        7: 2000, // Symbole 9
+        8: 899,  // Symbole 10
+        9: 2988  // Symbole 11
+      }
+    };
+
+    // =============================================
+    // GESTIONNAIRE D'ÉVÉNEMENTS
+    // =============================================
+    class EventManager {
+      constructor() {
+        this.handlers = {};
+      }
+      
+      on(event, handler) {
+        if (!this.handlers[event]) {
+          this.handlers[event] = [];
+        }
+        this.handlers[event].push(handler);
+      }
+      
+      emit(event, data) {
+        if (this.handlers[event]) {
+          this.handlers[event].forEach(handler => handler(data));
+        }
+      }
+    }
+
+    // =============================================
+    // GESTION DE LA SAUVEGARDE
+    // =============================================
+    class StorageManager {
+      constructor() {
+        this.SAVE_KEY = 'jackpotGameSave';
+        this.showSaveIndicator = true;
+      }
+
+      safeJSONParse(str, fallback = {}) {
+        try {
+          return JSON.parse(str);
+        } catch (e) {
+          console.error('Erreur de parsing JSON:', e);
+          return fallback;
+        }
+      }
+
+      validateGameData(data) {
+        const required = ['attempts', 'rosesCount', 'jackpotAmount'];
+        const missing = required.filter(field => !(field in data));
+        
+        if (missing.length > 0) {
+          console.warn(`Données de jeu invalides: champs manquants: ${missing.join(', ')}`);
+          return false;
+        }
+        
+        return true;
+      }
+
+      saveGame(data, showNotification = true) {
+        const saveData = {
+          ...data,
+          lastSaved: new Date().toISOString()
+        };
+        
+        try {
+          localStorage.setItem(this.SAVE_KEY, JSON.stringify(saveData));
+          
+          const saveIndicator = document.getElementById('saveIndicator');
+          if (saveIndicator && showNotification && this.showSaveIndicator) {
+            saveIndicator.classList.add('show');
+            setTimeout(() => {
+              saveIndicator.classList.remove('show');
+            }, 1500);
+          }
+          
+          console.log('Partie sauvegardée automatiquement');
+          return true;
+        } catch (e) {
+          console.error('Erreur lors de la sauvegarde:', e);
+          return false;
+        }
+      }
+
+      loadGame() {
+        try {
+          const savedData = localStorage.getItem(this.SAVE_KEY);
+          
+          if (savedData) {
+            const data = this.safeJSONParse(savedData);
+            
+            if (this.validateGameData(data)) {
+              console.log('Partie chargée depuis la sauvegarde');
+              return data;
+            }
+          }
+        } catch (e) {
+          console.error('Erreur lors du chargement:', e);
+        }
+        
+        return null;
+      }
+
+      clearSave() {
+        try {
+          localStorage.removeItem(this.SAVE_KEY);
+          return true;
+        } catch (e) {
+          console.error('Erreur lors de la suppression:', e);
+          return false;
+        }
+      }
+    }
+
+    // =============================================
+    // GESTION DES SYMBOLES
+    // =============================================
+    class SymbolManager {
+      constructor() {
+        this.symbolTypes = [
+          { 
+            type: 'symbol1', 
+            image: 'https://i.ibb.co/whJNdnxZ/symbol1.png', 
+            name: 'Symbole 1',
+            value: 90
+          },
+          { 
+            type: 'symbol2', 
+            image: 'https://i.ibb.co/ymsZKVwn/symbol2.png', 
+            name: 'Symbole 2',
+            value: 200
+          },
+          { 
+            type: 'symbol3', 
+            image: 'https://i.ibb.co/gbf2RYFk/symbol3.png', 
+            name: 'Symbole 3',
+            value: 100
+          },
+          { 
+            type: 'symbol4', 
+            image: 'https://i.ibb.co/sv8c6sRK/symbol4.png', 
+            name: 'Symbole 4',
+            value: 10
+          },
+          { 
+            type: 'symbol5', 
+            image: 'https://i.ibb.co/Xr6J8bfK/symbol5.png',
+            name: 'Symbole 5',
+            value: 0
+          },
+          // Symbole 6 supprimé
+          { 
+            type: 'symbol7', 
+            image: 'https://i.ibb.co/2fBDM0x/symbol7.png', 
+            name: 'Symbole 7',
+            value: 1000
+          },
+          { 
+            type: 'symbol8', 
+            image: 'https://i.ibb.co/gbnj5Qzw/symbol8.png', 
+            name: 'Symbole 8',
+            value: 100
+          },
+          { 
+            type: 'symbol9', 
+            image: 'https://i.ibb.co/DfDvmC8T/IMG-6585.png', 
+            name: 'Symbole 9',
+            value: 2000
+          },
+          { 
+            type: 'symbol10', 
+            image: 'https://i.ibb.co/2YpQxB1Y/IMG-6620.png', 
+            name: 'Symbole 10',
+            value: 899
+          },
+          { 
+            type: 'symbol11', 
+            image: 'https://i.ibb.co/0pM1D3wm/IMG-7123.png', 
+            name: 'Symbole 11',
+            value: 2988
+          }
+        ];
+        
+        // Images spéciales pour les cases 2, 3, 4, 5, 6
+        this.specialImages = [
+          {
+            type: 'special1',
+            image: 'https://i.ibb.co/JR5SS5vd/IMG-6570.png',
+            name: 'Symbole Spécial 1',
+            value: 0
+          },
+          {
+            type: 'special2', 
+            image: 'https://i.ibb.co/5XX6nS2W/unnamed-Photoroom.png',
+            name: 'Symbole Spécial 2',
+            value: 0
+          },
+          {
+            type: 'special3',
+            image: 'https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/8520d47b59c202a4534c1560a355ae06~tplv-obj.webp',
+            name: 'Symbole Spécial 3',
+            value: 0
+          }
+        ];
+      }
+
+      getRandomSymbol(position = 0) {
+        // Pour la case 1 (position 0), on exclut les images spéciales
+        if (position === 0) {
+          return Math.floor(Math.random() * this.symbolTypes.length);
+        }
+        
+        // Pour les cases 2, 3, 4, 5, 6 (positions 1-5), on a une chance sur 10 d'avoir une image spéciale
+        if (position >= 1 && position <= 5 && Math.random() < 0.1) {
+          // Retourne un index négatif pour identifier l'image spéciale
+          // -1 pour la première image spéciale, -2 pour la deuxième, etc.
+          return -1 - Math.floor(Math.random() * this.specialImages.length);
+        }
+        
+        return Math.floor(Math.random() * this.symbolTypes.length);
+      }
+
+      preloadImages() {
+        this.symbolTypes.forEach(symbol => {
+          const img = new Image();
+          img.src = symbol.image;
+        });
+        
+        // Précharger les images spéciales
+        this.specialImages.forEach(special => {
+          const img = new Image();
+          img.src = special.image;
+        });
+      }
+
+      getSymbolData(index, position = 0) {
+        // Si index est négatif, c'est une image spéciale
+        if (index < 0) {
+          const specialIndex = Math.abs(index) - 1;
+          if (specialIndex < this.specialImages.length) {
+            return this.specialImages[specialIndex];
+          }
+          // Fallback si l'index spécial est invalide
+          return this.symbolTypes[0];
+        }
+        
+        return this.symbolTypes[index];
+      }
+
+      getSymbolValue(index) {
+        // Si index est négatif, c'est une image spéciale (valeur 0)
+        if (index < 0) {
+          return 0;
+        }
+        
+        return this.symbolTypes[index].value;
+      }
+
+      countMatchingSymbols(symbols) {
+        const symbolCounts = {};
+        const symbolPositions = {};
+        
+        symbols.forEach((symbolIndex, position) => {
+          // Pour les images spéciales, on les traite comme des symboles uniques
+          let symbolName;
+          if (symbolIndex < 0) {
+            const specialIndex = Math.abs(symbolIndex) - 1;
+            symbolName = `special${specialIndex + 1}`;
+          } else {
+            symbolName = this.symbolTypes[symbolIndex].name;
+          }
+          
+          symbolCounts[symbolName] = (symbolCounts[symbolName] || 0) + 1;
+          
+          if (!symbolPositions[symbolName]) {
+            symbolPositions[symbolName] = [];
+          }
+          symbolPositions[symbolName].push(position);
+        });
+        
+        let maxCount = 0;
+        let maxSymbol = null;
+        let maxPositions = [];
+        
+        for (const [symbolName, count] of Object.entries(symbolCounts)) {
+          if (count > maxCount) {
+            maxCount = count;
+            maxSymbol = symbolName;
+            maxPositions = symbolPositions[symbolName];
+          }
+        }
+        
+        return {
+          count: maxCount,
+          symbol: maxSymbol,
+          positions: maxPositions
+        };
+      }
+    }
+
+    // =============================================
+    // GESTION DES ANIMATIONS
+    // =============================================
+    class AnimationManager {
+      constructor() {
+        this.animationId = null;
+      }
+
+      optimizedAnimation(callback) {
+        return {
+          start: () => {
+            if (!this.animationId) {
+              const animate = () => {
+                callback();
+                this.animationId = requestAnimationFrame(animate);
+              };
+              animate();
+            }
+          },
+          stop: () => {
+            if (this.animationId) {
+              cancelAnimationFrame(this.animationId);
+              this.animationId = null;
+            }
+          }
+        };
+      }
+
+      createConfetti() {
+        const confettiContainer = document.createElement('div');
+        confettiContainer.className = 'win-animation';
+        
+        for (let i = 0; i < 100; i++) {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.animationDelay = Math.random() * 3 + 's';
+          confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          confetti.style.backgroundColor = this.getRandomColor();
+          confettiContainer.appendChild(confetti);
+        }
+        
+        document.body.appendChild(confettiContainer);
+        
+        setTimeout(() => {
+          if (document.body.contains(confettiContainer)) {
+            document.body.removeChild(confettiContainer);
+          }
+        }, 5000);
+      }
+
+      getRandomColor() {
+        const colors = ['#feca57', '#ff6b9d', '#48dbfb', '#1dd1a1', '#f368e0', '#ff9ff3'];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+    }
+
+    // =============================================
+    // GESTION WEBSOCKET
+    // =============================================
+    class WebSocketManager {
+      constructor(game) {
+        this.game = game;
+        this.websocket = null;
+        this.reconnectInterval = null;
+        this.WEBSOCKET_URL = 'ws://127.0.0.1:8832';
+      }
+
+      connect() {
+        try {
+          this.updateStatus('connecting', 'Connexion en cours...');
+          
+          this.websocket = new WebSocket(this.WEBSOCKET_URL);
+          
+          this.websocket.onopen = (event) => {
+            console.log('🔗 Connexion WebSocket établie');
+            this.updateStatus('connected', 'Connecté à TikFinity');
+            this.clearReconnectInterval();
+            
+            this.sendMessage({
+              type: 'CLIENT_CONNECTED',
+              message: 'Client Jackpot connecté',
+              timestamp: new Date().toISOString()
+            });
+          };
+          
+          this.websocket.onmessage = (event) => {
+            try {
+              const data = JSON.parse(event.data);
+              console.log('📨 Message WebSocket reçu:', data);
+              this.handleMessage(data);
+            } catch (e) {
+              console.error('Erreur lors du parsing du message WebSocket:', e);
+            }
+          };
+          
+          this.websocket.onclose = (event) => {
+            console.log('❌ Connexion WebSocket fermée:', event.code, event.reason);
+            this.updateStatus('disconnected', 'Déconnecté - Reconnexion...');
+            this.scheduleReconnect();
+          };
+          
+          this.websocket.onerror = (error) => {
+            console.error('❌ Erreur WebSocket:', error);
+            this.updateStatus('disconnected', 'Erreur de connexion');
+          };
+          
+        } catch (error) {
+          console.error('❌ Erreur lors de la connexion WebSocket:', error);
+          this.updateStatus('disconnected', 'Erreur de connexion');
+          this.scheduleReconnect();
+        }
+      }
+
+      updateStatus(status, message) {
+        const statusElement = document.getElementById('websocketStatus');
+        if (statusElement) {
+          statusElement.className = 'websocket-status';
+          statusElement.classList.add(`websocket-${status}`);
+          statusElement.textContent = message;
+        }
+      }
+
+      sendMessage(message) {
+        if (this.websocket && this.websocket.readyState === WebSocket.OPEN) {
+          this.websocket.send(JSON.stringify(message));
+        } else {
+          console.warn('WebSocket non connecté, impossible d\'envoyer le message:', message);
+        }
+      }
+
+      handleMessage(data) {
+        switch(data.type) {
+          case 'TIKFINTY_ACTION':
+            console.log('🎯 Action TikFinity reçue:', data);
+            this.game.handleTikFinityAction(data.action);
+            break;
+            
+          case 'SERVER_MESSAGE':
+            console.log('📢 Message du serveur:', data.message);
+            this.game.showTemporaryMessage(`📢 ${data.message}`);
+            break;
+            
+          case 'PONG':
+            console.log('🏓 Pong reçu du serveur');
+            break;
+            
+          default:
+            console.log('📨 Message WebSocket non traité:', data);
+        }
+      }
+
+      scheduleReconnect() {
+        this.clearReconnectInterval();
+        
+        this.reconnectInterval = setInterval(() => {
+          console.log('🔄 Tentative de reconnexion WebSocket...');
+          this.connect();
+        }, 5000);
+      }
+
+      clearReconnectInterval() {
+        if (this.reconnectInterval) {
+          clearInterval(this.reconnectInterval);
+          this.reconnectInterval = null;
+        }
+      }
+    }
+
+    // =============================================
+    // JEU PRINCIPAL
+    // =============================================
+    class JackpotGame {
+      constructor() {
+        this.events = new EventManager();
+        this.storage = new StorageManager();
+        this.symbols = new SymbolManager();
+        this.animations = new AnimationManager();
+        this.websocket = new WebSocketManager(this);
+        
+        this.state = {
+          symbols: [],
+          attempts: 0,
+          currentGameAttempts: 0,
+          isSpinning: false,
+          winAnimationActive: false,
+          attackMode: 1,
+          lastWinningSymbol: null,
+          rosesCount: 0,
+          jackpotAmount: GAME_CONFIG.INITIAL_JACKPOT,
+          bonusCounter: 0,
+          gainsHistory: [],
+          remainingTurns: 0,
+          spinQueue: [], // File d'attente ordonnée
+          isProcessingQueue: false,
+          isFastMode: false,
+          isSuperSpeedMode: false,
+          isUltraSpeedMode: false,
+          lastUsername: "Personne",
+          debts: [],
+          paidDebts: [], // Stockage des dettes payées
+          currentDebtSearch: '',
+          userTurns: {}, // Stockage des tours par utilisateur
+          debtSort: 'amount-desc',
+          debtFilter: '',
+          sortByAmount: false,
+          sortByDate: false,
+          roseCounter: 0, // Compteur pour l'ajout de roses
+          jackpotRoseCounter: 0, // Compteur pour l'ajout de roses au jackpot
+          currentExchangeUser: null, // Utilisateur actuel pour l'échange
+          currentExchangeMaxRoses: 0, // Maximum de roses disponibles pour l'échange
+          myBalance: 0 // Solde personnel
+        };
+
+        this.initializeDOM();
+        this.setupEventListeners();
+      }
+
+      initializeDOM() {
+        // Références aux éléments DOM
+        this.elements = {
+          lockContainer: document.getElementById('lockContainer'),
+          spinBtn: document.getElementById('spinBtn'),
+          message: document.getElementById('message'),
+          resultContainer: document.getElementById('resultContainer'),
+          attemptsCount: document.getElementById('attemptsCount'),
+          currentGameAttempts: document.getElementById('currentGameAttempts'),
+          rosesCount: document.getElementById('rosesCount'),
+          nextBonus: document.getElementById('nextBonus'),
+          jackpotProgressAmount: document.getElementById('jackpotProgressAmount'),
+          jackpotProgressFill: document.getElementById('jackpotProgressFill'),
+          jackpotProgressMin: document.getElementById('jackpotProgressMin'),
+          debtsTableContainer: document.getElementById('debtsTableContainer'),
+          paidDebtsCount: document.getElementById('paidDebtsCount'), // Compteur de dettes payées
+          queueDisplay: document.getElementById('queueDisplay'),
+          menuToggle: document.getElementById('menuToggle'),
+          menuDropdown: document.getElementById('menuDropdown'),
+          debtSearchInput: document.getElementById('debtSearchInput'),
+          debtSearchButton: document.getElementById('debtSearchButton'),
+          sortByAmountBtn: document.getElementById('sortByAmountBtn'),
+          sortByDateBtn: document.getElementById('sortByDateBtn'),
+          lastUserDisplay: document.getElementById('lastUserDisplay'),
+          lastUserDebtInfo: document.getElementById('lastUserDebtInfo'), // Info dette du dernier utilisateur
+          // Éléments pour le panneau des dettes déplaçable
+          debtsPanel: document.getElementById('debtsPanel'),
+          debtsPanelContent: document.getElementById('debtsPanelContent'),
+          debtSortSelect: document.getElementById('debtSortSelect'),
+          debtFilterInput: document.getElementById('debtFilterInput'),
+          doubleTurnsBtn: document.getElementById('doubleTurnsBtn'),
+          resetDebtsBtn: document.getElementById('resetDebtsBtn'),
+          closeDebtsPanel: document.getElementById('closeDebtsPanel'),
+          // Éléments pour l'échange de roses
+          roseExchangeContainer: document.getElementById('roseExchangeContainer'),
+          roseExchangeInfo: document.getElementById('roseExchangeInfo'),
+          roseExchangeAmount: document.getElementById('roseExchangeAmount'),
+          roseExchangeSlider: document.getElementById('roseExchangeSlider'),
+          roseExchangeResult: document.getElementById('roseExchangeResult'),
+          exchangeTurns: document.getElementById('exchangeTurns'),
+          roseExchangeConfirm: document.getElementById('roseExchangeConfirm'),
+          roseExchangeCancel: document.getElementById('roseExchangeCancel'),
+          // Éléments pour le panneau Mes gains
+          myBalancePanel: document.getElementById('myBalancePanel'),
+          myBalancePanelHeader: document.getElementById('myBalancePanelHeader'),
+          balanceDisplay: document.getElementById('balanceDisplay'),
+          balanceAmount: document.getElementById('balanceAmount'),
+          balanceAddBtn: document.getElementById('balanceAddBtn'),
+          balanceSubtractBtn: document.getElementById('balanceSubtractBtn'),
+          balanceResetBtn: document.getElementById('balanceResetBtn'),
+          closeMyBalancePanel: document.getElementById('closeMyBalancePanel')
+        };
+      }
+
+      setupEventListeners() {
+        // Événements de base
+        document.getElementById('spinBtn').addEventListener('click', () => this.addToQueue());
+        document.getElementById('mode1').addEventListener('click', () => this.setAttackMode(1));
+        document.getElementById('mode10').addEventListener('click', () => this.setAttackMode(10));
+        document.getElementById('mode30').addEventListener('click', () => this.setAttackMode(30));
+
+        // Événements du menu
+        this.setupMenuEvents();
+
+        // Événements des panneaux
+        this.setupPanelEvents();
+
+        // Événements de recherche de dettes
+        this.setupDebtSearchEvents();
+
+        // Événements pour l'échange de roses
+        this.setupRoseExchangeEvents();
+
+        // Événements pour le panneau Mes gains
+        this.setupMyBalanceEvents();
+
+        // Raccourcis clavier
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+
+        // Sauvegarde automatique
+        setInterval(() => {
+          if (!this.state.isSpinning && this.state.attempts > 0) {
+            this.saveGame(true);
+          }
+        }, 10000);
+
+        window.addEventListener('beforeunload', () => this.saveGame(false));
+      }
+
+      setupMenuEvents() {
+        this.elements.menuToggle.addEventListener('click', () => {
+          this.elements.menuDropdown.classList.toggle('show');
+        });
+
+        // Fermer le menu en cliquant à l'extérieur
+        document.addEventListener('click', (e) => {
+          if (!this.elements.menuToggle.contains(e.target) && 
+              !this.elements.menuDropdown.contains(e.target)) {
+            this.elements.menuDropdown.classList.remove('show');
+          }
+        });
+
+        // Boutons du menu
+        document.getElementById('menuSuperSpeed').addEventListener('click', () => this.toggleSuperSpeedMode());
+        document.getElementById('menuUltraSpeed').addEventListener('click', () => this.toggleUltraSpeedMode());
+        document.getElementById('menuSpeed').addEventListener('click', () => this.toggleSpeedMode());
+        document.getElementById('menuIncreaseJackpot').addEventListener('click', () => this.modifyJackpot(this.state.jackpotAmount + 100));
+        document.getElementById('menuDecreaseJackpot').addEventListener('click', () => this.modifyJackpot(Math.max(0, this.state.jackpotAmount - 100)));
+        document.getElementById('menuSetJackpot').addEventListener('click', () => this.setJackpotManually());
+        document.getElementById('menuResetJackpot').addEventListener('click', () => this.initGame());
+        document.getElementById('menuResetRewards').addEventListener('click', () => this.resetRewards());
+        document.getElementById('menuClearData').addEventListener('click', () => this.clearSave());
+        document.getElementById('menuAddDebt').addEventListener('click', () => this.addDebtManually());
+        document.getElementById('menuResetDebts').addEventListener('click', () => this.resetDebts());
+        // Bouton pour ouvrir le panneau Mes gains
+        document.getElementById('menuMyBalance').addEventListener('click', () => this.toggleMyBalancePanel());
+      }
+
+      setupPanelEvents() {
+        // Fermer le panneau des dettes
+        this.elements.closeDebtsPanel.addEventListener('click', () => {
+          document.getElementById('debtsPanel').classList.add('hidden');
+        });
+
+        // Fermer le panneau Mes gains
+        this.elements.closeMyBalancePanel.addEventListener('click', () => {
+          document.getElementById('myBalancePanel').classList.add('hidden');
+        });
+
+        // Rendre le panneau des dettes déplaçable
+        this.makePanelDraggable('debtsPanel', 'debtsPanelHeader');
+
+        // Rendre le panneau Mes gains déplaçable
+        this.makePanelDraggable('myBalancePanel', 'myBalancePanelHeader');
+
+        // Événements pour le tri et le filtrage des dettes
+        this.elements.debtSortSelect.addEventListener('change', (e) => {
+          this.state.debtSort = e.target.value;
+          this.updateDebtsPanel();
+        });
+
+        this.elements.debtFilterInput.addEventListener('input', (e) => {
+          this.state.debtFilter = e.target.value;
+          this.updateDebtsPanel();
+        });
+
+        // Événement pour le bouton de double tours
+        this.elements.doubleTurnsBtn.addEventListener('click', () => {
+          this.doubleTurnsForUser();
+        });
+
+        // Événement pour le bouton de réinitialisation des dettes
+        this.elements.resetDebtsBtn.addEventListener('click', () => {
+          this.resetDebts();
+        });
+      }
+
+      setupDebtSearchEvents() {
+        this.elements.debtSearchInput.addEventListener('input', () => {
+          this.state.currentDebtSearch = this.elements.debtSearchInput.value;
+          this.updateDebtsTable();
+        });
+        
+        this.elements.debtSearchButton.addEventListener('click', () => {
+          this.state.currentDebtSearch = this.elements.debtSearchInput.value;
+          this.updateDebtsTable();
+        });
+        
+        this.elements.debtSearchInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            this.state.currentDebtSearch = this.elements.debtSearchInput.value;
+            this.updateDebtsTable();
+          }
+        });
+
+        // Événements pour les boutons de tri
+        this.elements.sortByAmountBtn.addEventListener('click', () => {
+          this.state.sortByAmount = !this.state.sortByAmount;
+          this.state.sortByDate = false;
+          this.updateDebtsTable();
+        });
+
+        this.elements.sortByDateBtn.addEventListener('click', () => {
+          this.state.sortByDate = !this.state.sortByDate;
+          this.state.sortByAmount = false;
+          this.updateDebtsTable();
+        });
+      }
+
+      setupRoseExchangeEvents() {
+        // Événements pour l'échange de roses
+        this.elements.roseExchangeAmount.addEventListener('input', (e) => {
+          this.updateRoseExchangeResult();
+        });
+        
+        this.elements.roseExchangeSlider.addEventListener('input', (e) => {
+          this.elements.roseExchangeAmount.value = e.target.value;
+          this.updateRoseExchangeResult();
+        });
+        
+        this.elements.roseExchangeConfirm.addEventListener('click', () => {
+          this.confirmRoseExchange();
+        });
+        
+        this.elements.roseExchangeCancel.addEventListener('click', () => {
+          this.hideRoseExchange();
+        });
+      }
+
+      // Configuration des événements pour le panneau Mes gains
+      setupMyBalanceEvents() {
+        // Événements pour les boutons du panneau Mes gains
+        this.elements.balanceAddBtn.addEventListener('click', () => {
+          this.addToBalance();
+        });
+        
+        this.elements.balanceSubtractBtn.addEventListener('click', () => {
+          this.subtractFromBalance();
+        });
+        
+        this.elements.balanceResetBtn.addEventListener('click', () => {
+          this.resetBalance();
+        });
+        
+        // Entrée pour valider le montant
+        this.elements.balanceAmount.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            this.addToBalance();
+          }
+        });
+      }
+
+      makePanelDraggable(panelId, headerId) {
+        const panel = document.getElementById(panelId);
+        const header = document.getElementById(headerId);
+        
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        
+        header.onmousedown = dragMouseDown;
+        
+        function dragMouseDown(e) {
+          e = e || window.event;
+          e.preventDefault();
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          document.onmouseup = closeDragElement;
+          document.onmousemove = elementDrag;
+        }
+        
+        function elementDrag(e) {
+          e = e || window.event;
+          e.preventDefault();
+          pos1 = pos3 - e.clientX;
+          pos2 = pos4 - e.clientY;
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          panel.style.top = (panel.offsetTop - pos2) + "px";
+          panel.style.left = (panel.offsetLeft - pos1) + "px";
+        }
+        
+        function closeDragElement() {
+          document.onmouseup = null;
+          document.onmousemove = null;
+        }
+      }
+
+      handleKeyboard(e) {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          if (!this.state.winAnimationActive) {
+            this.addToQueue();
+          }
+        }
+        
+        if (e.key === 'r' || e.key === 'R') {
+          this.initGame();
+        }
+        
+        if (e.key === 's' || e.key === 'S') {
+          this.toggleSpeedMode();
+        }
+        
+        if (e.key >= '1' && e.key <= '3') {
+          const modes = [1, 10, 30];
+          const index = parseInt(e.key) - 1;
+          if (index < modes.length) {
+            this.setAttackMode(modes[index]);
+          }
+        }
+        
+        if (e.key === 'd' || e.key === 'D') {
+          this.toggleDebtsPanel();
+        }
+        
+        if (e.key === 'm' || e.key === 'M') {
+          this.toggleMyBalancePanel();
+        }
+        
+        if (e.key === 'Escape') {
+          this.elements.menuDropdown.classList.remove('show');
+          this.hideRoseExchange();
+          this.elements.myBalancePanel.classList.add('hidden');
+        }
+      }
+
+      // Méthodes principales du jeu
+      initGame() {
+        this.state.currentGameAttempts = 0;
+        this.state.jackpotAmount = GAME_CONFIG.INITIAL_JACKPOT;
+        this.state.bonusCounter = 0;
+        this.state.remainingTurns = 0;
+        this.state.spinQueue = []; // Réinitialiser la file d'attente
+        this.state.userTurns = {}; // Réinitialiser les tours par utilisateur
+        this.state.roseCounter = 0; // Réinitialiser le compteur de roses
+        this.state.jackpotRoseCounter = 0; // Réinitialiser le compteur de roses du jackpot
+        this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
+        
+        this.updateDisplay();
+        this.updateStats();
+        this.updateQueueIndicator();
+        this.updateLastUserDisplay();
+        this.updateJackpotProgress(); // Mettre à jour la barre de progression
+        this.updatePaidDebtsCounter(); // Mettre à jour le compteur de dettes payées
+        this.updateMyBalanceDisplay(); // Mettre à jour l'affichage du solde
+        document.getElementById('resultContainer').classList.add('hidden');
+        this.elements.message.textContent = `Nouvelle partie ! Le bonus commence à ${GAME_CONFIG.INITIAL_JACKPOT} roses. Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques !`;
+        this.elements.spinBtn.disabled = false;
+        this.removeWinClasses();
+      }
+
+      setAttackMode(mode) {
+        this.state.attackMode = mode;
+        
+        document.querySelectorAll('.attack-mode-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        document.getElementById(`mode${mode}`).classList.add('active');
+        
+        this.elements.spinBtn.textContent = `Tourner (${mode.toLocaleString()} tour${mode > 1 ? 's' : ''})`;
+      }
+
+      addToQueue() {
+        // Ajouter un élément à la file d'attente avec l'utilisateur et le nombre de tours
+        const queueItem = {
+          username: this.state.lastUsername,
+          turns: this.state.attackMode,
+          timestamp: Date.now()
+        };
+        
+        this.state.spinQueue.push(queueItem);
+        
+        // Ajouter les tours à l'utilisateur actuel
+        if (!this.state.userTurns[this.state.lastUsername]) {
+          this.state.userTurns[this.state.lastUsername] = 0;
+        }
+        this.state.userTurns[this.state.lastUsername] += this.state.attackMode;
+        
+        this.updateQueueIndicator();
+        this.elements.message.textContent = `${this.state.attackMode} tour${this.state.attackMode > 1 ? 's' : ''} ajouté${this.state.attackMode > 1 ? 's' : ''} à la file d'attente pour ${this.state.lastUsername} !`;
+        
+        if (!this.state.isProcessingQueue) {
+          this.processQueue();
+        }
+      }
+
+      async processQueue() {
+        if (this.state.spinQueue.length <= 0) {
+          this.state.isProcessingQueue = false;
+          return;
+        }
+        
+        this.state.isProcessingQueue = true;
+        this.elements.spinBtn.disabled = false;
+        
+        // Prendre le premier élément de la file d'attente (FIFO)
+        const queueItem = this.state.spinQueue.shift();
+        const turnsToProcess = Math.min(queueItem.turns, 1);
+        
+        // Mettre à jour l'utilisateur actuel
+        this.state.lastUsername = queueItem.username;
+        this.updateLastUserDisplay();
+        
+        // Réduire les tours de l'utilisateur actuel
+        if (this.state.userTurns[queueItem.username]) {
+          this.state.userTurns[queueItem.username] -= turnsToProcess;
+          if (this.state.userTurns[queueItem.username] <= 0) {
+            delete this.state.userTurns[queueItem.username];
+          }
+        }
+        
+        // Si l'élément a encore des tours, le remettre en file d'attente
+        if (queueItem.turns > 1) {
+          queueItem.turns -= 1;
+          this.state.spinQueue.unshift(queueItem);
+        }
+        
+        this.updateQueueIndicator();
+        
+        await this.executeSpin();
+        
+        if (this.state.spinQueue.length > 0) {
+          let delay;
+          if (this.state.isUltraSpeedMode) delay = 50;
+          else if (this.state.isSuperSpeedMode) delay = 75;
+          else if (this.state.isFastMode) delay = 100;
+          else delay = 300;
+          
+          setTimeout(() => {
+            this.processQueue();
+          }, delay);
+        } else {
+          this.state.isProcessingQueue = false;
+          const matchingInfo = this.symbols.countMatchingSymbols(this.state.symbols);
+          // Message caché en blanc
+          this.elements.message.textContent = ` `;
+        }
+      }
+
+      async executeSpin() {
+        this.removeWinClasses();
+        this.playSpinSound();
+        
+        this.state.remainingTurns = 1;
+        
+        await this.spinAllSymbolsSimultaneously();
+        
+        this.state.attempts++;
+        this.state.currentGameAttempts++;
+        
+        this.state.remainingTurns = 0;
+        
+        this.handleRoseBonus();
+        this.handleRoseAddition(); // Gérer l'ajout de roses au solde personnel tous les 2 tours
+        this.handleJackpotRoseAddition(); // Gérer l'ajout de roses au jackpot tous les 50 tours
+        
+        if (this.checkWin()) {
+          this.playSymbolSound();
+          await this.winGame();
+        } else {
+          const matchingInfo = this.symbols.countMatchingSymbols(this.state.symbols);
+          
+          if (matchingInfo.count >= 4) {
+            this.elements.message.textContent = `🎉 ${matchingInfo.count} symboles identiques ! ${this.state.lastUsername} gagne ! 🎉`;
+            this.playSymbolSound();
+            
+            this.highlightMatchingSymbols();
+            
+            if (matchingInfo.count >= 4) {
+              const partialGainAmount = this.calculatePartialGain(matchingInfo.count);
+              
+              this.state.rosesCount += partialGainAmount;
+              this.state.jackpotAmount += partialGainAmount;
+              
+              // Ajouter automatiquement une dette
+              this.addDebt(
+                this.state.lastUsername,
+                'auto',
+                partialGainAmount * GAME_CONFIG.COINS_PER_ROSE,
+                `${matchingInfo.count} symboles identiques`,
+                partialGainAmount
+              );
+              
+              this.state.gainsHistory.push({
+                type: 'partial',
+                tours: this.state.currentGameAttempts,
+                symbolCount: matchingInfo.count,
+                roses: partialGainAmount,
+                username: this.state.lastUsername,
+                date: new Date().toLocaleString('fr-FR')
+              });
+              
+              this.updateStats();
+              this.updateJackpotProgress();
+            }
+            
+            let delay;
+            if (this.state.isUltraSpeedMode) delay = 200;
+            else if (this.state.isSuperSpeedMode) delay = 300;
+            else if (this.state.isFastMode) delay = 500;
+            else delay = 1000;
+            
+            await new Promise(resolve => setTimeout(resolve, delay));
+            this.removeWinClasses();
+          }
+        }
+      }
+
+      async spinAllSymbolsSimultaneously() {
+        return new Promise(resolve => {
+          document.querySelectorAll('.symbol-wheel').forEach(symbolElement => {
+            if (this.state.isUltraSpeedMode) {
+              symbolElement.classList.add('spinning', 'fast-spin');
+            } else if (this.state.isSuperSpeedMode || this.state.isFastMode) {
+              symbolElement.classList.add('spinning');
+            } else {
+              symbolElement.classList.add('spinning');
+            }
+          });
+          
+          let spins = 0;
+          let maxSpins, spinInterval;
+          
+          if (this.state.isUltraSpeedMode) {
+            maxSpins = 3 + Math.floor(Math.random() * 3);
+            spinInterval = 10;
+          } else if (this.state.isSuperSpeedMode) {
+            maxSpins = 5 + Math.floor(Math.random() * 5);
+            spinInterval = 20;
+          } else if (this.state.isFastMode) {
+            maxSpins = 5 + Math.floor(Math.random() * 5);
+            spinInterval = 30;
+          } else {
+            maxSpins = 10 + Math.floor(Math.random() * 10);
+            spinInterval = 100;
+          }
+          
+          const spinIntervalId = setInterval(() => {
+            for (let i = 0; i < this.state.symbols.length; i++) {
+              this.state.symbols[i] = this.symbols.getRandomSymbol(i);
+              this.updateSingleSymbol(i);
+            }
+            
+            spins++;
+            
+            if (spins >= maxSpins) {
+              clearInterval(spinIntervalId);
+              document.querySelectorAll('.symbol-wheel').forEach(symbolElement => {
+                symbolElement.classList.remove('spinning', 'fast-spin');
+              });
+              
+              let delay;
+              if (this.state.isUltraSpeedMode) delay = 10;
+              else if (this.state.isSuperSpeedMode) delay = 15;
+              else if (this.state.isFastMode) delay = 20;
+              else delay = 100;
+              
+              setTimeout(resolve, delay);
+            }
+          }, spinInterval);
+        });
+      }
+
+      checkWin() {
+        const firstSymbol = this.state.symbols[0];
+        for (let i = 1; i < this.state.symbols.length; i++) {
+          if (this.state.symbols[i] !== firstSymbol) {
+            return false;
+          }
+        }
+        
+        this.state.lastWinningSymbol = firstSymbol;
+        return true;
+      }
+
+      async winGame() {
+        this.state.winAnimationActive = true;
+        const winningSymbol = this.symbols.getSymbolData(this.state.lastWinningSymbol);
+        const symbolValue = this.symbols.getSymbolValue(this.state.lastWinningSymbol);
+        
+        // Calculer le gain total : jackpot + valeur du symbole
+        const totalGain = this.state.jackpotAmount + symbolValue;
+        
+        this.elements.message.textContent = `🎉 JACKPOT ! ${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s ! 🎉`;
+        
+        // Ajouter automatiquement une dette pour le jackpot
+        this.addDebt(
+          this.state.lastUsername,
+          'auto',
+          totalGain * GAME_CONFIG.COINS_PER_ROSE,
+          `Jackpot ${GAME_CONFIG.DIFFICULTY} symboles ${winningSymbol.name}`,
+          totalGain
+        );
+        
+        this.state.gainsHistory.push({
+          type: 'jackpot',
+          tours: this.state.currentGameAttempts,
+          symbolCount: GAME_CONFIG.DIFFICULTY,
+          roses: totalGain,
+          username: this.state.lastUsername,
+          symbolName: winningSymbol.name,
+          symbolValue: symbolValue,
+          jackpotValue: this.state.jackpotAmount,
+          date: new Date().toLocaleString('fr-FR')
+        });
+        
+        this.state.rosesCount += totalGain;
+        
+        // Réinitialiser le jackpot
+        this.state.jackpotAmount = GAME_CONFIG.INITIAL_JACKPOT;
+        
+        this.saveGame(true);
+        this.updateStats();
+        this.updateJackpotProgress();
+        
+        for (let i = 0; i < GAME_CONFIG.DIFFICULTY; i++) {
+          setTimeout(() => {
+            const symbolElement = document.getElementById(`symbol${i + 1}`);
+            if (symbolElement) symbolElement.classList.add('winning');
+          }, i * 200);
+        }
+        
+        document.getElementById('winMessage').textContent = `${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s !`;
+        document.getElementById('attemptsResult').textContent = `Nombre de tours dans cette partie : ${this.state.currentGameAttempts}`;
+        document.getElementById('winningSymbol').textContent = `Symbole gagnant : ${winningSymbol.name} (Valeur: ${symbolValue} roses)`;
+        document.getElementById('jackpotWin').textContent = `+ ${totalGain} 🌹 (Jackpot: ${this.state.jackpotAmount} + Symbole: ${symbolValue})`;
+        
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        document.getElementById('resultContainer').classList.remove('hidden');
+        
+        this.showReward();
+        this.animations.createConfetti();
+        
+        setTimeout(() => {
+          this.state.winAnimationActive = false;
+        }, 5000);
+      }
+
+      // Méthodes d'affichage
+      updateDisplay() {
+        this.elements.lockContainer.innerHTML = '';
+        
+        this.state.symbols.forEach((symbolIndex, index) => {
+          const symbolElement = document.createElement('div');
+          symbolElement.className = 'symbol-wheel';
+          symbolElement.id = `symbol${index + 1}`;
+          symbolElement.setAttribute('data-symbol', symbolIndex + 1);
+          symbolElement.setAttribute('role', 'img');
+          symbolElement.setAttribute('aria-label', `Symbole de jeu ${index + 1}`);
+          symbolElement.tabIndex = 0;
+          
+          const symbolData = this.symbols.getSymbolData(symbolIndex, index);
+          const img = document.createElement('img');
+          img.src = symbolData.image;
+          img.alt = symbolData.name;
+          img.className = 'symbol-image';
+          symbolElement.appendChild(img);
+          
+          this.elements.lockContainer.appendChild(symbolElement);
+        });
+      }
+
+      updateSingleSymbol(index) {
+        const symbolElement = document.getElementById(`symbol${index + 1}`);
+        if (!symbolElement) return;
+        
+        symbolElement.setAttribute('data-symbol', this.state.symbols[index] + 1);
+        
+        symbolElement.innerHTML = '';
+        const symbolData = this.symbols.getSymbolData(this.state.symbols[index], index);
+        const img = document.createElement('img');
+        img.src = symbolData.image;
+        img.alt = symbolData.name;
+        img.className = 'symbol-image';
+        symbolElement.appendChild(img);
+      }
+
+      updateStats() {
+        this.elements.attemptsCount.textContent = this.state.attempts;
+        this.elements.currentGameAttempts.textContent = this.state.currentGameAttempts;
+        this.elements.rosesCount.textContent = this.state.rosesCount;
+        this.elements.nextBonus.textContent = GAME_CONFIG.BONUS_INTERVAL - (this.state.bonusCounter % GAME_CONFIG.BONUS_INTERVAL);
+        
+        this.saveGame(false);
+      }
+
+      // Mettre à jour l'indicateur de file d'attente
+      updateQueueIndicator() {
+        // Calculer le nombre total de tours dans la file d'attente
+        const totalTurns = this.state.spinQueue.reduce((total, item) => total + item.turns, 0);
+        this.elements.queueDisplay.textContent = totalTurns;
+      }
+
+      // Mettre à jour l'affichage du dernier utilisateur
+      updateLastUserDisplay() {
+        this.elements.lastUserDisplay.innerHTML = `Dernier joueur: ${this.state.lastUsername}`;
+        
+        // Calculer et afficher le total des dettes du dernier utilisateur
+        const userDebts = this.state.debts.filter(debt => debt.username === this.state.lastUsername);
+        let totalDebtRoses = 0;
+        userDebts.forEach(debt => {
+          totalDebtRoses += debt.totalRoses || 0;
+        });
+        
+        this.elements.lastUserDebtInfo.textContent = `Dettes: ${totalDebtRoses} 🌹`;
+      }
+
+      // Mettre à jour la barre de progression du jackpot
+      updateJackpotProgress() {
+        this.elements.jackpotProgressAmount.textContent = `${this.state.jackpotAmount} 🌹`;
+        
+        // Calculer le pourcentage de progression
+        const progressPercentage = Math.min(100, (this.state.jackpotAmount / GAME_CONFIG.MIN_JACKPOT_VISIBLE) * 100);
+        this.elements.jackpotProgressFill.style.width = `${progressPercentage}%`;
+        
+        if (this.state.jackpotAmount >= GAME_CONFIG.MIN_JACKPOT_VISIBLE) {
+          this.elements.jackpotProgressMin.textContent = "Bonus visible !";
+          this.elements.jackpotProgressFill.style.background = 'linear-gradient(90deg, var(--primary-color), var(--warning-color), gold)';
+        } else {
+          this.elements.jackpotProgressMin.textContent = `Visible à ${GAME_CONFIG.MIN_JACKPOT_VISIBLE} 🌹`;
+          this.elements.jackpotProgressFill.style.background = 'linear-gradient(90deg, var(--danger-color), var(--warning-color), var(--primary-color))';
+        }
+      }
+
+      // Mettre à jour le compteur de dettes payées
+      updatePaidDebtsCounter() {
+        this.elements.paidDebtsCount.textContent = this.state.paidDebts.length;
+      }
+
+      // Mettre à jour l'affichage du solde personnel
+      updateMyBalanceDisplay() {
+        const balance = this.state.myBalance;
+        this.elements.balanceDisplay.textContent = `${balance} 🌹`;
+        
+        // Appliquer la couleur appropriée selon le solde
+        if (balance > 0) {
+          this.elements.balanceDisplay.className = 'balance-display balance-positive';
+        } else if (balance < 0) {
+          this.elements.balanceDisplay.className = 'balance-display balance-negative';
+        } else {
+          this.elements.balanceDisplay.className = 'balance-display balance-zero';
+        }
+      }
+
+      updateDebtsTable() {
+        let filteredDebts = this.state.debts;
+        
+        // Filtrer les dettes selon la recherche
+        if (this.state.currentDebtSearch) {
+          const searchTerm = this.state.currentDebtSearch.toLowerCase();
+          filteredDebts = this.state.debts.filter(debt => 
+            debt.username.toLowerCase().includes(searchTerm)
+          );
+        }
+        
+        // Trier les dettes
+        if (this.state.sortByAmount) {
+          filteredDebts.sort((a, b) => b.totalRoses - a.totalRoses);
+        } else if (this.state.sortByDate) {
+          filteredDebts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+        
+        // Supprimer les dettes avec 0 rose
+        filteredDebts = filteredDebts.filter(debt => debt.totalRoses > 0);
+        
+        if (filteredDebts.length === 0) {
+          this.elements.debtsTableContainer.innerHTML = '<div class="no-debts">Aucune dette enregistrée</div>';
+          return;
+        }
+
+        // Regrouper les dettes par utilisateur
+        const userDebts = {};
+        
+        filteredDebts.forEach(debt => {
+          if (!userDebts[debt.username]) {
+            userDebts[debt.username] = {
+              username: debt.username,
+              totalRoses: 0,
+              reasons: [],
+              lastDate: debt.date
+            };
+          }
+          
+          userDebts[debt.username].totalRoses += debt.totalRoses || 0;
+          userDebts[debt.username].reasons.push(debt.reason);
+          userDebts[debt.username].lastDate = debt.date;
+        });
+
+        let tableHTML = `
+          <table class="debts-table">
+            <thead>
+              <tr>
+                <th>Utilisateur</th>
+                <th>Roses totales</th>
+                <th>Dernière raison</th>
+                <th>Dernière date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        Object.values(userDebts).forEach(userDebt => {
+          tableHTML += `
+            <tr>
+              <td>${userDebt.username}</td>
+              <td class="user-roses">${userDebt.totalRoses} 🌹</td>
+              <td>${userDebt.reasons[userDebt.reasons.length - 1]}</td>
+              <td style="font-size: 0.85em;">${userDebt.lastDate}</td>
+              <td>
+                <button class="pay-debt-btn" data-username="${userDebt.username}">Payé</button>
+                <button class="exchange-rose-btn" data-username="${userDebt.username}" ${userDebt.totalRoses <= 0 ? 'disabled' : ''}>
+                  <span>🌹</span> Échanger
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        tableHTML += '</tbody></table>';
+        this.elements.debtsTableContainer.innerHTML = tableHTML;
+        
+        document.querySelectorAll('.pay-debt-btn').forEach(button => {
+          button.addEventListener('click', (e) => {
+            const username = e.target.getAttribute('data-username');
+            this.markUserDebtAsPaid(username);
+          });
+        });
+
+        document.querySelectorAll('.exchange-rose-btn').forEach(button => {
+          button.addEventListener('click', (e) => {
+            const username = e.target.getAttribute('data-username');
+            this.showRoseExchange(username);
+          });
+        });
+      }
+
+      // Mettre à jour le panneau des dettes déplaçable
+      updateDebtsPanel() {
+        let filteredDebts = [...this.state.debts];
+        
+        // Appliquer le filtre par nom
+        if (this.state.debtFilter) {
+          const filterTerm = this.state.debtFilter.toLowerCase();
+          filteredDebts = filteredDebts.filter(debt => 
+            debt.username.toLowerCase().includes(filterTerm)
+          );
+        }
+        
+        // Appliquer le tri
+        switch(this.state.debtSort) {
+          case 'amount-desc':
+            filteredDebts.sort((a, b) => b.totalRoses - a.totalRoses);
+            break;
+          case 'amount-asc':
+            filteredDebts.sort((a, b) => a.totalRoses - b.totalRoses);
+            break;
+          case 'date-desc':
+            filteredDebts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            break;
+          case 'date-asc':
+            filteredDebts.sort((a, b) => new Date(a.date) - new Date(b.date));
+            break;
+          case 'name':
+            filteredDebts.sort((a, b) => a.username.localeCompare(b.username));
+            break;
+        }
+        
+        // Supprimer les dettes avec 0 rose
+        filteredDebts = filteredDebts.filter(debt => debt.totalRoses > 0);
+        
+        // Regrouper les dettes par utilisateur
+        const userDebts = {};
+        
+        filteredDebts.forEach(debt => {
+          if (!userDebts[debt.username]) {
+            userDebts[debt.username] = {
+              username: debt.username,
+              totalRoses: 0,
+              reasons: [],
+              lastDate: debt.date
+            };
+          }
+          
+          userDebts[debt.username].totalRoses += debt.totalRoses || 0;
+          userDebts[debt.username].reasons.push(debt.reason);
+          userDebts[debt.username].lastDate = debt.date;
+        });
+
+        if (Object.keys(userDebts).length === 0) {
+          this.elements.debtsPanelContent.innerHTML = '<div class="no-debts">Aucune dette enregistrée</div>';
+          return;
+        }
+
+        let html = '';
+        Object.values(userDebts).forEach(userDebt => {
+          html += `
+            <div class="user-turn-item">
+              <span class="user-name">${userDebt.username}</span>
+              <span class="user-turns">${userDebt.totalRoses} 🌹</span>
+              <button class="exchange-rose-btn" data-username="${userDebt.username}" ${userDebt.totalRoses <= 0 ? 'disabled' : ''}>
+                <span>🌹</span> Échanger
+              </button>
+            </div>
+          `;
+        });
+        
+        this.elements.debtsPanelContent.innerHTML = html;
+        
+        // Ajouter les événements pour les boutons d'échange dans le panneau
+        document.querySelectorAll('#debtsPanelContent .exchange-rose-btn').forEach(button => {
+          button.addEventListener('click', (e) => {
+            const username = e.target.getAttribute('data-username');
+            this.showRoseExchange(username);
+          });
+        });
+        
+        // Mettre à jour le bouton de double tours
+        this.updateDoubleTurnsButton();
+      }
+
+      // Mettre à jour le bouton de double tours
+      updateDoubleTurnsButton() {
+        const lastUserDebt = this.getLastUserDebt();
+        
+        if (lastUserDebt && lastUserDebt.totalRoses > 0) {
+          const doubleTurns = lastUserDebt.totalRoses * GAME_CONFIG.ROSE_TO_TURNS_RATE;
+          this.elements.doubleTurnsBtn.textContent = `🔄 Relancer ${doubleTurns} tours (${lastUserDebt.totalRoses} roses)`;
+          this.elements.doubleTurnsBtn.disabled = false;
+        } else {
+          this.elements.doubleTurnsBtn.textContent = '🔄 Relancer le double de tours';
+          this.elements.doubleTurnsBtn.disabled = true;
+        }
+      }
+
+      // Obtenir la dette du dernier utilisateur
+      getLastUserDebt() {
+        if (this.state.debts.length === 0) return null;
+        
+        // Regrouper les dettes par utilisateur
+        const userDebts = {};
+        
+        this.state.debts.forEach(debt => {
+          if (!userDebts[debt.username]) {
+            userDebts[debt.username] = {
+              username: debt.username,
+              totalRoses: 0,
+              reasons: [],
+              lastDate: debt.date
+            };
+          }
+          
+          userDebts[debt.username].totalRoses += debt.totalRoses || 0;
+          userDebts[debt.username].reasons.push(debt.reason);
+          userDebts[debt.username].lastDate = debt.date;
+        });
+        
+        // Trouver l'utilisateur avec la date la plus récente
+        let lastUser = null;
+        let lastDate = new Date(0);
+        
+        Object.values(userDebts).forEach(userDebt => {
+          const debtDate = new Date(userDebt.lastDate);
+          if (debtDate > lastDate) {
+            lastDate = debtDate;
+            lastUser = userDebt;
+          }
+        });
+        
+        return lastUser;
+      }
+
+      // Afficher l'interface d'échange de roses
+      showRoseExchange(username) {
+        // Trouver toutes les dettes de l'utilisateur
+        const userDebts = this.state.debts.filter(debt => debt.username === username);
+        
+        if (userDebts.length === 0) {
+          this.elements.message.textContent = `❌ ${username} n'a aucune dette enregistrée !`;
+          return;
+        }
+        
+        // Calculer le total des roses
+        let totalRoses = 0;
+        userDebts.forEach(debt => {
+          totalRoses += debt.totalRoses || 0;
+        });
+        
+        if (totalRoses <= 0) {
+          this.elements.message.textContent = `❌ ${username} n'a pas de roses à échanger !`;
+          return;
+        }
+        
+        // Stocker les informations d'échange
+        this.state.currentExchangeUser = username;
+        this.state.currentExchangeMaxRoses = totalRoses;
+        
+        // Mettre à jour l'interface d'échange
+        this.elements.roseExchangeInfo.textContent = `${username} a ${totalRoses} rose${totalRoses > 1 ? 's' : ''} disponibles`;
+        this.elements.roseExchangeAmount.value = 1;
+        this.elements.roseExchangeAmount.max = totalRoses;
+        this.elements.roseExchangeSlider.value = 1;
+        this.elements.roseExchangeSlider.max = totalRoses;
+        
+        // Mettre à jour le résultat
+        this.updateRoseExchangeResult();
+        
+        // Afficher l'interface d'échange
+        this.elements.roseExchangeContainer.style.display = 'flex';
+      }
+
+      // Mettre à jour le résultat de l'échange
+      updateRoseExchangeResult() {
+        const rosesToExchange = parseInt(this.elements.roseExchangeAmount.value) || 1;
+        const turnsToAdd = rosesToExchange * GAME_CONFIG.ROSE_TO_TURNS_RATE;
+        
+        this.elements.exchangeTurns.textContent = turnsToAdd;
+      }
+
+      // Confirmer l'échange de roses
+      confirmRoseExchange() {
+        const rosesToExchange = parseInt(this.elements.roseExchangeAmount.value) || 1;
+        
+        if (rosesToExchange <= 0 || rosesToExchange > this.state.currentExchangeMaxRoses) {
+          this.elements.message.textContent = `❌ Nombre de roses invalide !`;
+          return;
+        }
+        
+        // Calculer le nombre de tours à ajouter
+        const turnsToAdd = rosesToExchange * GAME_CONFIG.ROSE_TO_TURNS_RATE;
+        
+        // Réduire les roses de la dette la plus récente
+        const userDebts = this.state.debts.filter(debt => debt.username === this.state.currentExchangeUser);
+        const sortedDebts = userDebts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        let remainingRoses = rosesToExchange;
+        
+        for (const debt of sortedDebts) {
+          if (remainingRoses <= 0) break;
+          
+          if (debt.totalRoses > 0) {
+            const rosesToDeduct = Math.min(remainingRoses, debt.totalRoses);
+            debt.totalRoses -= rosesToDeduct;
+            remainingRoses -= rosesToDeduct;
+          }
+        }
+        
+        // Supprimer les dettes avec 0 rose
+        this.cleanupZeroRosesDebts();
+        
+        // Ajouter les tours à la file d'attente
+        const queueItem = {
+          username: this.state.currentExchangeUser,
+          turns: turnsToAdd,
+          timestamp: Date.now()
+        };
+        this.state.spinQueue.push(queueItem);
+        
+        // Ajouter les tours à l'utilisateur
+        if (!this.state.userTurns[this.state.currentExchangeUser]) {
+          this.state.userTurns[this.state.currentExchangeUser] = 0;
+        }
+        this.state.userTurns[this.state.currentExchangeUser] += turnsToAdd;
+        
+        this.updateQueueIndicator();
+        this.updateDebtsTable();
+        this.updateDebtsPanel();
+        this.saveGame(true);
+        
+        this.elements.message.textContent = `🔄 ${this.state.currentExchangeUser} a échangé ${rosesToExchange} rose${rosesToExchange > 1 ? 's' : ''} contre ${turnsToAdd} tour${turnsToAdd > 1 ? 's' : ''} !`;
+        
+        // Masquer l'interface d'échange
+        this.hideRoseExchange();
+        
+        if (!this.state.isProcessingQueue && this.state.spinQueue.length > 0) {
+          this.processQueue();
+        }
+      }
+
+      // Masquer l'interface d'échange de roses
+      hideRoseExchange() {
+        this.elements.roseExchangeContainer.style.display = 'none';
+        this.state.currentExchangeUser = null;
+        this.state.currentExchangeMaxRoses = 0;
+      }
+
+      // Supprimer les dettes avec 0 rose
+      cleanupZeroRosesDebts() {
+        this.state.debts = this.state.debts.filter(debt => debt.totalRoses > 0);
+      }
+
+      // Relancer le double de tours pour le dernier utilisateur
+      doubleTurnsForUser() {
+        const lastUserDebt = this.getLastUserDebt();
+        
+        if (!lastUserDebt || lastUserDebt.totalRoses <= 0) {
+          this.elements.message.textContent = '❌ Aucune rose disponible pour relancer des tours !';
+          return;
+        }
+        
+        const doubleTurns = lastUserDebt.totalRoses * GAME_CONFIG.ROSE_TO_TURNS_RATE;
+        
+        // Ajouter les tours à la file d'attente
+        const queueItem = {
+          username: lastUserDebt.username,
+          turns: doubleTurns,
+          timestamp: Date.now()
+        };
+        this.state.spinQueue.push(queueItem);
+        
+        // Ajouter les tours à l'utilisateur
+        if (!this.state.userTurns[lastUserDebt.username]) {
+          this.state.userTurns[lastUserDebt.username] = 0;
+        }
+        this.state.userTurns[lastUserDebt.username] += doubleTurns;
+        
+        this.updateQueueIndicator();
+        this.elements.message.textContent = `🔄 ${doubleTurns} tours ajoutés pour ${lastUserDebt.username} (${lastUserDebt.totalRoses} roses converties) !`;
+        
+        if (!this.state.isProcessingQueue && this.state.spinQueue.length > 0) {
+          this.processQueue();
+        }
+      }
+
+      // Méthodes pour gérer le solde personnel
+      addToBalance() {
+        const amount = parseInt(this.elements.balanceAmount.value) || 1;
+        this.state.myBalance += amount;
+        this.updateMyBalanceDisplay();
+        this.saveGame(true);
+        this.elements.message.textContent = `💰 ${amount} rose${amount > 1 ? 's' : ''} ajoutée${amount > 1 ? 's' : ''} à votre solde !`;
+      }
+
+      subtractFromBalance() {
+        const amount = parseInt(this.elements.balanceAmount.value) || 1;
+        this.state.myBalance -= amount;
+        this.updateMyBalanceDisplay();
+        this.saveGame(true);
+        this.elements.message.textContent = `💰 ${amount} rose${amount > 1 ? 's' : ''} retirée${amount > 1 ? 's' : ''} de votre solde !`;
+      }
+
+      resetBalance() {
+        if (confirm('Voulez-vous vraiment réinitialiser votre solde à 0 ?')) {
+          this.state.myBalance = 0;
+          this.updateMyBalanceDisplay();
+          this.saveGame(true);
+          this.elements.message.textContent = '💰 Votre solde a été réinitialisé à 0 !';
+        }
+      }
+
+      toggleMyBalancePanel() {
+        this.elements.myBalancePanel.classList.toggle('hidden');
+        if (!this.elements.myBalancePanel.classList.contains('hidden')) {
+          this.updateMyBalanceDisplay();
+        }
+      }
+
+      // Méthodes de gestion des dettes
+      addDebt(username, userId, amount, reason, totalRoses = 0) {
+        const debt = {
+          id: Date.now().toString(),
+          username,
+          userId,
+          amount,
+          reason,
+          totalRoses,
+          date: new Date().toLocaleString('fr-FR')
+        };
+        
+        this.state.debts.push(debt);
+        this.updateDebtsTable();
+        this.updateDebtsPanel();
+        this.updateLastUserDisplay(); // Mettre à jour l'affichage du dernier utilisateur
+        this.saveGame(true);
+        
+        return debt;
+      }
+
+      addDebtManually() {
+        const username = prompt('Nom de l\'utilisateur:');
+        if (!username) return;
+        
+        const totalRoses = parseFloat(prompt('Nombre de roses gagnées:') || 0);
+        if (isNaN(totalRoses) || totalRoses <= 0) {
+          alert('Nombre de roses invalide');
+          return;
+        }
+        
+        const reason = prompt('Raison de la dette:') || 'Dette manuelle';
+        
+        this.addDebt(username, 'manual', 0, reason, totalRoses);
+        this.elements.message.textContent = `✅ Dette de ${totalRoses} roses ajoutée pour ${username}`;
+      }
+
+      markUserDebtAsPaid(username) {
+        // MODIFICATION: Supprimer la confirmation popup et marquer directement comme payé
+        // Récupérer toutes les dettes de cet utilisateur avant de les supprimer
+        const userDebts = this.state.debts.filter(debt => debt.username === username);
+        
+        // Calculer le total des roses à retirer du solde
+        let totalRosesToPay = 0;
+        userDebts.forEach(debt => {
+          totalRosesToPay += debt.totalRoses || 0;
+        });
+        
+        // Retirer les roses du solde personnel
+        this.state.myBalance -= totalRosesToPay;
+        this.updateMyBalanceDisplay();
+        
+        // Ajouter les dettes à l'historique des dettes payées
+        userDebts.forEach(debt => {
+          this.state.paidDebts.push({
+            ...debt,
+            paidDate: new Date().toLocaleString('fr-FR')
+          });
+        });
+        
+        // Supprimer toutes les dettes de cet utilisateur
+        this.state.debts = this.state.debts.filter(debt => debt.username !== username);
+        
+        this.elements.message.textContent = `✅ Toutes les dettes de ${username} ont été marquées comme payées ! ${totalRosesToPay} roses ont été retirées de votre solde.`;
+        this.updateDebtsTable();
+        this.updateDebtsPanel();
+        this.updateLastUserDisplay(); // Mettre à jour l'affichage du dernier utilisateur
+        this.updatePaidDebtsCounter(); // Mettre à jour le compteur
+        this.saveGame(true);
+      }
+
+      // Réinitialiser toutes les dettes
+      resetDebts() {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment réinitialiser TOUTES les dettes ?\n\nCette action est IRRÉVERSIBLE !')) {
+          this.state.debts = [];
+          this.updateDebtsTable();
+          this.updateDebtsPanel();
+          this.updateLastUserDisplay(); // Mettre à jour l'affichage du dernier utilisateur
+          this.saveGame(true);
+          this.elements.message.textContent = '🗑️ Toutes les dettes ont été réinitialisées !';
+        }
+      }
+
+      toggleDebtsTable() {
+        const debtsHistory = document.querySelector('.debts-history');
+        debtsHistory.style.display = debtsHistory.style.display === 'none' ? 'block' : 'none';
+      }
+
+      // Afficher/masquer le panneau des dettes déplaçable
+      toggleDebtsPanel() {
+        this.elements.debtsPanel.classList.toggle('hidden');
+        if (!this.elements.debtsPanel.classList.contains('hidden')) {
+          this.updateDebtsPanel();
+        }
+      }
+
+      // Méthodes utilitaires
+      removeWinClasses() {
+        document.querySelectorAll('.symbol-wheel').forEach(symbol => {
+          symbol.classList.remove('winning');
+          symbol.classList.remove('partial-win');
+          symbol.classList.remove('spinning');
+          symbol.classList.remove('fast-spin');
+        });
+      }
+
+      highlightMatchingSymbols() {
+        const symbolGroups = {};
+        
+        this.state.symbols.forEach((symbolIndex, position) => {
+          // Pour les images spéciales, on les traite comme des symboles uniques
+          let symbolName;
+          if (symbolIndex < 0) {
+            const specialIndex = Math.abs(symbolIndex) - 1;
+            symbolName = `special${specialIndex + 1}`;
+          } else {
+            symbolName = this.symbols.getSymbolData(symbolIndex).name;
+          }
+          
+          if (!symbolGroups[symbolName]) {
+            symbolGroups[symbolName] = [];
+          }
+          symbolGroups[symbolName].push(position);
+        });
+        
+        document.querySelectorAll('.symbol-wheel').forEach(symbol => {
+          symbol.classList.remove('partial-win');
+        });
+        
+        Object.values(symbolGroups).forEach(positions => {
+          if (positions.length >= 4) {
+            positions.forEach(position => {
+              const symbolElement = document.getElementById(`symbol${position + 1}`);
+              if (symbolElement) {
+                symbolElement.classList.add('partial-win');
+              }
+            });
+          }
+        });
+      }
+
+      handleRoseBonus() {
+        this.state.bonusCounter++;
+        
+        if (this.state.bonusCounter % GAME_CONFIG.BONUS_INTERVAL === 0) {
+          this.state.rosesCount += 1;
+          this.state.jackpotAmount += 1;
+          this.elements.message.textContent = `🌹 +1 rose ajoutée au bonus !`;
+          
+          this.updateStats();
+          this.updateJackpotProgress();
+        }
+      }
+
+      // Nouvelle méthode pour gérer l'ajout de roses au solde personnel tous les 2 tours
+      handleRoseAddition() {
+        this.state.roseCounter++;
+        
+        if (this.state.roseCounter % GAME_CONFIG.ROSE_ADD_INTERVAL === 0) {
+          this.state.myBalance += 1;
+          this.updateMyBalanceDisplay();
+          this.elements.message.textContent = `💰 +1 rose ajoutée à votre solde tous les ${GAME_CONFIG.ROSE_ADD_INTERVAL} tours !`;
+          
+          this.saveGame(false);
+        }
+      }
+
+      // Méthode pour gérer l'ajout de roses au jackpot tous les 50 tours
+      handleJackpotRoseAddition() {
+        this.state.jackpotRoseCounter++;
+        
+        if (this.state.jackpotRoseCounter % GAME_CONFIG.JACKPOT_ROSE_INTERVAL === 0) {
+          this.state.jackpotAmount += 1;
+          this.elements.message.textContent = `🌹 +1 rose ajoutée au jackpot tous les ${GAME_CONFIG.JACKPOT_ROSE_INTERVAL} tours !`;
+          
+          this.updateJackpotProgress();
+        }
+      }
+
+      calculatePartialGain(symbolCount) {
+        return GAME_CONFIG.PARTIAL_GAINS[symbolCount] || 0;
+      }
+
+      // Méthodes de contrôle
+      toggleSpeedMode() {
+        this.state.isFastMode = !this.state.isFastMode;
+        
+        const speedBtn = document.getElementById('menuSpeed');
+        if (this.state.isFastMode) {
+          speedBtn.classList.add('active');
+          speedBtn.innerHTML = '⏩ Ralenti';
+          document.getElementById('speedIndicator').style.display = 'block';
+          this.elements.message.textContent = 'Mode accéléré activé !';
+        } else {
+          speedBtn.classList.remove('active');
+          speedBtn.innerHTML = '⏩ Accélérer';
+          document.getElementById('speedIndicator').style.display = 'none';
+          this.elements.message.textContent = 'Mode normal activé';
+        }
+      }
+
+      toggleSuperSpeedMode() {
+        this.state.isSuperSpeedMode = !this.state.isSuperSpeedMode;
+        
+        const superSpeedBtn = document.getElementById('menuSuperSpeed');
+        if (this.state.isSuperSpeedMode) {
+          superSpeedBtn.classList.add('active');
+          this.state.isFastMode = false;
+          document.getElementById('menuSpeed').classList.remove('active');
+          document.getElementById('speedIndicator').style.display = 'none';
+          this.elements.message.textContent = 'Mode super vitesse activé !';
+        } else {
+          superSpeedBtn.classList.remove('active');
+          this.elements.message.textContent = 'Mode normal activé';
+        }
+      }
+
+      toggleUltraSpeedMode() {
+        this.state.isUltraSpeedMode = !this.state.isUltraSpeedMode;
+        
+        const ultraSpeedBtn = document.getElementById('menuUltraSpeed');
+        if (this.state.isUltraSpeedMode) {
+          ultraSpeedBtn.classList.add('active');
+          this.state.isFastMode = false;
+          this.state.isSuperSpeedMode = false;
+          document.getElementById('menuSuperSpeed').classList.remove('active');
+          document.getElementById('menuSpeed').classList.remove('active');
+          document.getElementById('speedIndicator').style.display = 'none';
+          this.elements.message.textContent = 'Mode ultra vitesse activé !';
+        } else {
+          ultraSpeedBtn.classList.remove('active');
+          this.elements.message.textContent = 'Mode normal activé';
+        }
+      }
+
+      modifyJackpot(amount) {
+        this.state.jackpotAmount = amount;
+        this.updateJackpotProgress();
+        this.updateStats();
+        this.elements.message.textContent = `Bonus modifié à ${this.state.jackpotAmount} roses !`;
+      }
+
+      setJackpotManually() {
+        const newAmount = prompt('Entrez le nouveau montant du bonus :', this.state.jackpotAmount);
+        if (newAmount !== null) {
+          const amount = parseInt(newAmount);
+          if (!isNaN(amount) && amount >= 0) {
+            this.modifyJackpot(amount);
+          } else {
+            this.elements.message.textContent = 'Veuillez entrer un nombre valide !';
+          }
+        }
+      }
+
+      resetRewards() {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment réinitialiser TOUTES vos récompenses ?\n\nCela supprimera :\n• ' + this.state.gainsHistory.length + ' jackpots dans l\'historique\n• L\'historique complet des gains\n\nCette action est IRRÉVERSIBLE !')) {
+          this.state.gainsHistory = [];
+          this.elements.message.textContent = '🔄 Toutes les récompenses ont été réinitialisées !';
+          this.saveGame(true);
+        }
+      }
+
+      clearSave() {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' jackpots dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• ' + this.state.paidDebts.length + ' dettes payées\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n\nCette action est IRRÉVERSIBLE !')) {
+          this.storage.clearSave();
+          
+          // Réinitialiser toutes les variables
+          this.state.attempts = 0;
+          this.state.currentGameAttempts = 0;
+          this.state.rosesCount = 0;
+          this.state.jackpotAmount = GAME_CONFIG.INITIAL_JACKPOT;
+          this.state.bonusCounter = 0;
+          this.state.gainsHistory = [];
+          this.state.remainingTurns = 0;
+          this.state.spinQueue = []; // Réinitialiser la file d'attente
+          this.state.lastUsername = "Personne";
+          this.state.debts = [];
+          this.state.paidDebts = []; // Réinitialiser les dettes payées
+          this.state.currentDebtSearch = '';
+          this.state.userTurns = {}; // Réinitialiser les tours par utilisateur
+          this.state.debtSort = 'amount-desc';
+          this.state.debtFilter = '';
+          this.state.sortByAmount = false;
+          this.state.sortByDate = false;
+          this.state.roseCounter = 0; // Réinitialiser le compteur de roses
+          this.state.jackpotRoseCounter = 0; // Réinitialiser le compteur de roses du jackpot
+          this.state.myBalance = 0; // Réinitialiser le solde personnel
+          
+          // Réinitialiser l'affichage
+          this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
+          this.updateDisplay();
+          this.updateStats();
+          this.updateJackpotProgress();
+          this.updateQueueIndicator();
+          this.updateLastUserDisplay();
+          this.updateDebtsTable();
+          this.updateDebtsPanel();
+          this.updatePaidDebtsCounter(); // Mettre à jour le compteur
+          this.updateMyBalanceDisplay(); // Mettre à jour l'affichage du solde
+          this.removeWinClasses();
+          
+          this.elements.message.textContent = '🗑️ Toutes les données ont été effacées ! Vous repartez de zéro.';
+        }
+      }
+
+      // Méthodes de sauvegarde
+      saveGame(showNotification = true) {
+        // Supprimer les dettes avec 0 rose avant sauvegarde
+        this.cleanupZeroRosesDebts();
+        
+        const saveData = {
+          attempts: this.state.attempts,
+          currentGameAttempts: this.state.currentGameAttempts,
+          rosesCount: this.state.rosesCount,
+          jackpotAmount: this.state.jackpotAmount,
+          bonusCounter: this.state.bonusCounter,
+          gainsHistory: this.state.gainsHistory,
+          lastUsername: this.state.lastUsername,
+          debts: this.state.debts, // Sauvegarder uniquement les dettes
+          paidDebts: this.state.paidDebts, // Sauvegarder les dettes payées
+          userTurns: this.state.userTurns, // Sauvegarder les tours par utilisateur
+          roseCounter: this.state.roseCounter, // Sauvegarder le compteur de roses
+          jackpotRoseCounter: this.state.jackpotRoseCounter, // Sauvegarder le compteur de roses du jackpot
+          myBalance: this.state.myBalance // Sauvegarder le solde personnel
+        };
+        
+        return this.storage.saveGame(saveData, showNotification);
+      }
+
+      loadGame() {
+        const savedData = this.storage.loadGame();
+        
+        if (savedData) {
+          this.state.attempts = savedData.attempts || 0;
+          this.state.currentGameAttempts = savedData.currentGameAttempts || 0;
+          this.state.rosesCount = savedData.rosesCount || 0;
+          this.state.jackpotAmount = savedData.jackpotAmount || GAME_CONFIG.INITIAL_JACKPOT;
+          this.state.bonusCounter = savedData.bonusCounter || 0;
+          this.state.gainsHistory = savedData.gainsHistory || [];
+          this.state.lastUsername = savedData.lastUsername || "Personne";
+          this.state.debts = savedData.debts || []; // Charger les dettes
+          this.state.paidDebts = savedData.paidDebts || []; // Charger les dettes payées
+          this.state.userTurns = savedData.userTurns || {}; // Charger les tours par utilisateur
+          this.state.roseCounter = savedData.roseCounter || 0; // Charger le compteur de roses
+          this.state.jackpotRoseCounter = savedData.jackpotRoseCounter || 0; // Charger le compteur de roses du jackpot
+          this.state.myBalance = savedData.myBalance || 0; // Charger le solde personnel
+          
+          // CORRECTION : Réinitialiser les compteurs de tours restants
+          this.state.remainingTurns = 0;
+          this.state.spinQueue = []; // Réinitialiser la file d'attente
+          
+          // Supprimer les dettes avec 0 rose
+          this.cleanupZeroRosesDebts();
+          
+          this.updateLastUserDisplay();
+          this.updateDebtsTable();
+          this.updateDebtsPanel();
+          this.updatePaidDebtsCounter(); // Mettre à jour le compteur
+          this.updateMyBalanceDisplay(); // Mettre à jour l'affichage du solde
+          this.updateQueueIndicator(); // Mettre à jour l'affichage de la file d'attente
+          this.updateJackpotProgress(); // Mettre à jour la barre de progression
+          
+          setTimeout(() => {
+            this.elements.message.textContent = `Bon retour ! Vous avez ${this.state.rosesCount} roses totales et ${this.state.gainsHistory.length} jackpot(s) gagné(s) !`;
+          }, 500);
+          
+          return true;
+        }
+        
+        return false;
+      }
+
+      // Méthodes WebSocket
+      handleTikFinityAction(action) {
+        this.state.lastUsername = action.username || 'Anonyme';
+        this.updateLastUserDisplay();
+        
+        // Ajouter les tours à la file d'attente ordonnée
+        const queueItem = {
+          username: this.state.lastUsername,
+          turns: 0,
+          timestamp: Date.now()
+        };
+        
+        switch(action.actionId) {
+          case "single_spin":
+            queueItem.turns = 1;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 1 tour via TikFinity !`;
+            break;
+          case "multi_spin_10":
+            queueItem.turns = 10;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 10 tours via TikFinity !`;
+            break;
+          case "multi_spin_30":
+            queueItem.turns = 30;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 30 tours via TikFinity !`;
+            break;
+          case "increase_jackpot":
+            this.modifyJackpot(this.state.jackpotAmount + 100);
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a augmenté le bonus de 100 roses !`;
+            break;
+          case "decrease_jackpot":
+            this.modifyJackpot(Math.max(0, this.state.jackpotAmount - 100));
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a diminué le bonus de 100 roses !`;
+            break;
+          case "reset_jackpot":
+            this.initGame();
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a réinitialisé le bonus !`;
+            break;
+        }
+        
+        if (queueItem.turns > 0) {
+          this.state.spinQueue.push(queueItem);
+          
+          // Ajouter les tours à l'utilisateur
+          if (!this.state.userTurns[this.state.lastUsername]) {
+            this.state.userTurns[this.state.lastUsername] = 0;
+          }
+          this.state.userTurns[this.state.lastUsername] += queueItem.turns;
+          
+          this.updateQueueIndicator();
+          
+          if (!this.state.isProcessingQueue && this.state.spinQueue.length > 0) {
+            this.processQueue();
+          }
+        }
+      }
+
+      showTemporaryMessage(text) {
+        const originalMessage = this.elements.message.textContent;
+        this.elements.message.textContent = text;
+        
+        setTimeout(() => {
+          this.elements.message.textContent = originalMessage;
+        }, 5000);
+      }
+
+      // Méthodes audio
+      playSymbolSound() {
+        // Implémentation simplifiée - à compléter avec les vrais fichiers audio
+        console.log('Jouer le son des symboles');
+      }
+
+      playSpinSound() {
+        // Implémentation simplifiée - à compléter avec les vrais fichiers audio
+        console.log('Jouer le son de rotation');
+      }
+
+      showReward() {
+        // Implémentation de la fenêtre de récompense
+        const winningSymbol = this.symbols.getSymbolData(this.state.lastWinningSymbol);
+        const symbolValue = this.symbols.getSymbolValue(this.state.lastWinningSymbol);
+        const totalGain = this.state.jackpotAmount + symbolValue;
+        
+        const rewardAnimation = document.createElement('div');
+        rewardAnimation.className = 'reward-animation';
+        rewardAnimation.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 10000;
+        `;
+        
+        rewardAnimation.innerHTML = `
+          <div style="background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); padding: 30px; border-radius: 20px; text-align: center; color: white; max-width: 400px;">
+            <h2 style="margin-bottom: 20px;">🎉 JACKPOT GAGNÉ !</h2>
+            <img src="${winningSymbol.image}" alt="${winningSymbol.name}" style="width: 100px; height: 100px; margin: 20px auto;">
+            <p style="margin: 10px 0;">${this.state.lastUsername} a remporté ${totalGain} roses !</p>
+            <p style="margin: 10px 0;">Symbole: ${winningSymbol.name} (${symbolValue} roses)</p>
+            <p style="margin: 10px 0;">Jackpot: ${this.state.jackpotAmount} roses</p>
+            <button style="background: white; color: black; border: none; padding: 10px 20px; border-radius: 10px; margin-top: 20px; cursor: pointer;">CONTINUER</button>
+          </div>
+        `;
+        
+        document.body.appendChild(rewardAnimation);
+        
+        const closeButton = rewardAnimation.querySelector('button');
+        closeButton.addEventListener('click', () => {
+          document.body.removeChild(rewardAnimation);
+        });
+        
+        setTimeout(() => {
+          if (document.body.contains(rewardAnimation)) {
+            document.body.removeChild(rewardAnimation);
+          }
+        }, 7000);
+      }
+
+      // Initialisation
+      start() {
+        const hasLoadedSave = this.loadGame();
+        
+        this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
+        this.updateDisplay();
+        this.updateStats();
+        this.updateJackpotProgress();
+        this.updateQueueIndicator();
+        this.updateLastUserDisplay();
+        this.updateDebtsTable();
+        this.updateDebtsPanel();
+        this.updatePaidDebtsCounter(); // Mettre à jour le compteur
+        this.updateMyBalanceDisplay(); // Mettre à jour l'affichage du solde
+        this.removeWinClasses();
+        
+        this.symbols.preloadImages();
+        this.websocket.connect();
+        
+        if (!hasLoadedSave) {
+          this.elements.message.textContent = `Bienvenue ! Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques pour remporter le bonus !`;
+        }
+      }
+    }
+
+    // =============================================
+    // INITIALISATION DU JEU
+    // =============================================
+    window.addEventListener('load', () => {
+      const game = new JackpotGame();
+      window.jackpotGame = game; // Exposer le jeu globalement pour le débogage
+      game.start();
+    });
+  </script>
+</body>
+</html>
