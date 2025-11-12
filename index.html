@@ -1273,32 +1273,62 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
-    /* NOUVEAU: Conteneur pour les roses bonus */
-    .bonus-container {
+    /* NOUVEAU: Conteneur pour les roses bonus et dettes côte à côte */
+    .bonus-debts-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
       margin: 25px auto;
-      max-width: 600px;
+      max-width: 1200px;
+      flex-wrap: wrap;
+    }
+
+    .bonus-container, .debts-container {
+      flex: 1;
+      min-width: 300px;
       background: rgba(0, 0, 0, 0.5);
       border-radius: 15px;
       padding: 20px;
-      border: 2px solid var(--primary-color);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
-    .bonus-container h3 {
-      color: var(--primary-color);
+    .bonus-container {
+      border: 2px solid var(--primary-color);
+    }
+
+    .debts-container {
+      border: 2px solid var(--danger-color);
+    }
+
+    .bonus-container h3, .debts-container h3 {
       margin-bottom: 15px;
       font-size: 1.5em;
       text-transform: uppercase;
     }
 
-    .bonus-count {
+    .bonus-container h3 {
+      color: var(--primary-color);
+    }
+
+    .debts-container h3 {
+      color: var(--danger-color);
+    }
+
+    .bonus-count, .debts-count {
       font-size: 3em;
       font-weight: bold;
       margin: 10px 0;
+    }
+
+    .bonus-count {
       color: var(--primary-color);
+    }
+
+    .debts-count {
+      color: var(--danger-color);
     }
 
     /* NOUVEAU: Conteneur pour les roses payées */
@@ -1414,7 +1444,11 @@
         align-items: flex-start;
       }
 
-      .bonus-container, .paid-roses-container {
+      .bonus-debts-container {
+        flex-direction: column;
+      }
+
+      .bonus-container, .debts-container, .paid-roses-container {
         min-width: auto;
       }
     }
@@ -1560,11 +1594,19 @@
       </div>
     </div>
 
-    <!-- NOUVEAU: Conteneur pour les roses bonus -->
-    <div class="bonus-container">
-      <h3>🎁 Roses Bonus</h3>
-      <div class="bonus-count" id="bonusRosesCount">0</div>
-      <div>Roses gagnées en bonus</div>
+    <!-- NOUVEAU: Conteneurs pour les roses bonus et dettes côte à côte -->
+    <div class="bonus-debts-container">
+      <div class="bonus-container">
+        <h3>🎁 Roses Bonus</h3>
+        <div class="bonus-count" id="bonusRosesCount">0</div>
+        <div>Roses gagnées en bonus</div>
+      </div>
+      
+      <div class="debts-container">
+        <h3>📋 Dettes en cours</h3>
+        <div class="debts-count" id="debtsCount">0</div>
+        <div>Roses dues par les joueurs</div>
+      </div>
     </div>
 
     <!-- NOUVEAU: Conteneur pour les roses payées -->
@@ -1724,6 +1766,12 @@
         7: 2000,
         8: 899,
         9: 2988
+      },
+      // NOUVEAU: Configuration des bonus par nombre de symboles alignés
+      BONUS_PERCENTAGES: {
+        4: 0.25,  // 25% du bonus pour 4 symboles
+        5: 0.5,   // 50% du bonus pour 5 symboles
+        6: 1      // 100% du bonus pour 6 symboles
       }
     };
 
@@ -2240,6 +2288,7 @@
           nextBonus: document.getElementById('nextBonus'),
           debtsTableContainer: document.getElementById('debtsTableContainer'),
           bonusRosesCount: document.getElementById('bonusRosesCount'),
+          debtsCount: document.getElementById('debtsCount'),
           paidRosesCount: document.getElementById('paidRosesCount'),
           queueDisplay: document.getElementById('queueDisplay'),
           menuToggle: document.getElementById('menuToggle'),
@@ -2537,6 +2586,7 @@
         this.updateQueueIndicator();
         this.updateLastUserDisplay();
         this.updateBonusRosesCounter();
+        this.updateDebtsCounter();
         this.updatePaidRosesCounter();
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
@@ -2658,24 +2708,49 @@
             this.highlightMatchingSymbols();
             
             if (matchingInfo.count >= 4) {
+              // NOUVEAU: Calcul du gain bonus basé sur le nombre de symboles alignés
+              const bonusPercentage = GAME_CONFIG.BONUS_PERCENTAGES[matchingInfo.count] || 0;
+              const bonusGain = Math.floor(this.state.bonusRoses * bonusPercentage);
+              
+              // Ajouter le gain bonus aux roses totales
+              if (bonusGain > 0) {
+                this.state.rosesCount += bonusGain;
+                this.state.bonusRoses -= bonusGain;
+                
+                this.addDebt(
+                  this.state.lastUsername,
+                  'auto',
+                  bonusGain * GAME_CONFIG.COINS_PER_ROSE,
+                  `${matchingInfo.count} symboles identiques (Bonus: ${bonusPercentage * 100}%)`,
+                  bonusGain
+                );
+                
+                this.elements.message.textContent = `🎉 ${matchingInfo.count} symboles identiques ! ${this.state.lastUsername} gagne ${bonusGain} roses de bonus ! 🎉`;
+                
+                this.updateBonusRosesCounter();
+              }
+              
+              // Gain partiel normal
               const partialGainAmount = this.calculatePartialGain(matchingInfo.count);
               
-              this.state.rosesCount += partialGainAmount;
-              this.state.jackpotAmount += partialGainAmount;
-              
-              this.addDebt(
-                this.state.lastUsername,
-                'auto',
-                partialGainAmount * GAME_CONFIG.COINS_PER_ROSE,
-                `${matchingInfo.count} symboles identiques`,
-                partialGainAmount
-              );
+              if (partialGainAmount > 0) {
+                this.state.rosesCount += partialGainAmount;
+                this.state.jackpotAmount += partialGainAmount;
+                
+                this.addDebt(
+                  this.state.lastUsername,
+                  'auto',
+                  partialGainAmount * GAME_CONFIG.COINS_PER_ROSE,
+                  `${matchingInfo.count} symboles identiques`,
+                  partialGainAmount
+                );
+              }
               
               this.state.gainsHistory.push({
                 type: 'partial',
                 tours: this.state.currentGameAttempts,
                 symbolCount: matchingInfo.count,
-                roses: partialGainAmount,
+                roses: partialGainAmount + bonusGain,
                 username: this.state.lastUsername,
                 date: new Date().toLocaleString('fr-FR')
               });
@@ -2772,7 +2847,7 @@
         
         this.elements.message.textContent = `🎉 JACKPOT ! ${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s ! 🎉`;
         
-        // Ajouter le gain aux roses bonus au lieu du jackpot
+        // NOUVEAU: Ajouter le gain aux roses bonus au lieu du jackpot
         this.state.bonusRoses += totalGain;
         
         this.addDebt(
@@ -2895,6 +2970,14 @@
         this.elements.bonusRosesCount.textContent = this.state.bonusRoses;
       }
 
+      updateDebtsCounter() {
+        let totalDebts = 0;
+        this.state.debts.forEach(debt => {
+          totalDebts += debt.totalRoses || 0;
+        });
+        this.elements.debtsCount.textContent = totalDebts;
+      }
+
       updatePaidRosesCounter() {
         this.elements.paidRosesCount.textContent = this.state.paidRoses;
       }
@@ -3003,6 +3086,8 @@
             this.showRoseExchange(username);
           });
         });
+        
+        this.updateDebtsCounter();
       }
 
       updateDebtsPanel() {
@@ -3080,6 +3165,7 @@
         });
         
         this.updateDoubleTurnsButton();
+        this.updateDebtsCounter();
       }
 
       updateDoubleTurnsButton() {
@@ -3228,6 +3314,7 @@
 
       cleanupZeroRosesDebts() {
         this.state.debts = this.state.debts.filter(debt => debt.totalRoses > 0);
+        this.updateDebtsCounter();
       }
 
       doubleTurnsForUser() {
@@ -3577,6 +3664,7 @@
           this.updateDebtsTable();
           this.updateDebtsPanel();
           this.updateBonusRosesCounter();
+          this.updateDebtsCounter();
           this.updatePaidRosesCounter();
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
@@ -3638,6 +3726,7 @@
           this.updateDebtsTable();
           this.updateDebtsPanel();
           this.updateBonusRosesCounter();
+          this.updateDebtsCounter();
           this.updatePaidRosesCounter();
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
@@ -3782,6 +3871,7 @@
         this.updateDebtsTable();
         this.updateDebtsPanel();
         this.updateBonusRosesCounter();
+        this.updateDebtsCounter();
         this.updatePaidRosesCounter();
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
