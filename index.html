@@ -2190,6 +2190,11 @@
           positions: maxPositions
         };
       }
+
+      // Nouvelle méthode pour obtenir la valeur du symbole gagnant
+      getWinningSymbolValue(symbolIndex) {
+        return this.getSymbolValue(symbolIndex);
+      }
     }
 
     // =============================================
@@ -3152,12 +3157,12 @@
       async winGame() {
         this.state.winAnimationActive = true;
         const winningSymbol = this.symbols.getSymbolData(this.state.lastWinningSymbol);
-        const symbolValue = this.symbols.getSymbolValue(this.state.lastWinningSymbol);
+        const symbolValue = this.symbols.getWinningSymbolValue(this.state.lastWinningSymbol);
         
-        // Calcul du gain basé sur le nombre de symboles alignés
-        const totalGain = GAME_CONFIG.SYMBOL_GAINS[6] || 200;
+        // Calcul du gain basé sur la valeur du symbole
+        const totalGain = symbolValue;
         
-        this.elements.message.textContent = `🎉 GAIN ! ${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s ! 🎉`;
+        this.elements.message.textContent = `🎉 GAIN ! ${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s et gagne ${totalGain} roses ! 🎉`;
         
         this.state.bonusRoses = 0;
         
@@ -3195,7 +3200,7 @@
         
         document.getElementById('winMessage').textContent = `${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s !`;
         document.getElementById('attemptsResult').textContent = `Nombre de tours dans cette partie : ${this.state.currentGameAttempts}`;
-        document.getElementById('winningSymbol').textContent = `Symbole gagnant : ${winningSymbol.name}`;
+        document.getElementById('winningSymbol').textContent = `Symbole gagnant : ${winningSymbol.name} (Valeur: ${symbolValue} roses)`;
         document.getElementById('jackpotWin').textContent = `+ ${totalGain} 🌹`;
         
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -4156,8 +4161,8 @@
 
       showReward() {
         const winningSymbol = this.symbols.getSymbolData(this.state.lastWinningSymbol);
-        const symbolValue = this.symbols.getSymbolValue(this.state.lastWinningSymbol);
-        const totalGain = GAME_CONFIG.SYMBOL_GAINS[6] || 200;
+        const symbolValue = this.symbols.getWinningSymbolValue(this.state.lastWinningSymbol);
+        const totalGain = symbolValue;
         
         const rewardAnimation = document.createElement('div');
         rewardAnimation.className = 'reward-animation';
@@ -4179,7 +4184,7 @@
             <h2 style="margin-bottom: 20px;">🎉 GAIN GAGNÉ !</h2>
             <img src="${winningSymbol.image}" alt="${winningSymbol.name}" style="width: 100px; height: 100px; margin: 20px auto;">
             <p style="margin: 10px 0;">${this.state.lastUsername} a remporté ${totalGain} roses !</p>
-            <p style="margin: 10px 0;">Symbole: ${winningSymbol.name}</p>
+            <p style="margin: 10px 0;">Symbole: ${winningSymbol.name} (Valeur: ${symbolValue} roses)</p>
             <button style="background: white; color: black; border: none; padding: 10px 20px; border-radius: 10px; margin-top: 20px; cursor: pointer;">CONTINUER</button>
           </div>
         `;
