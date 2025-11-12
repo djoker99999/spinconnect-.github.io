@@ -1274,7 +1274,7 @@
     }
 
     /* NOUVEAU: Conteneur pour les roses bonus et dettes côte à côte */
-    .bonus-debts-container {
+    .stats-container {
       display: flex;
       justify-content: space-between;
       gap: 20px;
@@ -1283,9 +1283,9 @@
       flex-wrap: wrap;
     }
 
-    .bonus-container, .debts-container {
+    .stats-item {
       flex: 1;
-      min-width: 300px;
+      min-width: 250px;
       background: rgba(0, 0, 0, 0.5);
       border-radius: 15px;
       padding: 20px;
@@ -1295,29 +1295,37 @@
       justify-content: center;
     }
 
-    .bonus-container {
+    .bonus-stats {
       border: 2px solid var(--primary-color);
     }
 
-    .debts-container {
+    .debts-stats {
       border: 2px solid var(--danger-color);
     }
 
-    .bonus-container h3, .debts-container h3 {
+    .paid-stats {
+      border: 2px solid var(--success-color);
+    }
+
+    .stats-item h3 {
       margin-bottom: 15px;
       font-size: 1.5em;
       text-transform: uppercase;
     }
 
-    .bonus-container h3 {
+    .bonus-stats h3 {
       color: var(--primary-color);
     }
 
-    .debts-container h3 {
+    .debts-stats h3 {
       color: var(--danger-color);
     }
 
-    .bonus-count, .debts-count {
+    .paid-stats h3 {
+      color: var(--success-color);
+    }
+
+    .stats-count {
       font-size: 3em;
       font-weight: bold;
       margin: 10px 0;
@@ -1331,31 +1339,7 @@
       color: var(--danger-color);
     }
 
-    /* NOUVEAU: Conteneur pour les roses payées */
-    .paid-roses-container {
-      margin: 25px auto;
-      max-width: 600px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 15px;
-      padding: 20px;
-      border: 2px solid var(--success-color);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .paid-roses-container h3 {
-      color: var(--success-color);
-      margin-bottom: 15px;
-      font-size: 1.5em;
-      text-transform: uppercase;
-    }
-
-    .paid-roses-count {
-      font-size: 3em;
-      font-weight: bold;
-      margin: 10px 0;
+    .paid-count {
       color: var(--success-color);
     }
 
@@ -1444,11 +1428,11 @@
         align-items: flex-start;
       }
 
-      .bonus-debts-container {
+      .stats-container {
         flex-direction: column;
       }
 
-      .bonus-container, .debts-container, .paid-roses-container {
+      .stats-item {
         min-width: auto;
       }
     }
@@ -1594,26 +1578,25 @@
       </div>
     </div>
 
-    <!-- NOUVEAU: Conteneurs pour les roses bonus et dettes côte à côte -->
-    <div class="bonus-debts-container">
-      <div class="bonus-container">
-        <h3>🎁 Roses Bonus</h3>
-        <div class="bonus-count" id="bonusRosesCount">0</div>
+    <!-- NOUVEAU: Conteneurs pour les statistiques sur la même ligne -->
+    <div class="stats-container">
+      <div class="stats-item bonus-stats">
+        <h3>🎁 Bonus</h3>
+        <div class="stats-count bonus-count" id="bonusRosesCount">0</div>
         <div>Roses gagnées en bonus</div>
       </div>
       
-      <div class="debts-container">
-        <h3>📋 Dettes en cours</h3>
-        <div class="debts-count" id="debtsCount">0</div>
+      <div class="stats-item debts-stats">
+        <h3>📋 En cours</h3>
+        <div class="stats-count debts-count" id="debtsCount">0</div>
         <div>Roses dues par les joueurs</div>
       </div>
-    </div>
-
-    <!-- NOUVEAU: Conteneur pour les roses payées -->
-    <div class="paid-roses-container">
-      <h3>💰 Roses Payées</h3>
-      <div class="paid-roses-count" id="paidRosesCount">0</div>
-      <div>Roses payées par les utilisateurs</div>
+      
+      <div class="stats-item paid-stats">
+        <h3>💰 Payées</h3>
+        <div class="stats-count paid-count" id="paidRosesCount">0</div>
+        <div>Roses payées par les utilisateurs</div>
+      </div>
     </div>
 
     <div class="attack-modes">
