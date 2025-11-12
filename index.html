@@ -1301,6 +1301,34 @@
       color: var(--primary-color);
     }
 
+    /* NOUVEAU: Conteneur pour les roses payées */
+    .paid-roses-container {
+      margin: 25px auto;
+      max-width: 600px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      border: 2px solid var(--success-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .paid-roses-container h3 {
+      color: var(--success-color);
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      text-transform: uppercase;
+    }
+
+    .paid-roses-count {
+      font-size: 3em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: var(--success-color);
+    }
+
     @media (max-width: 768px) {
       .game-container {
         padding: 25px;
@@ -1386,7 +1414,7 @@
         align-items: flex-start;
       }
 
-      .bonus-container {
+      .bonus-container, .paid-roses-container {
         min-width: auto;
       }
     }
@@ -1537,6 +1565,13 @@
       <h3>🎁 Roses Bonus</h3>
       <div class="bonus-count" id="bonusRosesCount">0</div>
       <div>Roses gagnées en bonus</div>
+    </div>
+
+    <!-- NOUVEAU: Conteneur pour les roses payées -->
+    <div class="paid-roses-container">
+      <h3>💰 Roses Payées</h3>
+      <div class="paid-roses-count" id="paidRosesCount">0</div>
+      <div>Roses payées par les utilisateurs</div>
     </div>
 
     <div class="attack-modes">
@@ -2205,6 +2240,7 @@
           nextBonus: document.getElementById('nextBonus'),
           debtsTableContainer: document.getElementById('debtsTableContainer'),
           bonusRosesCount: document.getElementById('bonusRosesCount'),
+          paidRosesCount: document.getElementById('paidRosesCount'),
           queueDisplay: document.getElementById('queueDisplay'),
           menuToggle: document.getElementById('menuToggle'),
           menuDropdown: document.getElementById('menuDropdown'),
@@ -2501,6 +2537,7 @@
         this.updateQueueIndicator();
         this.updateLastUserDisplay();
         this.updateBonusRosesCounter();
+        this.updatePaidRosesCounter();
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
         document.getElementById('resultContainer').classList.add('hidden');
@@ -2735,6 +2772,9 @@
         
         this.elements.message.textContent = `🎉 JACKPOT ! ${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s ! 🎉`;
         
+        // Ajouter le gain aux roses bonus au lieu du jackpot
+        this.state.bonusRoses += totalGain;
+        
         this.addDebt(
           this.state.lastUsername,
           'auto',
@@ -2853,6 +2893,10 @@
 
       updateBonusRosesCounter() {
         this.elements.bonusRosesCount.textContent = this.state.bonusRoses;
+      }
+
+      updatePaidRosesCounter() {
+        this.elements.paidRosesCount.textContent = this.state.paidRoses;
       }
 
       updateMyBalanceDisplay() {
@@ -3302,6 +3346,7 @@
         });
         
         this.state.myBalance -= totalRosesToPay;
+        this.state.paidRoses += totalRosesToPay;
         
         this.state.debts = this.state.debts.filter(debt => debt.username !== username);
         
@@ -3309,6 +3354,7 @@
         this.updateDebtsTable();
         this.updateDebtsPanel();
         this.updateLastUserDisplay();
+        this.updatePaidRosesCounter();
         this.saveGame(true);
       }
 
@@ -3498,7 +3544,7 @@
       }
 
       clearSave() {
-        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' jackpots dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.bonusRoses + ' roses en bonus\n\nCette action est IRRÉVERSIBLE !')) {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' jackpots dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.bonusRoses + ' roses en bonus\n• ' + this.state.paidRoses + ' roses payées\n\nCette action est IRRÉVERSIBLE !')) {
           this.storage.clearSave();
           
           this.state.attempts = 0;
@@ -3521,6 +3567,7 @@
           this.state.jackpotRoseCounter = 0;
           this.state.myBalance = 0;
           this.state.bonusRoses = 0;
+          this.state.paidRoses = 0;
           
           this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
           this.updateDisplay();
@@ -3530,6 +3577,7 @@
           this.updateDebtsTable();
           this.updateDebtsPanel();
           this.updateBonusRosesCounter();
+          this.updatePaidRosesCounter();
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
           this.removeWinClasses();
@@ -3555,7 +3603,8 @@
           roseCounter: this.state.roseCounter,
           jackpotRoseCounter: this.state.jackpotRoseCounter,
           myBalance: this.state.myBalance,
-          bonusRoses: this.state.bonusRoses
+          bonusRoses: this.state.bonusRoses,
+          paidRoses: this.state.paidRoses
         };
         
         return this.storage.saveGame(saveData, showNotification);
@@ -3578,6 +3627,7 @@
           this.state.jackpotRoseCounter = savedData.jackpotRoseCounter || 0;
           this.state.myBalance = savedData.myBalance || 0;
           this.state.bonusRoses = savedData.bonusRoses || 0;
+          this.state.paidRoses = savedData.paidRoses || 0;
           
           this.state.remainingTurns = 0;
           this.state.spinQueue = [];
@@ -3588,6 +3638,7 @@
           this.updateDebtsTable();
           this.updateDebtsPanel();
           this.updateBonusRosesCounter();
+          this.updatePaidRosesCounter();
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
           this.updateQueueIndicator();
@@ -3731,6 +3782,7 @@
         this.updateDebtsTable();
         this.updateDebtsPanel();
         this.updateBonusRosesCounter();
+        this.updatePaidRosesCounter();
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
         this.removeWinClasses();
