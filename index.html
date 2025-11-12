@@ -101,78 +101,6 @@
       border: 2px solid var(--primary-color);
     }
 
-    /* Barre de progression du jackpot */
-    .jackpot-progress {
-      margin: 25px auto;
-      width: 90%;
-      height: 70px;
-      background: rgba(0, 0, 0, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 25px;
-      border-radius: 10px;
-      border: 2px solid var(--primary-color);
-    }
-
-    .jackpot-progress-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .jackpot-progress-label {
-      font-size: 1em;
-      color: var(--primary-color);
-      margin-bottom: 5px;
-    }
-
-    .jackpot-progress-amount {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: gold;
-      text-shadow: 0 0 10px rgba(0,0,0,0.8);
-    }
-
-    .jackpot-progress-bar {
-      flex: 1;
-      height: 25px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      margin: 0 25px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .jackpot-progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--danger-color), var(--warning-color), var(--primary-color));
-      border-radius: 12px;
-      transition: width 0.5s ease;
-      position: relative;
-    }
-
-    .jackpot-progress-fill::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      animation: progressShine 2s infinite;
-    }
-
-    @keyframes progressShine {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .jackpot-progress-min {
-      font-size: 0.9em;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
     .lock-container {
       display: flex;
       justify-content: center;
@@ -1128,31 +1056,6 @@
       transform: scale(1.05);
     }
 
-    /* Compteur de roses payées */
-    .paid-roses-counter {
-      margin: 15px auto;
-      padding: 15px;
-      background: rgba(39, 174, 96, 0.2);
-      border-radius: 10px;
-      border: 2px solid var(--success-color);
-      max-width: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .paid-roses-counter h4 {
-      color: var(--success-color);
-      margin-bottom: 10px;
-      font-size: 1.2em;
-    }
-
-    .paid-roses-count {
-      font-size: 2em;
-      font-weight: bold;
-      color: var(--success-color);
-    }
-
     /* NOUVEAU: Panneau Mes gains */
     .my-balance-panel {
       position: fixed;
@@ -1370,62 +1273,32 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
-    /* NOUVEAU: Conteneur pour les panneaux bonus et dettes payées côte à côte */
-    .bonus-paid-container {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
+    /* NOUVEAU: Conteneur pour les roses bonus */
+    .bonus-container {
       margin: 25px auto;
-      max-width: 1200px;
-      flex-wrap: wrap;
-    }
-
-    .bonus-paid-item {
-      flex: 1;
-      min-width: 300px;
+      max-width: 600px;
       background: rgba(0, 0, 0, 0.5);
       border-radius: 15px;
       padding: 20px;
+      border: 2px solid var(--primary-color);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
-    .bonus-paid-item h3 {
+    .bonus-container h3 {
+      color: var(--primary-color);
       margin-bottom: 15px;
       font-size: 1.5em;
       text-transform: uppercase;
     }
 
-    .bonus-paid-count {
+    .bonus-count {
       font-size: 3em;
       font-weight: bold;
       margin: 10px 0;
-    }
-
-    .bonus-item {
-      border: 2px solid var(--primary-color);
-    }
-
-    .bonus-item h3 {
       color: var(--primary-color);
-    }
-
-    .bonus-item .bonus-paid-count {
-      color: var(--primary-color);
-    }
-
-    .paid-item {
-      border: 2px solid var(--success-color);
-    }
-
-    .paid-item h3 {
-      color: var(--success-color);
-    }
-
-    .paid-item .bonus-paid-count {
-      color: var(--success-color);
     }
 
     @media (max-width: 768px) {
@@ -1491,19 +1364,6 @@
         left: 0;
       }
 
-      .jackpot-progress {
-        height: 60px;
-        padding: 0 15px;
-      }
-
-      .jackpot-progress-amount {
-        font-size: 1.5em;
-      }
-
-      .jackpot-progress-label {
-        font-size: 0.9em;
-      }
-
       .debts-search {
         flex-direction: column;
       }
@@ -1526,11 +1386,7 @@
         align-items: flex-start;
       }
 
-      .bonus-paid-container {
-        flex-direction: column;
-      }
-
-      .bonus-paid-item {
+      .bonus-container {
         min-width: auto;
       }
     }
@@ -1558,21 +1414,6 @@
         padding: 12px 15px;
         font-size: 14px;
         min-width: 90px;
-      }
-
-      .jackpot-progress {
-        height: 55px;
-        flex-direction: column;
-        padding: 8px;
-      }
-
-      .jackpot-progress-info {
-        align-items: center;
-      }
-
-      .jackpot-progress-bar {
-        margin: 8px 0;
-        width: 100%;
       }
     }
   </style>
@@ -1691,16 +1532,11 @@
       </div>
     </div>
 
-    <!-- Barre de progression du jackpot sous les symboles -->
-    <div class="jackpot-progress">
-      <div class="jackpot-progress-info">
-        <div class="jackpot-progress-label">BONUS</div>
-        <div class="jackpot-progress-amount" id="jackpotProgressAmount">864 🌹</div>
-      </div>
-      <div class="jackpot-progress-bar">
-        <div class="jackpot-progress-fill" id="jackpotProgressFill" style="width: 0%"></div>
-      </div>
-      <div class="jackpot-progress-min" id="jackpotProgressMin">Visible à 1000 🌹</div>
+    <!-- NOUVEAU: Conteneur pour les roses bonus -->
+    <div class="bonus-container">
+      <h3>🎁 Roses Bonus</h3>
+      <div class="bonus-count" id="bonusRosesCount">0</div>
+      <div>Roses gagnées en bonus</div>
     </div>
 
     <div class="attack-modes">
@@ -1742,20 +1578,6 @@
       <div class="stat-item">
         <div>Prochain bonus</div>
         <div class="stat-value" id="nextBonus">20</div>
-      </div>
-    </div>
-
-    <!-- NOUVEAU: Conteneur pour les panneaux bonus et dettes payées côte à côte -->
-    <div class="bonus-paid-container">
-      <div class="bonus-paid-item bonus-item">
-        <h3>🎁 Roses Bonus</h3>
-        <div class="bonus-paid-count" id="bonusRosesCount">0</div>
-        <div>Roses gagnées en bonus</div>
-      </div>
-      <div class="bonus-paid-item paid-item">
-        <h3>💰 Roses Payées</h3>
-        <div class="bonus-paid-count" id="paidRosesCount">0</div>
-        <div>Roses payées aux joueurs</div>
       </div>
     </div>
 
@@ -1844,9 +1666,8 @@
     // CONFIGURATION DU JEU
     // =============================================
     const GAME_CONFIG = {
-      INITIAL_JACKPOT: 864,
+      INITIAL_JACKPOT: 250,
       BONUS_INTERVAL: 20,
-      MIN_JACKPOT_VISIBLE: 1000,
       SYMBOL_COUNT: 10,
       DIFFICULTY: 6,
       COINS_PER_ROSE: 1,
@@ -2353,7 +2174,7 @@
           isUltraSpeedMode: false,
           lastUsername: "Personne",
           debts: [],
-          paidRoses: 0, // Compteur de roses payées
+          paidRoses: 0,
           currentDebtSearch: '',
           userTurns: {},
           debtSort: 'amount-desc',
@@ -2365,7 +2186,7 @@
           currentExchangeUser: null,
           currentExchangeMaxRoses: 0,
           myBalance: 0,
-          bonusRoses: 0 // Roses gagnées en bonus
+          bonusRoses: 0
         };
 
         this.initializeDOM();
@@ -2382,11 +2203,7 @@
           currentGameAttempts: document.getElementById('currentGameAttempts'),
           rosesCount: document.getElementById('rosesCount'),
           nextBonus: document.getElementById('nextBonus'),
-          jackpotProgressAmount: document.getElementById('jackpotProgressAmount'),
-          jackpotProgressFill: document.getElementById('jackpotProgressFill'),
-          jackpotProgressMin: document.getElementById('jackpotProgressMin'),
           debtsTableContainer: document.getElementById('debtsTableContainer'),
-          paidRosesCount: document.getElementById('paidRosesCount'),
           bonusRosesCount: document.getElementById('bonusRosesCount'),
           queueDisplay: document.getElementById('queueDisplay'),
           menuToggle: document.getElementById('menuToggle'),
@@ -2683,13 +2500,11 @@
         this.updateStats();
         this.updateQueueIndicator();
         this.updateLastUserDisplay();
-        this.updateJackpotProgress();
-        this.updatePaidRosesCounter();
         this.updateBonusRosesCounter();
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
         document.getElementById('resultContainer').classList.add('hidden');
-        this.elements.message.textContent = `Nouvelle partie ! Le bonus commence à ${GAME_CONFIG.INITIAL_JACKPOT} roses. Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques !`;
+        this.elements.message.textContent = `Nouvelle partie ! Le jackpot commence à ${GAME_CONFIG.INITIAL_JACKPOT} roses. Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques !`;
         this.elements.spinBtn.disabled = false;
         this.removeWinClasses();
       }
@@ -2829,7 +2644,7 @@
               });
               
               this.updateStats();
-              this.updateJackpotProgress();
+              this.updateBonusRosesCounter();
             }
             
             let delay;
@@ -2946,7 +2761,7 @@
         
         this.saveGame(true);
         this.updateStats();
-        this.updateJackpotProgress();
+        this.updateBonusRosesCounter();
         
         for (let i = 0; i < GAME_CONFIG.DIFFICULTY; i++) {
           setTimeout(() => {
@@ -3034,25 +2849,6 @@
         });
         
         this.elements.lastUserDebtInfo.textContent = `Dettes: ${totalDebtRoses} 🌹`;
-      }
-
-      updateJackpotProgress() {
-        this.elements.jackpotProgressAmount.textContent = `${this.state.jackpotAmount} 🌹`;
-        
-        const progressPercentage = Math.min(100, (this.state.jackpotAmount / GAME_CONFIG.MIN_JACKPOT_VISIBLE) * 100);
-        this.elements.jackpotProgressFill.style.width = `${progressPercentage}%`;
-        
-        if (this.state.jackpotAmount >= GAME_CONFIG.MIN_JACKPOT_VISIBLE) {
-          this.elements.jackpotProgressMin.textContent = "Bonus visible !";
-          this.elements.jackpotProgressFill.style.background = 'linear-gradient(90deg, var(--primary-color), var(--warning-color), gold)';
-        } else {
-          this.elements.jackpotProgressMin.textContent = `Visible à ${GAME_CONFIG.MIN_JACKPOT_VISIBLE} 🌹`;
-          this.elements.jackpotProgressFill.style.background = 'linear-gradient(90deg, var(--danger-color), var(--warning-color), var(--primary-color))';
-        }
-      }
-
-      updatePaidRosesCounter() {
-        this.elements.paidRosesCount.textContent = this.state.paidRoses;
       }
 
       updateBonusRosesCounter() {
@@ -3506,9 +3302,6 @@
         });
         
         this.state.myBalance -= totalRosesToPay;
-        this.state.paidRoses += totalRosesToPay; // Ajouter au compteur de roses payées
-        this.updateMyBalanceDisplay();
-        this.updatePaidRosesCounter();
         
         this.state.debts = this.state.debts.filter(debt => debt.username !== username);
         
@@ -3592,13 +3385,12 @@
         if (this.state.bonusCounter % GAME_CONFIG.BONUS_INTERVAL === 0) {
           this.state.rosesCount += 1;
           this.state.jackpotAmount += 1;
-          this.state.bonusRoses += 1; // Ajouter au compteur de bonus
+          this.state.bonusRoses += 1;
           this.updateBonusRosesCounter();
           this.updateBonusDisplay();
           this.elements.message.textContent = `🌹 +1 rose ajoutée au bonus !`;
           
           this.updateStats();
-          this.updateJackpotProgress();
         }
       }
 
@@ -3620,8 +3412,6 @@
         if (this.state.jackpotRoseCounter % GAME_CONFIG.JACKPOT_ROSE_INTERVAL === 0) {
           this.state.jackpotAmount += 1;
           this.elements.message.textContent = `🌹 +1 rose ajoutée au jackpot tous les ${GAME_CONFIG.JACKPOT_ROSE_INTERVAL} tours !`;
-          
-          this.updateJackpotProgress();
         }
       }
 
@@ -3683,13 +3473,12 @@
 
       modifyJackpot(amount) {
         this.state.jackpotAmount = amount;
-        this.updateJackpotProgress();
         this.updateStats();
-        this.elements.message.textContent = `Bonus modifié à ${this.state.jackpotAmount} roses !`;
+        this.elements.message.textContent = `Jackpot modifié à ${this.state.jackpotAmount} roses !`;
       }
 
       setJackpotManually() {
-        const newAmount = prompt('Entrez le nouveau montant du bonus :', this.state.jackpotAmount);
+        const newAmount = prompt('Entrez le nouveau montant du jackpot :', this.state.jackpotAmount);
         if (newAmount !== null) {
           const amount = parseInt(newAmount);
           if (!isNaN(amount) && amount >= 0) {
@@ -3709,7 +3498,7 @@
       }
 
       clearSave() {
-        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' jackpots dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• ' + this.state.paidRoses + ' roses payées\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.bonusRoses + ' roses en bonus\n\nCette action est IRRÉVERSIBLE !')) {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' jackpots dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.bonusRoses + ' roses en bonus\n\nCette action est IRRÉVERSIBLE !')) {
           this.storage.clearSave();
           
           this.state.attempts = 0;
@@ -3722,7 +3511,6 @@
           this.state.spinQueue = [];
           this.state.lastUsername = "Personne";
           this.state.debts = [];
-          this.state.paidRoses = 0;
           this.state.currentDebtSearch = '';
           this.state.userTurns = {};
           this.state.debtSort = 'amount-desc';
@@ -3737,12 +3525,10 @@
           this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
           this.updateDisplay();
           this.updateStats();
-          this.updateJackpotProgress();
           this.updateQueueIndicator();
           this.updateLastUserDisplay();
           this.updateDebtsTable();
           this.updateDebtsPanel();
-          this.updatePaidRosesCounter();
           this.updateBonusRosesCounter();
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
@@ -3765,7 +3551,6 @@
           gainsHistory: this.state.gainsHistory,
           lastUsername: this.state.lastUsername,
           debts: this.state.debts,
-          paidRoses: this.state.paidRoses,
           userTurns: this.state.userTurns,
           roseCounter: this.state.roseCounter,
           jackpotRoseCounter: this.state.jackpotRoseCounter,
@@ -3788,7 +3573,6 @@
           this.state.gainsHistory = savedData.gainsHistory || [];
           this.state.lastUsername = savedData.lastUsername || "Personne";
           this.state.debts = savedData.debts || [];
-          this.state.paidRoses = savedData.paidRoses || 0;
           this.state.userTurns = savedData.userTurns || {};
           this.state.roseCounter = savedData.roseCounter || 0;
           this.state.jackpotRoseCounter = savedData.jackpotRoseCounter || 0;
@@ -3803,12 +3587,10 @@
           this.updateLastUserDisplay();
           this.updateDebtsTable();
           this.updateDebtsPanel();
-          this.updatePaidRosesCounter();
           this.updateBonusRosesCounter();
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
           this.updateQueueIndicator();
-          this.updateJackpotProgress();
           
           setTimeout(() => {
             this.elements.message.textContent = `Bon retour ! Vous avez ${this.state.rosesCount} roses totales et ${this.state.gainsHistory.length} jackpot(s) gagné(s) !`;
@@ -3846,15 +3628,15 @@
             break;
           case "increase_jackpot":
             this.modifyJackpot(this.state.jackpotAmount + 100);
-            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a augmenté le bonus de 100 roses !`;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a augmenté le jackpot de 100 roses !`;
             break;
           case "decrease_jackpot":
             this.modifyJackpot(Math.max(0, this.state.jackpotAmount - 100));
-            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a diminué le bonus de 100 roses !`;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a diminué le jackpot de 100 roses !`;
             break;
           case "reset_jackpot":
             this.initGame();
-            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a réinitialisé le bonus !`;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a réinitialisé le jackpot !`;
             break;
         }
         
@@ -3944,12 +3726,10 @@
         this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
         this.updateDisplay();
         this.updateStats();
-        this.updateJackpotProgress();
         this.updateQueueIndicator();
         this.updateLastUserDisplay();
         this.updateDebtsTable();
         this.updateDebtsPanel();
-        this.updatePaidRosesCounter();
         this.updateBonusRosesCounter();
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
@@ -3959,7 +3739,7 @@
         this.websocket.connect();
         
         if (!hasLoadedSave) {
-          this.elements.message.textContent = `Bienvenue ! Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques pour remporter le bonus !`;
+          this.elements.message.textContent = `Bienvenue ! Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques pour remporter le jackpot !`;
         }
       }
     }
