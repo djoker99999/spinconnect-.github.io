@@ -1304,8 +1304,7 @@
     .main-menu {
       position: fixed;
       bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 20px;
       z-index: 1000;
     }
 
@@ -1434,6 +1433,113 @@
       50% { transform: scale(1.1); }
     }
 
+    /* Interface de sélection de titre */
+    .title-selector-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .title-selector-panel {
+      background: var(--dark-bg);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      border: 3px solid var(--primary-color);
+      box-shadow: 0 0 30px rgba(254, 202, 87, 0.5);
+    }
+
+    .title-selector-header {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      text-align: center;
+    }
+
+    .title-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .title-option {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .title-option:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .title-option.selected {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      border-color: white;
+    }
+
+    .custom-title-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--primary-color);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.2em;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .title-selector-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .title-selector-confirm {
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .title-selector-confirm:hover {
+      transform: scale(1.05);
+    }
+
+    .title-selector-cancel {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .title-selector-cancel:hover {
+      transform: scale(1.05);
+    }
+
     @media (max-width: 768px) {
       .game-container {
         padding: 25px;
@@ -1490,6 +1596,7 @@
       .main-menu {
         width: 90%;
         bottom: 20px;
+        left: 5%;
       }
 
       .menu-dropdown {
@@ -1525,6 +1632,10 @@
 
       .debug-symbols-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .title-options {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -1583,6 +1694,38 @@
       <div class="rose-exchange-buttons">
         <button class="rose-exchange-confirm" id="roseExchangeConfirm">Confirmer l'échange</button>
         <button class="rose-exchange-cancel" id="roseExchangeCancel">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interface de sélection de titre -->
+  <div class="title-selector-container" id="titleSelectorContainer">
+    <div class="title-selector-panel">
+      <h2 class="title-selector-header">🎭 Choisir un titre</h2>
+      <div class="title-options" id="titleOptions">
+        <div class="title-option" data-title="🎰 Machine à Sous des Symboles Mystères">
+          🎰 Machine à Sous des Symboles Mystères
+        </div>
+        <div class="title-option" data-title="🎪 Cirque des Symboles Magiques">
+          🎪 Cirque des Symboles Magiques
+        </div>
+        <div class="title-option" data-title="🌟 Aventure des Symboles Enchantés">
+          🌟 Aventure des Symboles Enchantés
+        </div>
+        <div class="title-option" data-title="🎯 Jackpot des Symboles Légendaires">
+          🎯 Jackpot des Symboles Légendaires
+        </div>
+        <div class="title-option" data-title="🎪 Festival des Symboles Éclatants">
+          🎪 Festival des Symboles Éclatants
+        </div>
+        <div class="title-option" data-title="🌈 Arc-en-Ciel des Symboles Magiques">
+          🌈 Arc-en-Ciel des Symboles Magiques
+        </div>
+      </div>
+      <input type="text" class="custom-title-input" id="customTitleInput" placeholder="Ou saisir un titre personnalisé...">
+      <div class="title-selector-buttons">
+        <button class="title-selector-confirm" id="titleSelectorConfirm">Confirmer</button>
+        <button class="title-selector-cancel" id="titleSelectorCancel">Annuler</button>
       </div>
     </div>
   </div>
@@ -1786,6 +1929,10 @@
           <img src="https://i.ibb.co/8DMJ0cxy/IMG-7355-Photoroom.png" alt="Donuts - 30 tours" class="attack-mode-image">
           <div>30 tours</div>
         </button>
+        <button id="mode100" class="attack-mode-btn">
+          <img src="https://i.ibb.co/C5M6DHcS/IMG-7356-Photoroom.png" alt="100 tours" class="attack-mode-image">
+          <div>100 tours</div>
+        </button>
       </div>
     </div>
 
@@ -1858,6 +2005,13 @@
         <div class="menu-buttons">
           <button class="menu-button" id="menuAddDebt">➕ Ajouter dette</button>
           <button class="menu-button" id="menuResetDebts">🗑️ Réinitialiser dettes</button>
+        </div>
+      </div>
+      
+      <div class="menu-section">
+        <h4>Personnalisation</h4>
+        <div class="menu-buttons">
+          <button class="menu-button" id="menuChangeTitle">🎭 Changer le titre</button>
         </div>
       </div>
       
@@ -2412,7 +2566,9 @@
           debugMode: false,
           debugSelectedSymbol: null,
           debugTurnsRemaining: 0,
-          debugTurnsTarget: 200
+          debugTurnsTarget: 200,
+          // Nouvelle variable pour le titre personnalisé
+          customTitle: "🎰 Machine à Sous des Symboles Mystères"
         };
 
         this.initializeDOM();
@@ -2486,7 +2642,12 @@
           currentTurnsPanel: document.getElementById('currentTurnsPanel'),
           currentTurnsPanelHeader: document.getElementById('currentTurnsPanelHeader'),
           currentTurnsContent: document.getElementById('currentTurnsContent'),
-          closeCurrentTurnsPanel: document.getElementById('closeCurrentTurnsPanel')
+          closeCurrentTurnsPanel: document.getElementById('closeCurrentTurnsPanel'),
+          titleSelectorContainer: document.getElementById('titleSelectorContainer'),
+          titleOptions: document.getElementById('titleOptions'),
+          customTitleInput: document.getElementById('customTitleInput'),
+          titleSelectorConfirm: document.getElementById('titleSelectorConfirm'),
+          titleSelectorCancel: document.getElementById('titleSelectorCancel')
         };
       }
 
@@ -2495,6 +2656,7 @@
         document.getElementById('mode1').addEventListener('click', () => this.setAttackMode(1));
         document.getElementById('mode10').addEventListener('click', () => this.setAttackMode(10));
         document.getElementById('mode30').addEventListener('click', () => this.setAttackMode(30));
+        document.getElementById('mode100').addEventListener('click', () => this.setAttackMode(100));
 
         this.setupMenuEvents();
         this.setupPanelEvents();
@@ -2504,6 +2666,7 @@
         this.setupBonusEvents();
         this.setupStatsEvents();
         this.setupDebugEvents();
+        this.setupTitleSelectorEvents();
 
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
 
@@ -2540,6 +2703,7 @@
         document.getElementById('menuClearData').addEventListener('click', () => this.clearSave());
         document.getElementById('menuAddDebt').addEventListener('click', () => this.addDebtManually());
         document.getElementById('menuResetDebts').addEventListener('click', () => this.resetDebts());
+        document.getElementById('menuChangeTitle').addEventListener('click', () => this.showTitleSelector());
         document.getElementById('menuDebug').addEventListener('click', () => this.toggleDebugPanel());
       }
 
@@ -2686,6 +2850,33 @@
         });
         
         this.initializeDebugSymbolsGrid();
+      }
+
+      setupTitleSelectorEvents() {
+        this.elements.titleOptions.addEventListener('click', (e) => {
+          const titleOption = e.target.closest('.title-option');
+          if (titleOption) {
+            document.querySelectorAll('.title-option').forEach(option => {
+              option.classList.remove('selected');
+            });
+            titleOption.classList.add('selected');
+            this.elements.customTitleInput.value = titleOption.getAttribute('data-title');
+          }
+        });
+        
+        this.elements.customTitleInput.addEventListener('input', (e) => {
+          document.querySelectorAll('.title-option').forEach(option => {
+            option.classList.remove('selected');
+          });
+        });
+        
+        this.elements.titleSelectorConfirm.addEventListener('click', () => {
+          this.confirmTitleSelection();
+        });
+        
+        this.elements.titleSelectorCancel.addEventListener('click', () => {
+          this.hideTitleSelector();
+        });
       }
 
       initializeDebugSymbolsGrid() {
@@ -2842,8 +3033,8 @@
           this.toggleSpeedMode();
         }
         
-        if (e.key >= '1' && e.key <= '3') {
-          const modes = [1, 10, 30];
+        if (e.key >= '1' && e.key <= '4') {
+          const modes = [1, 10, 30, 100];
           const index = parseInt(e.key) - 1;
           if (index < modes.length) {
             this.setAttackMode(modes[index]);
@@ -2877,6 +3068,7 @@
         if (e.key === 'Escape') {
           this.elements.menuDropdown.classList.remove('show');
           this.hideRoseExchange();
+          this.hideTitleSelector();
           this.hideAllPanels();
         }
       }
@@ -3767,6 +3959,37 @@
         }
       }
 
+      // Méthodes de gestion des titres
+      showTitleSelector() {
+        this.elements.titleSelectorContainer.style.display = 'flex';
+        this.elements.customTitleInput.value = this.state.customTitle;
+        
+        document.querySelectorAll('.title-option').forEach(option => {
+          if (option.getAttribute('data-title') === this.state.customTitle) {
+            option.classList.add('selected');
+          } else {
+            option.classList.remove('selected');
+          }
+        });
+      }
+
+      hideTitleSelector() {
+        this.elements.titleSelectorContainer.style.display = 'none';
+      }
+
+      confirmTitleSelection() {
+        const newTitle = this.elements.customTitleInput.value.trim();
+        if (newTitle) {
+          this.state.customTitle = newTitle;
+          document.title = newTitle;
+          this.saveGame(true);
+          this.elements.message.textContent = `🎭 Titre changé en: "${newTitle}"`;
+          this.hideTitleSelector();
+        } else {
+          this.elements.message.textContent = '❌ Veuillez saisir un titre valide !';
+        }
+      }
+
       // Méthodes de gestion des dettes
       addDebt(username, userId, amount, reason, totalRoses = 0) {
         const debt = {
@@ -4005,6 +4228,7 @@
           this.state.debugSelectedSymbol = null;
           this.state.debugTurnsRemaining = 0;
           this.state.debugTurnsTarget = 200;
+          this.state.customTitle = "🎰 Machine à Sous des Symboles Mystères";
           
           this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
           this.updateDisplay();
@@ -4043,7 +4267,8 @@
           debugMode: this.state.debugMode,
           debugSelectedSymbol: this.state.debugSelectedSymbol,
           debugTurnsRemaining: this.state.debugTurnsRemaining,
-          debugTurnsTarget: this.state.debugTurnsTarget
+          debugTurnsTarget: this.state.debugTurnsTarget,
+          customTitle: this.state.customTitle
         };
         
         return this.storage.saveGame(saveData, showNotification);
@@ -4069,6 +4294,7 @@
           this.state.debugSelectedSymbol = savedData.debugSelectedSymbol || null;
           this.state.debugTurnsRemaining = savedData.debugTurnsRemaining || 0;
           this.state.debugTurnsTarget = savedData.debugTurnsTarget || 200;
+          this.state.customTitle = savedData.customTitle || "🎰 Machine à Sous des Symboles Mystères";
           
           this.state.remainingTurns = 0;
           this.state.spinQueue = [];
@@ -4092,6 +4318,8 @@
             this.elements.debugActivateBtn.disabled = true;
             this.elements.debugDeactivateBtn.disabled = false;
           }
+          
+          document.title = this.state.customTitle;
           
           setTimeout(() => {
             this.elements.message.textContent = `Bon retour ! Vous avez ${this.state.rosesCount} roses totales et ${this.state.gainsHistory.length} gain(s) gagné(s) !`;
@@ -4126,6 +4354,10 @@
           case "multi_spin_30":
             queueItem.turns = 30;
             this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 30 tours via TikFinity !`;
+            break;
+          case "multi_spin_100":
+            queueItem.turns = 100;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 100 tours via TikFinity !`;
             break;
         }
         
