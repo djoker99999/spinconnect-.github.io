@@ -3282,15 +3282,20 @@
       }
 
       updateLastUserDisplay() {
-        this.elements.lastUserDisplay.innerHTML = `Dernier joueur: ${this.state.lastUsername}`;
-        
-        const userDebts = this.state.debts.filter(debt => debt.username === this.state.lastUsername);
+        // Calculer le total des roses que l'utilisateur doit
         let totalDebtRoses = 0;
-        userDebts.forEach(debt => {
-          totalDebtRoses += debt.totalRoses || 0;
+        this.state.debts.forEach(debt => {
+          if (debt.username === this.state.lastUsername) {
+            totalDebtRoses += debt.totalRoses || 0;
+          }
         });
         
-        this.elements.lastUserDebtInfo.textContent = `Dettes: ${totalDebtRoses} 🌹`;
+        this.elements.lastUserDisplay.innerHTML = `
+          Dernier joueur: ${this.state.lastUsername}
+          <div id="lastUserDebtInfo" style="font-size: 0.8em; margin-top: 5px; color: var(--primary-color);">
+            Dettes: ${totalDebtRoses} 🌹
+          </div>
+        `;
       }
 
       updateCurrentTurnsPanel() {
