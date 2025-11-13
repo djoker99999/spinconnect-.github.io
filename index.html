@@ -1540,6 +1540,62 @@
       transform: scale(1.05);
     }
 
+    /* Panneau Statistiques Roses */
+    .roses-stats-panel {
+      width: 450px;
+      border: 2px solid #e74c3c;
+    }
+
+    .roses-stats-panel h3 {
+      color: #e74c3c;
+    }
+
+    .roses-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .roses-stat-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .roses-stat-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
+
+    .roses-stat-value {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #e74c3c;
+    }
+
+    .roses-stat-period {
+      font-size: 0.9em;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 5px;
+    }
+
+    .current-title-display {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-align: center;
+      margin: 15px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid var(--primary-color);
+    }
+
     @media (max-width: 768px) {
       .game-container {
         padding: 25px;
@@ -1637,6 +1693,11 @@
       .title-options {
         grid-template-columns: 1fr;
       }
+
+      .current-title-display {
+        font-size: 1.4em;
+        padding: 8px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -1666,6 +1727,10 @@
 
       .debug-symbols-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .current-title-display {
+        font-size: 1.2em;
       }
     }
   </style>
@@ -1874,11 +1939,42 @@
     </div>
   </div>
 
+  <!-- NOUVEAU PANEL: Statistiques des Roses -->
+  <div class="draggable-panel roses-stats-panel hidden" id="rosesStatsPanel">
+    <div class="panel-header" id="rosesStatsPanelHeader">
+      <h3>📈 Statistiques Roses</h3>
+      <button class="close-panel" id="closeRosesStatsPanel">✕</button>
+    </div>
+    <div class="roses-stats-grid" id="rosesStatsGrid">
+      <div class="roses-stat-card">
+        <h4>🌹 Total Général</h4>
+        <div class="roses-stat-value" id="totalRosesAllTime">0</div>
+        <div class="roses-stat-period">Depuis le début</div>
+      </div>
+      <div class="roses-stat-card">
+        <h4>📅 Ce Mois</h4>
+        <div class="roses-stat-value" id="totalRosesThisMonth">0</div>
+        <div class="roses-stat-period" id="currentMonthPeriod">Mois en cours</div>
+      </div>
+      <div class="roses-stat-card">
+        <h4>🗓️ Cette Semaine</h4>
+        <div class="roses-stat-value" id="totalRosesThisWeek">0</div>
+        <div class="roses-stat-period" id="currentWeekPeriod">Semaine en cours</div>
+      </div>
+    </div>
+    <button class="double-turns-btn" id="resetRosesStatsBtn" style="background: linear-gradient(45deg, var(--warning-color), #e67e22);">🔄 Réinitialiser Stats</button>
+  </div>
+
   <div class="game-container">
     <!-- Section titre remplacée par l'affichage de la file d'attente -->
     <div class="title-section">
       <div class="queue-display" id="queueDisplay">0</div>
       <div class="queue-label">Tours en attente</div>
+    </div>
+    
+    <!-- Affichage du titre actuel sous la barre de spin -->
+    <div class="current-title-display" id="currentTitleDisplay">
+      🎰 Machine à Sous des Symboles Mystères
     </div>
     
     <!-- Affichage du dernier utilisateur avec le nombre de roses dans ses dettes -->
@@ -1989,6 +2085,7 @@
           <button class="menu-button" id="menuStats">📊 Statistiques</button>
           <button class="menu-button" id="menuDebtsPanel">📋 Dettes</button>
           <button class="menu-button" id="menuCurrentTurns">🔄 Tours en cours</button>
+          <button class="menu-button" id="menuRosesStats">📈 Stats Roses</button>
         </div>
       </div>
       
@@ -2568,7 +2665,13 @@
           debugTurnsRemaining: 0,
           debugTurnsTarget: 200,
           // Nouvelle variable pour le titre personnalisé
-          customTitle: "🎰 Machine à Sous des Symboles Mystères"
+          customTitle: "🎰 Machine à Sous des Symboles Mystères",
+          // Nouvelles variables pour les statistiques des roses
+          rosesStats: {
+            totalAllTime: 0,
+            monthlyStats: {},
+            weeklyStats: {}
+          }
         };
 
         this.initializeDOM();
@@ -2647,7 +2750,19 @@
           titleOptions: document.getElementById('titleOptions'),
           customTitleInput: document.getElementById('customTitleInput'),
           titleSelectorConfirm: document.getElementById('titleSelectorConfirm'),
-          titleSelectorCancel: document.getElementById('titleSelectorCancel')
+          titleSelectorCancel: document.getElementById('titleSelectorCancel'),
+          // Nouveaux éléments pour les statistiques des roses
+          rosesStatsPanel: document.getElementById('rosesStatsPanel'),
+          rosesStatsPanelHeader: document.getElementById('rosesStatsPanelHeader'),
+          rosesStatsGrid: document.getElementById('rosesStatsGrid'),
+          totalRosesAllTime: document.getElementById('totalRosesAllTime'),
+          totalRosesThisMonth: document.getElementById('totalRosesThisMonth'),
+          totalRosesThisWeek: document.getElementById('totalRosesThisWeek'),
+          currentMonthPeriod: document.getElementById('currentMonthPeriod'),
+          currentWeekPeriod: document.getElementById('currentWeekPeriod'),
+          resetRosesStatsBtn: document.getElementById('resetRosesStatsBtn'),
+          closeRosesStatsPanel: document.getElementById('closeRosesStatsPanel'),
+          currentTitleDisplay: document.getElementById('currentTitleDisplay')
         };
       }
 
@@ -2667,6 +2782,7 @@
         this.setupStatsEvents();
         this.setupDebugEvents();
         this.setupTitleSelectorEvents();
+        this.setupRosesStatsEvents();
 
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
 
@@ -2699,6 +2815,7 @@
         document.getElementById('menuStats').addEventListener('click', () => this.toggleStatsPanel());
         document.getElementById('menuDebtsPanel').addEventListener('click', () => this.toggleDebtsPanel());
         document.getElementById('menuCurrentTurns').addEventListener('click', () => this.toggleCurrentTurnsPanel());
+        document.getElementById('menuRosesStats').addEventListener('click', () => this.toggleRosesStatsPanel());
         document.getElementById('menuResetRewards').addEventListener('click', () => this.resetRewards());
         document.getElementById('menuClearData').addEventListener('click', () => this.clearSave());
         document.getElementById('menuAddDebt').addEventListener('click', () => this.addDebtManually());
@@ -2715,7 +2832,8 @@
           { panel: 'statsPanel', closeBtn: 'closeStatsPanel' },
           { panel: 'debtsPanel', closeBtn: 'closeDebtsPanel' },
           { panel: 'debugPanel', closeBtn: 'closeDebugPanel' },
-          { panel: 'currentTurnsPanel', closeBtn: 'closeCurrentTurnsPanel' }
+          { panel: 'currentTurnsPanel', closeBtn: 'closeCurrentTurnsPanel' },
+          { panel: 'rosesStatsPanel', closeBtn: 'closeRosesStatsPanel' }
         ];
 
         panels.forEach(({ panel, closeBtn }) => {
@@ -2731,7 +2849,8 @@
           { panel: 'statsPanel', header: 'statsPanelHeader' },
           { panel: 'debtsPanel', header: 'debtsPanelHeader' },
           { panel: 'debugPanel', header: 'debugPanelHeader' },
-          { panel: 'currentTurnsPanel', header: 'currentTurnsPanelHeader' }
+          { panel: 'currentTurnsPanel', header: 'currentTurnsPanelHeader' },
+          { panel: 'rosesStatsPanel', header: 'rosesStatsPanelHeader' }
         ];
 
         draggablePanels.forEach(({ panel, header }) => {
@@ -2876,6 +2995,12 @@
         
         this.elements.titleSelectorCancel.addEventListener('click', () => {
           this.hideTitleSelector();
+        });
+      }
+
+      setupRosesStatsEvents() {
+        this.elements.resetRosesStatsBtn.addEventListener('click', () => {
+          this.resetRosesStats();
         });
       }
 
@@ -3065,6 +3190,12 @@
           this.toggleCurrentTurnsPanel();
         }
         
+        if (e.key === 'r' || e.key === 'R') {
+          if (e.ctrlKey) {
+            this.toggleRosesStatsPanel();
+          }
+        }
+        
         if (e.key === 'Escape') {
           this.elements.menuDropdown.classList.remove('show');
           this.hideRoseExchange();
@@ -3076,7 +3207,7 @@
       hideAllPanels() {
         const panels = [
           'myBalancePanel', 'bonusPanel', 'statsPanel', 
-          'debtsPanel', 'debugPanel', 'currentTurnsPanel'
+          'debtsPanel', 'debugPanel', 'currentTurnsPanel', 'rosesStatsPanel'
         ];
         
         panels.forEach(panel => {
@@ -3099,6 +3230,7 @@
         this.updateQueueIndicator();
         this.updateLastUserDisplay();
         this.updateStatsPanel();
+        this.updateRosesStatsPanel();
         document.getElementById('resultContainer').classList.add('hidden');
         this.elements.message.textContent = `Nouvelle partie ! Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques pour remporter un gain !`;
         this.elements.spinBtn.disabled = false;
@@ -3265,6 +3397,7 @@
               
               this.updateStats();
               this.updateStatsPanel();
+              this.updateRosesStats(partialGainAmount + bonusGain);
             }
             
             let delay;
@@ -3379,6 +3512,9 @@
         
         this.state.rosesCount += totalGain;
         
+        // Mettre à jour les statistiques des roses
+        this.updateRosesStats(totalGain);
+        
         this.saveGame(true);
         this.updateStats();
         this.updateStatsPanel();
@@ -3466,6 +3602,74 @@
         this.elements.statsPaidRoses.textContent = this.state.paidRoses;
         this.elements.statsMyBalance.textContent = this.state.myBalance;
         this.elements.statsAttempts.textContent = this.state.attempts;
+      }
+
+      updateRosesStats(rosesGained = 0) {
+        // Mettre à jour le total général
+        this.state.rosesStats.totalAllTime += rosesGained;
+        
+        // Obtenir la date actuelle
+        const now = new Date();
+        const currentMonth = now.getMonth() + '-' + now.getFullYear();
+        const currentWeek = this.getWeekNumber(now) + '-' + now.getFullYear();
+        
+        // Mettre à jour les statistiques mensuelles
+        if (!this.state.rosesStats.monthlyStats[currentMonth]) {
+          this.state.rosesStats.monthlyStats[currentMonth] = 0;
+        }
+        this.state.rosesStats.monthlyStats[currentMonth] += rosesGained;
+        
+        // Mettre à jour les statistiques hebdomadaires
+        if (!this.state.rosesStats.weeklyStats[currentWeek]) {
+          this.state.rosesStats.weeklyStats[currentWeek] = 0;
+        }
+        this.state.rosesStats.weeklyStats[currentWeek] += rosesGained;
+        
+        // Mettre à jour l'affichage du panneau si visible
+        if (!this.elements.rosesStatsPanel.classList.contains('hidden')) {
+          this.updateRosesStatsPanel();
+        }
+      }
+
+      getWeekNumber(date) {
+        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+        const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+      }
+
+      updateRosesStatsPanel() {
+        // Mettre à jour le total général
+        this.elements.totalRosesAllTime.textContent = this.state.rosesStats.totalAllTime;
+        
+        // Obtenir la date actuelle
+        const now = new Date();
+        const currentMonth = now.getMonth() + '-' + now.getFullYear();
+        const currentWeek = this.getWeekNumber(now) + '-' + now.getFullYear();
+        
+        // Mettre à jour les statistiques du mois en cours
+        const monthRoses = this.state.rosesStats.monthlyStats[currentMonth] || 0;
+        this.elements.totalRosesThisMonth.textContent = monthRoses;
+        
+        const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+        const currentMonthName = monthNames[now.getMonth()];
+        this.elements.currentMonthPeriod.textContent = `${currentMonthName} ${now.getFullYear()}`;
+        
+        // Mettre à jour les statistiques de la semaine en cours
+        const weekRoses = this.state.rosesStats.weeklyStats[currentWeek] || 0;
+        this.elements.totalRosesThisWeek.textContent = weekRoses;
+        
+        // Calculer le début et la fin de la semaine
+        const startOfWeek = new Date(now);
+        startOfWeek.setDate(now.getDate() - now.getDay());
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        
+        const startDay = startOfWeek.getDate();
+        const startMonth = monthNames[startOfWeek.getMonth()];
+        const endDay = endOfWeek.getDate();
+        const endMonth = monthNames[endOfWeek.getMonth()];
+        
+        this.elements.currentWeekPeriod.textContent = `Semaine du ${startDay} ${startMonth} au ${endDay} ${endMonth}`;
       }
 
       updateQueueIndicator() {
@@ -3959,6 +4163,13 @@
         }
       }
 
+      toggleRosesStatsPanel() {
+        this.elements.rosesStatsPanel.classList.toggle('hidden');
+        if (!this.elements.rosesStatsPanel.classList.contains('hidden')) {
+          this.updateRosesStatsPanel();
+        }
+      }
+
       // Méthodes de gestion des titres
       showTitleSelector() {
         this.elements.titleSelectorContainer.style.display = 'flex';
@@ -3982,6 +4193,7 @@
         if (newTitle) {
           this.state.customTitle = newTitle;
           document.title = newTitle;
+          this.elements.currentTitleDisplay.textContent = newTitle;
           this.saveGame(true);
           this.elements.message.textContent = `🎭 Titre changé en: "${newTitle}"`;
           this.hideTitleSelector();
@@ -4058,6 +4270,19 @@
           this.updateStatsPanel();
           this.saveGame(true);
           this.elements.message.textContent = '🗑️ Toutes les dettes ont été réinitialisées !';
+        }
+      }
+
+      resetRosesStats() {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment réinitialiser les statistiques des roses ?\n\nCette action est IRRÉVERSIBLE !')) {
+          this.state.rosesStats = {
+            totalAllTime: 0,
+            monthlyStats: {},
+            weeklyStats: {}
+          };
+          this.updateRosesStatsPanel();
+          this.saveGame(true);
+          this.elements.message.textContent = '🗑️ Les statistiques des roses ont été réinitialisées !';
         }
       }
 
@@ -4202,7 +4427,7 @@
       }
 
       clearSave() {
-        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' gains dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.bonusRoses + ' roses en bonus\n• ' + this.state.paidRoses + ' roses payées\n\nCette action est IRRÉVERSIBLE !')) {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' gains dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.bonusRoses + ' roses en bonus\n• ' + this.state.paidRoses + ' roses payées\n• Toutes vos statistiques de roses\n\nCette action est IRRÉVERSIBLE !')) {
           this.storage.clearSave();
           
           this.state.attempts = 0;
@@ -4229,6 +4454,11 @@
           this.state.debugTurnsRemaining = 0;
           this.state.debugTurnsTarget = 200;
           this.state.customTitle = "🎰 Machine à Sous des Symboles Mystères";
+          this.state.rosesStats = {
+            totalAllTime: 0,
+            monthlyStats: {},
+            weeklyStats: {}
+          };
           
           this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
           this.updateDisplay();
@@ -4241,6 +4471,8 @@
           this.updateMyBalanceDisplay();
           this.updateBonusDisplay();
           this.updateCurrentTurnsPanel();
+          this.updateRosesStatsPanel();
+          this.elements.currentTitleDisplay.textContent = this.state.customTitle;
           this.removeWinClasses();
           
           this.elements.message.textContent = '🗑️ Toutes les données ont été effacées ! Vous repartez de zéro.';
@@ -4268,7 +4500,8 @@
           debugSelectedSymbol: this.state.debugSelectedSymbol,
           debugTurnsRemaining: this.state.debugTurnsRemaining,
           debugTurnsTarget: this.state.debugTurnsTarget,
-          customTitle: this.state.customTitle
+          customTitle: this.state.customTitle,
+          rosesStats: this.state.rosesStats
         };
         
         return this.storage.saveGame(saveData, showNotification);
@@ -4295,6 +4528,11 @@
           this.state.debugTurnsRemaining = savedData.debugTurnsRemaining || 0;
           this.state.debugTurnsTarget = savedData.debugTurnsTarget || 200;
           this.state.customTitle = savedData.customTitle || "🎰 Machine à Sous des Symboles Mystères";
+          this.state.rosesStats = savedData.rosesStats || {
+            totalAllTime: 0,
+            monthlyStats: {},
+            weeklyStats: {}
+          };
           
           this.state.remainingTurns = 0;
           this.state.spinQueue = [];
@@ -4309,6 +4547,8 @@
           this.updateBonusDisplay();
           this.updateQueueIndicator();
           this.updateCurrentTurnsPanel();
+          this.updateRosesStatsPanel();
+          this.elements.currentTitleDisplay.textContent = this.state.customTitle;
           
           if (this.state.debugMode && this.state.debugSelectedSymbol !== null) {
             const selectedItem = document.querySelector(`.debug-symbol-item[data-symbol-index="${this.state.debugSelectedSymbol}"]`);
@@ -4455,6 +4695,7 @@
         this.updateMyBalanceDisplay();
         this.updateBonusDisplay();
         this.updateCurrentTurnsPanel();
+        this.updateRosesStatsPanel();
         this.removeWinClasses();
         
         this.symbols.preloadImages();
