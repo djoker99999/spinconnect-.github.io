@@ -2203,6 +2203,15 @@
           <img src="https://i.ibb.co/C5M6DHcS/IMG-7356-Photoroom.png" alt="100 tours" class="attack-mode-image">
           <div>100 tours</div>
         </button>
+        <!-- NOUVEAUX BOUTONS 500 et 1000 tours -->
+        <button id="mode500" class="attack-mode-btn">
+          <img src="https://i.ibb.co/nNy17WfL/IMG-6065.png" alt="500 tours" class="attack-mode-image">
+          <div>500 tours</div>
+        </button>
+        <button id="mode1000" class="attack-mode-btn">
+          <img src="https://i.ibb.co/JMPfpWV/IMG-5851.png" alt="1000 tours" class="attack-mode-image">
+          <div>1000 tours</div>
+        </button>
       </div>
     </div>
 
@@ -2920,6 +2929,9 @@
         document.getElementById('mode10').addEventListener('click', () => this.setAttackMode(10));
         document.getElementById('mode30').addEventListener('click', () => this.setAttackMode(30));
         document.getElementById('mode100').addEventListener('click', () => this.setAttackMode(100));
+        // NOUVEAUX BOUTONS 500 et 1000 tours
+        document.getElementById('mode500').addEventListener('click', () => this.setAttackMode(500));
+        document.getElementById('mode1000').addEventListener('click', () => this.setAttackMode(1000));
 
         this.setupMenuEvents();
         this.setupImportExportEvents();
@@ -3126,8 +3138,8 @@
           this.toggleSpeedMode();
         }
         
-        if (e.key >= '1' && e.key <= '4') {
-          const modes = [1, 10, 30, 100];
+        if (e.key >= '1' && e.key <= '6') {
+          const modes = [1, 10, 30, 100, 500, 1000];
           const index = parseInt(e.key) - 1;
           if (index < modes.length) {
             this.setAttackMode(modes[index]);
@@ -4268,6 +4280,14 @@
           case "multi_spin_100":
             queueItem.turns = 100;
             this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 100 tours via TikFinity !`;
+            break;
+          case "multi_spin_500":
+            queueItem.turns = 500;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 500 tours via TikFinity !`;
+            break;
+          case "multi_spin_1000":
+            queueItem.turns = 1000;
+            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 1000 tours via TikFinity !`;
             break;
         }
         
