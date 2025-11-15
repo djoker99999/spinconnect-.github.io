@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -334,6 +336,26 @@
 
     #spinBtn:hover {
       background: linear-gradient(45deg, #2ecc71, var(--success-color));
+    }
+
+    #speedBtn {
+      background: linear-gradient(45deg, var(--info-color), #2980b9);
+      font-size: 18px;
+      padding: 18px 30px;
+    }
+
+    #speedBtn:hover {
+      background: linear-gradient(45deg, #2980b9, var(--info-color));
+    }
+
+    #speedBtn.active {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      animation: pulseSpeed 1s infinite;
+    }
+
+    @keyframes pulseSpeed {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
     #message {
@@ -742,6 +764,157 @@
       background: #555;
       cursor: not-allowed;
       transform: none;
+    }
+
+    /* Panneau Mes gains */
+    .my-balance-panel {
+      width: 450px;
+      border: 2px solid var(--info-color);
+    }
+
+    .my-balance-panel h3 {
+      color: var(--info-color);
+    }
+
+    .balance-display {
+      font-size: 2.5em;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .balance-positive {
+      color: var(--success-color);
+    }
+
+    .balance-negative {
+      color: var(--danger-color);
+    }
+
+    .balance-zero {
+      color: var(--primary-color);
+    }
+
+    .balance-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .balance-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .balance-input label {
+      font-size: 1.1em;
+      color: var(--primary-color);
+      min-width: 100px;
+    }
+
+    .balance-input input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--info-color);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.1em;
+      text-align: center;
+    }
+
+    .balance-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .balance-add-btn {
+      background: linear-gradient(45deg, var(--success-color), #2ecc71);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      transition: var(--transition);
+      flex: 1;
+    }
+
+    .balance-add-btn:hover {
+      background: linear-gradient(45deg, #2ecc71, var(--success-color));
+      transform: scale(1.05);
+    }
+
+    .balance-subtract-btn {
+      background: linear-gradient(45deg, var(--danger-color), #c0392b);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      transition: var(--transition);
+      flex: 1;
+    }
+
+    .balance-subtract-btn:hover {
+      background: linear-gradient(45deg, #c0392b, var(--danger-color));
+      transform: scale(1.05);
+    }
+
+    .balance-reset-btn {
+      background: linear-gradient(45deg, var(--warning-color), #e67e22);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      transition: var(--transition);
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .balance-reset-btn:hover {
+      background: linear-gradient(45deg, #e67e22, var(--warning-color));
+      transform: scale(1.05);
+    }
+
+    /* Panneau Bonus */
+    .bonus-panel {
+      width: 450px;
+      border: 2px solid var(--primary-color);
+    }
+
+    .bonus-panel h3 {
+      color: var(--primary-color);
+    }
+
+    .bonus-display {
+      font-size: 2.5em;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--primary-color);
+    }
+
+    .bonus-info {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.1em;
+      color: rgba(255, 255, 255, 0.8);
     }
 
     /* Panneau Statistiques */
@@ -1425,169 +1598,6 @@
       border: 2px solid var(--primary-color);
     }
 
-    /* Panneau Import/Export */
-    .import-export-panel {
-      width: 500px;
-      border: 2px solid #9b59b6;
-    }
-
-    .import-export-panel h3 {
-      color: #9b59b6;
-    }
-
-    .import-export-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .import-export-section {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-
-    .import-export-section h4 {
-      color: var(--primary-color);
-      margin-bottom: 10px;
-      font-size: 1.2em;
-    }
-
-    .import-export-textarea {
-      width: 100%;
-      height: 150px;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #9b59b6;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1em;
-      font-family: monospace;
-      resize: vertical;
-    }
-
-    .import-export-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    .import-export-btn {
-      background: linear-gradient(45deg, #9b59b6, #8e44ad);
-      border: none;
-      border-radius: 8px;
-      color: white;
-      padding: 12px 18px;
-      cursor: pointer;
-      font-size: 1em;
-      font-weight: bold;
-      transition: var(--transition);
-      flex: 1;
-    }
-
-    .import-export-btn:hover {
-      background: linear-gradient(45deg, #8e44ad, #9b59b6);
-      transform: scale(1.05);
-    }
-
-    .import-export-btn.export {
-      background: linear-gradient(45deg, var(--success-color), #2ecc71);
-    }
-
-    .import-export-btn.export:hover {
-      background: linear-gradient(45deg, #2ecc71, var(--success-color));
-    }
-
-    .import-export-btn.import {
-      background: linear-gradient(45deg, var(--info-color), #3498db);
-    }
-
-    .import-export-btn.import:hover {
-      background: linear-gradient(45deg, #3498db, var(--info-color));
-    }
-
-    /* Panneau Ajouter des Tours */
-    .add-turns-panel {
-      width: 500px;
-      border: 2px solid #f39c12;
-    }
-
-    .add-turns-panel h3 {
-      color: #f39c12;
-    }
-
-    .add-turns-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .add-turns-input {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .add-turns-input label {
-      font-size: 1.1em;
-      color: var(--primary-color);
-    }
-
-    .add-turns-input input {
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #f39c12;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1.1em;
-      text-align: center;
-    }
-
-    .add-turns-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    .add-turns-confirm {
-      background: linear-gradient(45deg, var(--success-color), #2ecc71);
-      border: none;
-      border-radius: 8px;
-      color: white;
-      padding: 12px;
-      cursor: pointer;
-      font-size: 1em;
-      font-weight: bold;
-      transition: var(--transition);
-      flex: 1;
-    }
-
-    .add-turns-confirm:hover {
-      background: linear-gradient(45deg, #2ecc71, var(--success-color));
-      transform: scale(1.05);
-    }
-
-    .add-turns-cancel {
-      background: linear-gradient(45deg, var(--danger-color), #c0392b);
-      border: none;
-      border-radius: 8px;
-      color: white;
-      padding: 12px;
-      cursor: pointer;
-      font-size: 1em;
-      font-weight: bold;
-      transition: var(--transition);
-      flex: 1;
-    }
-
-    .add-turns-cancel:hover {
-      background: linear-gradient(45deg, #c0392b, var(--danger-color));
-      transform: scale(1.05);
-    }
-
     @media (max-width: 768px) {
       .game-container {
         padding: 25px;
@@ -1667,6 +1677,11 @@
 
       .rose-exchange-input {
         flex-direction: column;
+      }
+
+      .balance-input {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .stats-grid {
@@ -1783,6 +1798,46 @@
   </div>
 
   <!-- Panneaux déplaçables -->
+  <div class="draggable-panel my-balance-panel hidden" id="myBalancePanel">
+    <div class="panel-header" id="myBalancePanelHeader">
+      <h3>💰 Mes Gains</h3>
+      <button class="close-panel" id="closeMyBalancePanel">✕</button>
+    </div>
+    
+    <div class="balance-display" id="balanceDisplay">
+      0 🌹
+    </div>
+    
+    <div class="balance-controls">
+      <div class="balance-input">
+        <label for="balanceAmount">Montant :</label>
+        <input type="number" id="balanceAmount" value="1">
+      </div>
+      
+      <div class="balance-buttons">
+        <button class="balance-add-btn" id="balanceAddBtn">Ajouter</button>
+        <button class="balance-subtract-btn" id="balanceSubtractBtn">Retirer</button>
+      </div>
+      
+      <button class="balance-reset-btn" id="balanceResetBtn">Réinitialiser le solde</button>
+    </div>
+  </div>
+
+  <div class="draggable-panel bonus-panel hidden" id="bonusPanel">
+    <div class="panel-header" id="bonusPanelHeader">
+      <h3>🎁 Bonus</h3>
+      <button class="close-panel" id="closeBonusPanel">✕</button>
+    </div>
+    
+    <div class="bonus-display" id="bonusDisplay">
+      0 🌹
+    </div>
+    
+    <div class="bonus-info" id="bonusInfo">
+      Roses gagnées en bonus
+    </div>
+  </div>
+
   <div class="draggable-panel stats-panel hidden" id="statsPanel">
     <div class="panel-header" id="statsPanelHeader">
       <h3>📊 Statistiques</h3>
@@ -1790,6 +1845,12 @@
     </div>
     
     <div class="stats-grid" id="statsGrid">
+      <div class="stat-card bonus">
+        <h4>🎁 Bonus</h4>
+        <div class="stat-card-value" id="statsBonusRoses">0</div>
+        <div>Roses gagnées en bonus</div>
+      </div>
+      
       <div class="stat-card debts">
         <h4>📋 En cours</h4>
         <div class="stat-card-value" id="statsDebtsCount">0</div>
@@ -1848,6 +1909,28 @@
     </div>
   </div>
 
+  <div class="draggable-panel debts-panel hidden" id="debtsPanel">
+    <div class="panel-header" id="debtsPanelHeader">
+      <h3>📋 Dettes en cours</h3>
+      <button class="close-panel" id="closeDebtsPanel">✕</button>
+    </div>
+    <div class="debts-panel-filters">
+      <select id="debtSortSelect">
+        <option value="amount-desc">Trier par montant (décroissant)</option>
+        <option value="amount-asc">Trier par montant (croissant)</option>
+        <option value="date-desc">Trier par date (récent)</option>
+        <option value="date-asc">Trier par date (ancien)</option>
+        <option value="name">Trier par nom</option>
+      </select>
+      <input type="text" id="debtFilterInput" placeholder="Filtrer par nom...">
+    </div>
+    <div id="debtsPanelContent">
+      <div class="no-debts">Aucune dette enregistrée</div>
+    </div>
+    <button class="double-turns-btn" id="doubleTurnsBtn">🔄 Relancer le double de tours</button>
+    <button class="double-turns-btn" id="resetDebtsBtn" style="background: linear-gradient(45deg, var(--danger-color), #c0392b); margin-top: 8px;">🗑️ Réinitialiser dettes</button>
+  </div>
+
   <div class="draggable-panel current-turns-panel hidden" id="currentTurnsPanel">
     <div class="panel-header" id="currentTurnsPanelHeader">
       <h3>🔄 Tours en cours</h3>
@@ -1855,29 +1938,6 @@
     </div>
     <div class="current-turns-content" id="currentTurnsContent">
       <div class="no-debts">Aucun tour en attente</div>
-    </div>
-  </div>
-
-  <!-- NOUVEAU PANEL: Ajouter des Tours -->
-  <div class="draggable-panel add-turns-panel hidden" id="addTurnsPanel">
-    <div class="panel-header" id="addTurnsPanelHeader">
-      <h3>➕ Ajouter des Tours</h3>
-      <button class="close-panel" id="closeAddTurnsPanel">✕</button>
-    </div>
-    
-    <div class="add-turns-controls">
-      <div class="add-turns-input">
-        <label for="addTurnsUsername">Nom de l'utilisateur :</label>
-        <input type="text" id="addTurnsUsername" placeholder="Entrez le nom d'utilisateur">
-        
-        <label for="addTurnsCount">Nombre de tours à ajouter :</label>
-        <input type="number" id="addTurnsCount" min="1" value="1">
-      </div>
-      
-      <div class="add-turns-buttons">
-        <button class="add-turns-confirm" id="addTurnsConfirm">Ajouter les tours</button>
-        <button class="add-turns-cancel" id="addTurnsCancel">Annuler</button>
-      </div>
     </div>
   </div>
 
@@ -1905,36 +1965,6 @@
       </div>
     </div>
     <button class="double-turns-btn" id="resetRosesStatsBtn" style="background: linear-gradient(45deg, var(--warning-color), #e67e22);">🔄 Réinitialiser Stats</button>
-  </div>
-
-  <!-- NOUVEAU PANEL: Import/Export -->
-  <div class="draggable-panel import-export-panel hidden" id="importExportPanel">
-    <div class="panel-header" id="importExportPanelHeader">
-      <h3>💾 Import/Export</h3>
-      <button class="close-panel" id="closeImportExportPanel">✕</button>
-    </div>
-    
-    <div class="import-export-controls">
-      <div class="import-export-section">
-        <h4>📤 Exporter les données</h4>
-        <p>Copiez ce code pour sauvegarder votre progression :</p>
-        <textarea class="import-export-textarea" id="exportDataText" readonly></textarea>
-        <div class="import-export-buttons">
-          <button class="import-export-btn export" id="exportDataBtn">📋 Copier</button>
-          <button class="import-export-btn export" id="downloadDataBtn">💾 Télécharger</button>
-        </div>
-      </div>
-      
-      <div class="import-export-section">
-        <h4>📥 Importer les données</h4>
-        <p>Collez un code de sauvegarde pour restaurer votre progression :</p>
-        <textarea class="import-export-textarea" id="importDataText" placeholder="Collez votre code de sauvegarde ici..."></textarea>
-        <div class="import-export-buttons">
-          <button class="import-export-btn import" id="importDataBtn">📥 Importer</button>
-          <button class="import-export-btn" id="clearImportBtn">🗑️ Effacer</button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="game-container">
@@ -2001,15 +2031,6 @@
           <img src="https://i.ibb.co/C5M6DHcS/IMG-7356-Photoroom.png" alt="100 tours" class="attack-mode-image">
           <div>100 tours</div>
         </button>
-        <!-- NOUVEAUX BOUTONS 500 et 1000 tours -->
-        <button id="mode500" class="attack-mode-btn">
-          <img src="https://i.ibb.co/nNy17WfL/IMG-6065.png" alt="500 tours" class="attack-mode-image">
-          <div>500 tours</div>
-        </button>
-        <button id="mode1000" class="attack-mode-btn">
-          <img src="https://i.ibb.co/JMPfpWV/IMG-5851.png" alt="1000 tours" class="attack-mode-image">
-          <div>1000 tours</div>
-        </button>
       </div>
     </div>
 
@@ -2061,10 +2082,12 @@
       <div class="menu-section">
         <h4>Panneaux de contrôle</h4>
         <div class="menu-buttons">
+          <button class="menu-button" id="menuMyBalance">💰 Mes Gains</button>
+          <button class="menu-button" id="menuBonus">🎁 Bonus</button>
           <button class="menu-button" id="menuStats">📊 Statistiques</button>
+          <button class="menu-button" id="menuDebtsPanel">📋 Dettes</button>
           <button class="menu-button" id="menuCurrentTurns">🔄 Tours en cours</button>
           <button class="menu-button" id="menuRosesStats">📈 Stats Roses</button>
-          <button class="menu-button" id="menuImportExport">💾 Import/Export</button>
         </div>
       </div>
       
@@ -2095,14 +2118,13 @@
         <h4>Outils de développement</h4>
         <div class="menu-buttons">
           <button class="menu-button" id="menuDebug">🐛 Mode Debug</button>
-          <button class="menu-button" id="menuAddTurns">➕ Ajouter tours</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Indicateur de sauvegarde -->
-  <div class="save-indicator" id="saveIndicator">💾 Données importées avec succès</div>
+  <div class="save-indicator" id="saveIndicator">💾 Sauvegarde automatique</div>
 
   <script>
     // =============================================
@@ -2120,7 +2142,7 @@
         6: 200  // Gain pour 6 symboles identiques
       },
       ROSE_TO_TURNS_RATE: 2,
-      ROSE_ADD_INTERVAL: 20, // Changé à 20 tours pour ajouter une rose
+      ROSE_ADD_INTERVAL: 2,
       SYMBOL_VALUES: {
         0: 90,
         1: 200,
@@ -2168,6 +2190,7 @@
     // =============================================
     class StorageManager {
       constructor() {
+        this.SAVE_KEY = 'jackpotGameSave';
         this.showSaveIndicator = true;
       }
 
@@ -2192,69 +2215,58 @@
         return true;
       }
 
-      // Méthode pour exporter les données
-      exportGameData(data) {
-        const exportData = {
+      saveGame(data, showNotification = true) {
+        const saveData = {
           ...data,
-          exportedAt: new Date().toISOString(),
-          version: '1.0'
+          lastSaved: new Date().toISOString()
         };
         
-        return JSON.stringify(exportData, null, 2);
+        try {
+          localStorage.setItem(this.SAVE_KEY, JSON.stringify(saveData));
+          
+          const saveIndicator = document.getElementById('saveIndicator');
+          if (saveIndicator && showNotification && this.showSaveIndicator) {
+            saveIndicator.classList.add('show');
+            setTimeout(() => {
+              saveIndicator.classList.remove('show');
+            }, 1500);
+          }
+          
+          console.log('Partie sauvegardée automatiquement');
+          return true;
+        } catch (e) {
+          console.error('Erreur lors de la sauvegarde:', e);
+          return false;
+        }
       }
 
-      // Méthode pour importer les données
-      importGameData(jsonString) {
+      loadGame() {
         try {
-          const data = this.safeJSONParse(jsonString);
+          const savedData = localStorage.getItem(this.SAVE_KEY);
           
-          if (this.validateGameData(data)) {
-            console.log('Données importées avec succès');
-            return data;
+          if (savedData) {
+            const data = this.safeJSONParse(savedData);
+            
+            if (this.validateGameData(data)) {
+              console.log('Partie chargée depuis la sauvegarde');
+              return data;
+            }
           }
         } catch (e) {
-          console.error('Erreur lors de l\'importation:', e);
+          console.error('Erreur lors du chargement:', e);
         }
         
         return null;
       }
 
-      // Méthode pour copier dans le presse-papier
-      copyToClipboard(text) {
-        return new Promise((resolve, reject) => {
-          if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(resolve).catch(reject);
-          } else {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-              document.execCommand('copy');
-              resolve();
-            } catch (err) {
-              reject(err);
-            }
-            document.body.removeChild(textArea);
-          }
-        });
-      }
-
-      // Méthode pour télécharger un fichier
-      downloadFile(filename, content) {
-        const blob = new Blob([content], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+      clearSave() {
+        try {
+          localStorage.removeItem(this.SAVE_KEY);
+          return true;
+        } catch (e) {
+          console.error('Erreur lors de la suppression:', e);
+          return false;
+        }
       }
     }
 
@@ -2648,6 +2660,7 @@
           currentExchangeUser: null,
           currentExchangeMaxRoses: 0,
           myBalance: 0,
+          bonusRoses: 0,
           // Variables pour le mode debug
           debugMode: false,
           debugSelectedSymbol: null,
@@ -2665,7 +2678,6 @@
 
         this.initializeDOM();
         this.setupEventListeners();
-        this.setupDraggablePanels();
       }
 
       initializeDOM() {
@@ -2688,33 +2700,71 @@
           sortByDateBtn: document.getElementById('sortByDateBtn'),
           lastUserDisplay: document.getElementById('lastUserDisplay'),
           lastUserDebtInfo: document.getElementById('lastUserDebtInfo'),
-          currentTitleDisplay: document.getElementById('currentTitleDisplay'),
-          // Nouveaux éléments pour l'import/export
-          importExportPanel: document.getElementById('importExportPanel'),
-          importExportPanelHeader: document.getElementById('importExportPanelHeader'),
-          exportDataText: document.getElementById('exportDataText'),
-          importDataText: document.getElementById('importDataText'),
-          exportDataBtn: document.getElementById('exportDataBtn'),
-          downloadDataBtn: document.getElementById('downloadDataBtn'),
-          importDataBtn: document.getElementById('importDataBtn'),
-          clearImportBtn: document.getElementById('clearImportBtn'),
-          closeImportExportPanel: document.getElementById('closeImportExportPanel'),
-          // Nouveaux éléments pour le panneau d'ajout de tours
-          addTurnsPanel: document.getElementById('addTurnsPanel'),
-          addTurnsPanelHeader: document.getElementById('addTurnsPanelHeader'),
-          addTurnsUsername: document.getElementById('addTurnsUsername'),
-          addTurnsCount: document.getElementById('addTurnsCount'),
-          addTurnsConfirm: document.getElementById('addTurnsConfirm'),
-          addTurnsCancel: document.getElementById('addTurnsCancel'),
-          closeAddTurnsPanel: document.getElementById('closeAddTurnsPanel'),
-          // Éléments pour le panneau debug
+          debtsPanel: document.getElementById('debtsPanel'),
+          debtsPanelContent: document.getElementById('debtsPanelContent'),
+          debtSortSelect: document.getElementById('debtSortSelect'),
+          debtFilterInput: document.getElementById('debtFilterInput'),
+          doubleTurnsBtn: document.getElementById('doubleTurnsBtn'),
+          resetDebtsBtn: document.getElementById('resetDebtsBtn'),
+          closeDebtsPanel: document.getElementById('closeDebtsPanel'),
+          roseExchangeContainer: document.getElementById('roseExchangeContainer'),
+          roseExchangeInfo: document.getElementById('roseExchangeInfo'),
+          roseExchangeAmount: document.getElementById('roseExchangeAmount'),
+          roseExchangeSlider: document.getElementById('roseExchangeSlider'),
+          roseExchangeResult: document.getElementById('roseExchangeResult'),
+          exchangeTurns: document.getElementById('exchangeTurns'),
+          roseExchangeConfirm: document.getElementById('roseExchangeConfirm'),
+          roseExchangeCancel: document.getElementById('roseExchangeCancel'),
+          myBalancePanel: document.getElementById('myBalancePanel'),
+          myBalancePanelHeader: document.getElementById('myBalancePanelHeader'),
+          balanceDisplay: document.getElementById('balanceDisplay'),
+          balanceAmount: document.getElementById('balanceAmount'),
+          balanceAddBtn: document.getElementById('balanceAddBtn'),
+          balanceSubtractBtn: document.getElementById('balanceSubtractBtn'),
+          balanceResetBtn: document.getElementById('balanceResetBtn'),
+          closeMyBalancePanel: document.getElementById('closeMyBalancePanel'),
+          bonusPanel: document.getElementById('bonusPanel'),
+          bonusPanelHeader: document.getElementById('bonusPanelHeader'),
+          bonusDisplay: document.getElementById('bonusDisplay'),
+          bonusInfo: document.getElementById('bonusInfo'),
+          closeBonusPanel: document.getElementById('closeBonusPanel'),
+          statsPanel: document.getElementById('statsPanel'),
+          statsPanelHeader: document.getElementById('statsPanelHeader'),
+          statsGrid: document.getElementById('statsGrid'),
+          statsBonusRoses: document.getElementById('statsBonusRoses'),
+          statsDebtsCount: document.getElementById('statsDebtsCount'),
+          statsPaidRoses: document.getElementById('statsPaidRoses'),
+          statsMyBalance: document.getElementById('statsMyBalance'),
+          statsAttempts: document.getElementById('statsAttempts'),
+          closeStatsPanel: document.getElementById('closeStatsPanel'),
           debugPanel: document.getElementById('debugPanel'),
           debugPanelHeader: document.getElementById('debugPanelHeader'),
+          debugSymbolsGrid: document.getElementById('debugSymbolsGrid'),
           debugTurns: document.getElementById('debugTurns'),
           debugActivateBtn: document.getElementById('debugActivateBtn'),
           debugDeactivateBtn: document.getElementById('debugDeactivateBtn'),
-          debugSymbolsGrid: document.getElementById('debugSymbolsGrid'),
-          closeDebugPanel: document.getElementById('closeDebugPanel')
+          closeDebugPanel: document.getElementById('closeDebugPanel'),
+          currentTurnsPanel: document.getElementById('currentTurnsPanel'),
+          currentTurnsPanelHeader: document.getElementById('currentTurnsPanelHeader'),
+          currentTurnsContent: document.getElementById('currentTurnsContent'),
+          closeCurrentTurnsPanel: document.getElementById('closeCurrentTurnsPanel'),
+          titleSelectorContainer: document.getElementById('titleSelectorContainer'),
+          titleOptions: document.getElementById('titleOptions'),
+          customTitleInput: document.getElementById('customTitleInput'),
+          titleSelectorConfirm: document.getElementById('titleSelectorConfirm'),
+          titleSelectorCancel: document.getElementById('titleSelectorCancel'),
+          // Nouveaux éléments pour les statistiques des roses
+          rosesStatsPanel: document.getElementById('rosesStatsPanel'),
+          rosesStatsPanelHeader: document.getElementById('rosesStatsPanelHeader'),
+          rosesStatsGrid: document.getElementById('rosesStatsGrid'),
+          totalRosesAllTime: document.getElementById('totalRosesAllTime'),
+          totalRosesThisMonth: document.getElementById('totalRosesThisMonth'),
+          totalRosesThisWeek: document.getElementById('totalRosesThisWeek'),
+          currentMonthPeriod: document.getElementById('currentMonthPeriod'),
+          currentWeekPeriod: document.getElementById('currentWeekPeriod'),
+          resetRosesStatsBtn: document.getElementById('resetRosesStatsBtn'),
+          closeRosesStatsPanel: document.getElementById('closeRosesStatsPanel'),
+          currentTitleDisplay: document.getElementById('currentTitleDisplay')
         };
       }
 
@@ -2724,42 +2774,27 @@
         document.getElementById('mode10').addEventListener('click', () => this.setAttackMode(10));
         document.getElementById('mode30').addEventListener('click', () => this.setAttackMode(30));
         document.getElementById('mode100').addEventListener('click', () => this.setAttackMode(100));
-        // NOUVEAUX BOUTONS 500 et 1000 tours
-        document.getElementById('mode500').addEventListener('click', () => this.setAttackMode(500));
-        document.getElementById('mode1000').addEventListener('click', () => this.setAttackMode(1000));
 
         this.setupMenuEvents();
-        this.setupImportExportEvents();
+        this.setupPanelEvents();
         this.setupDebtSearchEvents();
-        this.setupAddTurnsEvents();
+        this.setupRoseExchangeEvents();
+        this.setupMyBalanceEvents();
+        this.setupBonusEvents();
+        this.setupStatsEvents();
         this.setupDebugEvents();
+        this.setupTitleSelectorEvents();
+        this.setupRosesStatsEvents();
 
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
 
-        // Suppression de la sauvegarde automatique
-        // setInterval(() => {
-        //   if (!this.state.isSpinning && this.state.attempts > 0) {
-        //     this.saveGame(true);
-        //   }
-        // }, 10000);
+        setInterval(() => {
+          if (!this.state.isSpinning && this.state.attempts > 0) {
+            this.saveGame(true);
+          }
+        }, 10000);
 
-        // window.addEventListener('beforeunload', () => this.saveGame(false));
-      }
-
-      setupDraggablePanels() {
-        // Configuration de tous les panneaux déplaçables
-        const panels = [
-          { id: 'statsPanel', headerId: 'statsPanelHeader' },
-          { id: 'debugPanel', headerId: 'debugPanelHeader' },
-          { id: 'currentTurnsPanel', headerId: 'currentTurnsPanelHeader' },
-          { id: 'addTurnsPanel', headerId: 'addTurnsPanelHeader' },
-          { id: 'rosesStatsPanel', headerId: 'rosesStatsPanelHeader' },
-          { id: 'importExportPanel', headerId: 'importExportPanelHeader' }
-        ];
-
-        panels.forEach(panel => {
-          this.makePanelDraggable(panel.id, panel.headerId);
-        });
+        window.addEventListener('beforeunload', () => this.saveGame(false));
       }
 
       setupMenuEvents() {
@@ -2777,70 +2812,71 @@
         document.getElementById('menuSuperSpeed').addEventListener('click', () => this.toggleSuperSpeedMode());
         document.getElementById('menuUltraSpeed').addEventListener('click', () => this.toggleUltraSpeedMode());
         document.getElementById('menuSpeed').addEventListener('click', () => this.toggleSpeedMode());
+        document.getElementById('menuMyBalance').addEventListener('click', () => this.toggleMyBalancePanel());
+        document.getElementById('menuBonus').addEventListener('click', () => this.toggleBonusPanel());
         document.getElementById('menuStats').addEventListener('click', () => this.toggleStatsPanel());
+        document.getElementById('menuDebtsPanel').addEventListener('click', () => this.toggleDebtsPanel());
         document.getElementById('menuCurrentTurns').addEventListener('click', () => this.toggleCurrentTurnsPanel());
         document.getElementById('menuRosesStats').addEventListener('click', () => this.toggleRosesStatsPanel());
-        document.getElementById('menuImportExport').addEventListener('click', () => this.toggleImportExportPanel());
         document.getElementById('menuResetRewards').addEventListener('click', () => this.resetRewards());
         document.getElementById('menuClearData').addEventListener('click', () => this.clearSave());
         document.getElementById('menuAddDebt').addEventListener('click', () => this.addDebtManually());
         document.getElementById('menuResetDebts').addEventListener('click', () => this.resetDebts());
         document.getElementById('menuChangeTitle').addEventListener('click', () => this.showTitleSelector());
         document.getElementById('menuDebug').addEventListener('click', () => this.toggleDebugPanel());
-        document.getElementById('menuAddTurns').addEventListener('click', () => this.toggleAddTurnsPanel());
       }
 
-      setupImportExportEvents() {
-        this.elements.exportDataBtn.addEventListener('click', () => {
-          this.exportData();
-        });
-        
-        this.elements.downloadDataBtn.addEventListener('click', () => {
-          this.downloadData();
-        });
-        
-        this.elements.importDataBtn.addEventListener('click', () => {
-          this.importData();
-        });
-        
-        this.elements.clearImportBtn.addEventListener('click', () => {
-          this.elements.importDataText.value = '';
-        });
-        
-        this.elements.closeImportExportPanel.addEventListener('click', () => {
-          this.elements.importExportPanel.classList.add('hidden');
-        });
-      }
+      setupPanelEvents() {
+        // Fermeture des panneaux
+        const panels = [
+          { panel: 'myBalancePanel', closeBtn: 'closeMyBalancePanel' },
+          { panel: 'bonusPanel', closeBtn: 'closeBonusPanel' },
+          { panel: 'statsPanel', closeBtn: 'closeStatsPanel' },
+          { panel: 'debtsPanel', closeBtn: 'closeDebtsPanel' },
+          { panel: 'debugPanel', closeBtn: 'closeDebugPanel' },
+          { panel: 'currentTurnsPanel', closeBtn: 'closeCurrentTurnsPanel' },
+          { panel: 'rosesStatsPanel', closeBtn: 'closeRosesStatsPanel' }
+        ];
 
-      setupAddTurnsEvents() {
-        this.elements.addTurnsConfirm.addEventListener('click', () => {
-          this.addTurnsManually();
+        panels.forEach(({ panel, closeBtn }) => {
+          document.getElementById(closeBtn).addEventListener('click', () => {
+            document.getElementById(panel).classList.add('hidden');
+          });
         });
-        
-        this.elements.addTurnsCancel.addEventListener('click', () => {
-          this.elements.addTurnsPanel.classList.add('hidden');
-        });
-        
-        this.elements.closeAddTurnsPanel.addEventListener('click', () => {
-          this.elements.addTurnsPanel.classList.add('hidden');
-        });
-      }
 
-      setupDebugEvents() {
-        this.elements.debugActivateBtn.addEventListener('click', () => {
-          this.activateDebugMode();
+        // Rendre les panneaux déplaçables
+        const draggablePanels = [
+          { panel: 'myBalancePanel', header: 'myBalancePanelHeader' },
+          { panel: 'bonusPanel', header: 'bonusPanelHeader' },
+          { panel: 'statsPanel', header: 'statsPanelHeader' },
+          { panel: 'debtsPanel', header: 'debtsPanelHeader' },
+          { panel: 'debugPanel', header: 'debugPanelHeader' },
+          { panel: 'currentTurnsPanel', header: 'currentTurnsPanelHeader' },
+          { panel: 'rosesStatsPanel', header: 'rosesStatsPanelHeader' }
+        ];
+
+        draggablePanels.forEach(({ panel, header }) => {
+          this.makePanelDraggable(panel, header);
         });
-        
-        this.elements.debugDeactivateBtn.addEventListener('click', () => {
-          this.deactivateDebugMode();
+
+        // Événements spécifiques au panneau des dettes
+        this.elements.debtSortSelect.addEventListener('change', (e) => {
+          this.state.debtSort = e.target.value;
+          this.updateDebtsPanel();
         });
-        
-        this.elements.closeDebugPanel.addEventListener('click', () => {
-          this.elements.debugPanel.classList.add('hidden');
+
+        this.elements.debtFilterInput.addEventListener('input', (e) => {
+          this.state.debtFilter = e.target.value;
+          this.updateDebtsPanel();
         });
-        
-        // Initialiser la grille des symboles de debug
-        this.initializeDebugSymbolsGrid();
+
+        this.elements.doubleTurnsBtn.addEventListener('click', () => {
+          this.doubleTurnsForUser();
+        });
+
+        this.elements.resetDebtsBtn.addEventListener('click', () => {
+          this.resetDebts();
+        });
       }
 
       setupDebtSearchEvents() {
@@ -2874,14 +2910,209 @@
         });
       }
 
+      setupRoseExchangeEvents() {
+        this.elements.roseExchangeAmount.addEventListener('input', (e) => {
+          this.updateRoseExchangeResult();
+        });
+        
+        this.elements.roseExchangeSlider.addEventListener('input', (e) => {
+          this.elements.roseExchangeAmount.value = e.target.value;
+          this.updateRoseExchangeResult();
+        });
+        
+        this.elements.roseExchangeConfirm.addEventListener('click', () => {
+          this.confirmRoseExchange();
+        });
+        
+        this.elements.roseExchangeCancel.addEventListener('click', () => {
+          this.hideRoseExchange();
+        });
+      }
+
+      setupMyBalanceEvents() {
+        this.elements.balanceAddBtn.addEventListener('click', () => {
+          this.addToBalance();
+        });
+        
+        this.elements.balanceSubtractBtn.addEventListener('click', () => {
+          this.subtractFromBalance();
+        });
+        
+        this.elements.balanceResetBtn.addEventListener('click', () => {
+          this.resetBalance();
+        });
+        
+        this.elements.balanceAmount.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            this.addToBalance();
+          }
+        });
+      }
+
+      setupBonusEvents() {
+        // Pas d'événements spécifiques pour le panneau bonus pour l'instant
+      }
+
+      setupStatsEvents() {
+        // Pas d'événements spécifiques pour le panneau stats pour l'instant
+      }
+
+      setupDebugEvents() {
+        this.elements.debugActivateBtn.addEventListener('click', () => {
+          this.activateDebugMode();
+        });
+        
+        this.elements.debugDeactivateBtn.addEventListener('click', () => {
+          this.deactivateDebugMode();
+        });
+        
+        this.elements.debugTurns.addEventListener('input', (e) => {
+          this.state.debugTurnsTarget = parseInt(e.target.value) || 200;
+        });
+        
+        this.initializeDebugSymbolsGrid();
+      }
+
+      setupTitleSelectorEvents() {
+        this.elements.titleOptions.addEventListener('click', (e) => {
+          const titleOption = e.target.closest('.title-option');
+          if (titleOption) {
+            document.querySelectorAll('.title-option').forEach(option => {
+              option.classList.remove('selected');
+            });
+            titleOption.classList.add('selected');
+            this.elements.customTitleInput.value = titleOption.getAttribute('data-title');
+          }
+        });
+        
+        this.elements.customTitleInput.addEventListener('input', (e) => {
+          document.querySelectorAll('.title-option').forEach(option => {
+            option.classList.remove('selected');
+          });
+        });
+        
+        this.elements.titleSelectorConfirm.addEventListener('click', () => {
+          this.confirmTitleSelection();
+        });
+        
+        this.elements.titleSelectorCancel.addEventListener('click', () => {
+          this.hideTitleSelector();
+        });
+      }
+
+      setupRosesStatsEvents() {
+        this.elements.resetRosesStatsBtn.addEventListener('click', () => {
+          this.resetRosesStats();
+        });
+      }
+
+      initializeDebugSymbolsGrid() {
+        this.elements.debugSymbolsGrid.innerHTML = '';
+        
+        this.symbols.symbolTypes.forEach((symbol, index) => {
+          const symbolItem = document.createElement('div');
+          symbolItem.className = 'debug-symbol-item';
+          symbolItem.setAttribute('data-symbol-index', index);
+          
+          symbolItem.innerHTML = `
+            <img src="${symbol.image}" alt="${symbol.name}" class="debug-symbol-image">
+            <div class="debug-symbol-name">${symbol.name}</div>
+          `;
+          
+          symbolItem.addEventListener('click', () => {
+            this.selectDebugSymbol(index);
+          });
+          
+          this.elements.debugSymbolsGrid.appendChild(symbolItem);
+        });
+        
+        this.symbols.specialImages.forEach((special, index) => {
+          const symbolItem = document.createElement('div');
+          symbolItem.className = 'debug-symbol-item';
+          symbolItem.setAttribute('data-symbol-index', -1 - index);
+          
+          symbolItem.innerHTML = `
+            <img src="${special.image}" alt="${special.name}" class="debug-symbol-image">
+            <div class="debug-symbol-name">${special.name}</div>
+          `;
+          
+          symbolItem.addEventListener('click', () => {
+            this.selectDebugSymbol(-1 - index);
+          });
+          
+          this.elements.debugSymbolsGrid.appendChild(symbolItem);
+        });
+      }
+
+      selectDebugSymbol(symbolIndex) {
+        document.querySelectorAll('.debug-symbol-item').forEach(item => {
+          item.classList.remove('selected');
+        });
+        
+        const selectedItem = document.querySelector(`.debug-symbol-item[data-symbol-index="${symbolIndex}"]`);
+        if (selectedItem) {
+          selectedItem.classList.add('selected');
+        }
+        
+        this.state.debugSelectedSymbol = symbolIndex;
+      }
+
+      activateDebugMode() {
+        if (this.state.debugSelectedSymbol === null) {
+          this.elements.message.textContent = '❌ Veuillez sélectionner un symbole d\'abord !';
+          return;
+        }
+        
+        this.state.debugMode = true;
+        this.state.debugTurnsRemaining = this.state.debugTurnsTarget;
+        
+        this.elements.message.textContent = `🐛 Mode debug activé ! Gain forcé dans ${this.state.debugTurnsRemaining} tours avec le symbole sélectionné.`;
+        this.elements.debugActivateBtn.disabled = true;
+        this.elements.debugDeactivateBtn.disabled = false;
+        
+        this.saveGame(true);
+      }
+
+      deactivateDebugMode() {
+        this.state.debugMode = false;
+        this.state.debugTurnsRemaining = 0;
+        this.state.debugSelectedSymbol = null;
+        
+        document.querySelectorAll('.debug-symbol-item').forEach(item => {
+          item.classList.remove('selected');
+        });
+        
+        this.elements.message.textContent = '🐛 Mode debug désactivé.';
+        this.elements.debugActivateBtn.disabled = false;
+        this.elements.debugDeactivateBtn.disabled = true;
+        
+        this.saveGame(true);
+      }
+
+      checkDebugMode() {
+        if (this.state.debugMode && this.state.debugSelectedSymbol !== null) {
+          this.state.debugTurnsRemaining--;
+          
+          if (this.state.debugTurnsRemaining <= 0) {
+            for (let i = 0; i < GAME_CONFIG.DIFFICULTY; i++) {
+              this.state.symbols[i] = this.state.debugSelectedSymbol;
+            }
+            
+            this.updateDisplay();
+            this.elements.message.textContent = '🎯 GAIN FORCÉ ! Mode debug activé.';
+            
+            this.deactivateDebugMode();
+            
+            return true;
+          }
+        }
+        
+        return false;
+      }
+
       makePanelDraggable(panelId, headerId) {
         const panel = document.getElementById(panelId);
         const header = document.getElementById(headerId);
-        
-        if (!panel || !header) {
-          console.warn(`Panneau ${panelId} ou header ${headerId} non trouvé`);
-          return;
-        }
         
         let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
         
@@ -2929,16 +3160,42 @@
           this.toggleSpeedMode();
         }
         
-        if (e.key >= '1' && e.key <= '6') {
-          const modes = [1, 10, 30, 100, 500, 1000];
+        if (e.key >= '1' && e.key <= '4') {
+          const modes = [1, 10, 30, 100];
           const index = parseInt(e.key) - 1;
           if (index < modes.length) {
             this.setAttackMode(modes[index]);
           }
         }
         
-        if (e.key === 'i' || e.key === 'I') {
-          this.toggleImportExportPanel();
+        if (e.key === 'd' || e.key === 'D') {
+          this.toggleDebtsPanel();
+        }
+        
+        if (e.key === 'm' || e.key === 'M') {
+          this.toggleMyBalancePanel();
+        }
+        
+        if (e.key === 'b' || e.key === 'B') {
+          this.toggleBonusPanel();
+        }
+        
+        if (e.key === 't' || e.key === 'T') {
+          this.toggleStatsPanel();
+        }
+        
+        if (e.key === 'f' || e.key === 'F') {
+          this.toggleDebugPanel();
+        }
+        
+        if (e.key === 'c' || e.key === 'C') {
+          this.toggleCurrentTurnsPanel();
+        }
+        
+        if (e.key === 'r' || e.key === 'R') {
+          if (e.ctrlKey) {
+            this.toggleRosesStatsPanel();
+          }
         }
         
         if (e.key === 'Escape') {
@@ -2951,16 +3208,12 @@
 
       hideAllPanels() {
         const panels = [
-          'statsPanel', 
-          'currentTurnsPanel', 'rosesStatsPanel', 'importExportPanel', 
-          'debugPanel', 'addTurnsPanel'
+          'myBalancePanel', 'bonusPanel', 'statsPanel', 
+          'debtsPanel', 'debugPanel', 'currentTurnsPanel', 'rosesStatsPanel'
         ];
         
         panels.forEach(panel => {
-          const element = document.getElementById(panel);
-          if (element) {
-            element.classList.add('hidden');
-          }
+          document.getElementById(panel).classList.add('hidden');
         });
       }
 
@@ -2978,6 +3231,8 @@
         this.updateStats();
         this.updateQueueIndicator();
         this.updateLastUserDisplay();
+        this.updateStatsPanel();
+        this.updateRosesStatsPanel();
         document.getElementById('resultContainer').classList.add('hidden');
         this.elements.message.textContent = `Nouvelle partie ! Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques pour remporter un gain !`;
         this.elements.spinBtn.disabled = false;
@@ -3011,132 +3266,12 @@
         this.state.userTurns[this.state.lastUsername] += this.state.attackMode;
         
         this.updateQueueIndicator();
+        this.updateCurrentTurnsPanel();
         this.elements.message.textContent = `${this.state.attackMode} tour${this.state.attackMode > 1 ? 's' : ''} ajouté${this.state.attackMode > 1 ? 's' : ''} à la file d'attente pour ${this.state.lastUsername} !`;
         
         if (!this.state.isProcessingQueue) {
           this.processQueue();
         }
-      }
-
-      // NOUVELLE MÉTHODE: Ajouter des tours manuellement via le panneau
-      addTurnsManually() {
-        const username = this.elements.addTurnsUsername.value.trim();
-        if (!username) {
-          this.elements.message.textContent = '❌ Veuillez entrer un nom d\'utilisateur';
-          return;
-        }
-        
-        const turns = parseInt(this.elements.addTurnsCount.value) || 0;
-        if (isNaN(turns) || turns <= 0) {
-          this.elements.message.textContent = '❌ Nombre de tours invalide';
-          return;
-        }
-        
-        const queueItem = {
-          username: username,
-          turns: turns,
-          timestamp: Date.now()
-        };
-        
-        this.state.spinQueue.push(queueItem);
-        
-        if (!this.state.userTurns[username]) {
-          this.state.userTurns[username] = 0;
-        }
-        this.state.userTurns[username] += turns;
-        
-        this.updateQueueIndicator();
-        this.elements.message.textContent = `✅ ${turns} tour${turns > 1 ? 's' : ''} ajouté${turns > 1 ? 's' : ''} manuellement pour ${username} !`;
-        
-        // Fermer le panneau après ajout
-        this.elements.addTurnsPanel.classList.add('hidden');
-        
-        // Réinitialiser les champs
-        this.elements.addTurnsUsername.value = '';
-        this.elements.addTurnsCount.value = '1';
-        
-        if (!this.state.isProcessingQueue) {
-          this.processQueue();
-        }
-      }
-
-      // NOUVELLE MÉTHODE: Afficher le panneau d'ajout de tours
-      toggleAddTurnsPanel() {
-        this.elements.addTurnsPanel.classList.toggle('hidden');
-        if (!this.elements.addTurnsPanel.classList.contains('hidden')) {
-          // Focus sur le champ nom d'utilisateur
-          this.elements.addTurnsUsername.focus();
-        }
-      }
-
-      // NOUVELLE MÉTHODE: Initialiser la grille des symboles de debug
-      initializeDebugSymbolsGrid() {
-        this.elements.debugSymbolsGrid.innerHTML = '';
-        
-        this.symbols.symbolTypes.forEach((symbol, index) => {
-          const symbolItem = document.createElement('div');
-          symbolItem.className = 'debug-symbol-item';
-          symbolItem.setAttribute('data-symbol-index', index);
-          
-          symbolItem.innerHTML = `
-            <img src="${symbol.image}" alt="${symbol.name}" class="debug-symbol-image">
-            <div class="debug-symbol-name">${symbol.name}</div>
-          `;
-          
-          symbolItem.addEventListener('click', () => {
-            // Désélectionner tous les autres symboles
-            document.querySelectorAll('.debug-symbol-item').forEach(item => {
-              item.classList.remove('selected');
-            });
-            
-            // Sélectionner ce symbole
-            symbolItem.classList.add('selected');
-            this.state.debugSelectedSymbol = index;
-          });
-          
-          this.elements.debugSymbolsGrid.appendChild(symbolItem);
-        });
-      }
-
-      // NOUVELLE MÉTHODE: Activer le mode debug
-      activateDebugMode() {
-        if (this.state.debugSelectedSymbol === null) {
-          this.elements.message.textContent = '❌ Veuillez sélectionner un symbole pour le mode debug';
-          return;
-        }
-        
-        const turns = parseInt(this.elements.debugTurns.value) || 200;
-        if (turns <= 0) {
-          this.elements.message.textContent = '❌ Nombre de tours invalide';
-          return;
-        }
-        
-        this.state.debugMode = true;
-        this.state.debugTurnsRemaining = turns;
-        this.state.debugTurnsTarget = turns;
-        
-        this.elements.message.textContent = `🐛 Mode debug activé ! Gain forcé dans ${turns} tours avec le symbole ${this.symbols.symbolTypes[this.state.debugSelectedSymbol].name}`;
-        this.elements.debugPanel.classList.add('hidden');
-      }
-
-      // NOUVELLE MÉTHODE: Désactiver le mode debug
-      deactivateDebugMode() {
-        this.state.debugMode = false;
-        this.state.debugSelectedSymbol = null;
-        this.state.debugTurnsRemaining = 0;
-        
-        // Désélectionner tous les symboles
-        document.querySelectorAll('.debug-symbol-item').forEach(item => {
-          item.classList.remove('selected');
-        });
-        
-        this.elements.message.textContent = '🐛 Mode debug désactivé';
-        this.elements.debugPanel.classList.add('hidden');
-      }
-
-      // NOUVELLE MÉTHODE: Afficher le panneau debug
-      toggleDebugPanel() {
-        this.elements.debugPanel.classList.toggle('hidden');
       }
 
       async processQueue() {
@@ -3167,6 +3302,7 @@
         }
         
         this.updateQueueIndicator();
+        this.updateCurrentTurnsPanel();
         
         await this.executeSpin();
         
@@ -3220,6 +3356,24 @@
             this.highlightMatchingSymbols();
             
             if (matchingInfo.count >= 4) {
+              const bonusPercentage = GAME_CONFIG.BONUS_PERCENTAGES[matchingInfo.count] || 0;
+              const bonusGain = Math.floor(this.state.bonusRoses * bonusPercentage);
+              
+              if (bonusGain > 0) {
+                this.state.rosesCount += bonusGain;
+                this.state.bonusRoses = 0;
+                
+                this.addDebt(
+                  this.state.lastUsername,
+                  'auto',
+                  bonusGain * GAME_CONFIG.COINS_PER_ROSE,
+                  `${matchingInfo.count} symboles identiques (Bonus: ${bonusPercentage * 100}%)`,
+                  bonusGain
+                );
+                
+                this.elements.message.textContent = `🎉 ${matchingInfo.count} symboles identiques ! ${this.state.lastUsername} gagne ${bonusGain} roses de bonus ! 🎉`;
+              }
+              
               const partialGainAmount = this.calculatePartialGain(matchingInfo.count);
               
               if (partialGainAmount > 0) {
@@ -3238,13 +3392,14 @@
                 type: 'partial',
                 tours: this.state.currentGameAttempts,
                 symbolCount: matchingInfo.count,
-                roses: partialGainAmount,
+                roses: partialGainAmount + bonusGain,
                 username: this.state.lastUsername,
                 date: new Date().toLocaleString('fr-FR')
               });
               
               this.updateStats();
-              this.updateRosesStats(partialGainAmount);
+              this.updateStatsPanel();
+              this.updateRosesStats(partialGainAmount + bonusGain);
             }
             
             let delay;
@@ -3336,6 +3491,8 @@
         
         this.elements.message.textContent = `🎉 GAIN ! ${this.state.lastUsername} a aligné ${GAME_CONFIG.DIFFICULTY} ${winningSymbol.name}s et gagne ${totalGain} roses ! 🎉`;
         
+        this.state.bonusRoses = 0;
+        
         this.addDebt(
           this.state.lastUsername,
           'auto',
@@ -3360,7 +3517,9 @@
         // Mettre à jour les statistiques des roses
         this.updateRosesStats(totalGain);
         
+        this.saveGame(true);
         this.updateStats();
+        this.updateStatsPanel();
         
         for (let i = 0; i < GAME_CONFIG.DIFFICULTY; i++) {
           setTimeout(() => {
@@ -3430,11 +3589,21 @@
         this.elements.rosesCount.textContent = this.state.rosesCount;
         this.elements.nextBonus.textContent = GAME_CONFIG.BONUS_INTERVAL - (this.state.bonusCounter % GAME_CONFIG.BONUS_INTERVAL);
         
-        // Mettre à jour les statistiques dans le panneau
-        document.getElementById('statsDebtsCount').textContent = this.getTotalDebts();
-        document.getElementById('statsPaidRoses').textContent = this.state.paidRoses;
-        document.getElementById('statsMyBalance').textContent = this.state.myBalance;
-        document.getElementById('statsAttempts').textContent = this.state.attempts;
+        this.saveGame(false);
+      }
+
+      updateStatsPanel() {
+        this.elements.statsBonusRoses.textContent = this.state.bonusRoses;
+        
+        let totalDebts = 0;
+        this.state.debts.forEach(debt => {
+          totalDebts += debt.totalRoses || 0;
+        });
+        this.elements.statsDebtsCount.textContent = totalDebts;
+        
+        this.elements.statsPaidRoses.textContent = this.state.paidRoses;
+        this.elements.statsMyBalance.textContent = this.state.myBalance;
+        this.elements.statsAttempts.textContent = this.state.attempts;
       }
 
       updateRosesStats(rosesGained = 0) {
@@ -3458,14 +3627,10 @@
         }
         this.state.rosesStats.weeklyStats[currentWeek] += rosesGained;
         
-        // Mettre à jour l'affichage du panneau
-        document.getElementById('totalRosesAllTime').textContent = this.state.rosesStats.totalAllTime;
-        document.getElementById('totalRosesThisMonth').textContent = this.state.rosesStats.monthlyStats[currentMonth] || 0;
-        document.getElementById('totalRosesThisWeek').textContent = this.state.rosesStats.weeklyStats[currentWeek] || 0;
-        
-        // Mettre à jour les périodes
-        document.getElementById('currentMonthPeriod').textContent = this.getMonthName(now.getMonth()) + ' ' + now.getFullYear();
-        document.getElementById('currentWeekPeriod').textContent = 'Semaine ' + this.getWeekNumber(now) + ' ' + now.getFullYear();
+        // Mettre à jour l'affichage du panneau si visible
+        if (!this.elements.rosesStatsPanel.classList.contains('hidden')) {
+          this.updateRosesStatsPanel();
+        }
       }
 
       getWeekNumber(date) {
@@ -3473,11 +3638,40 @@
         const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
         return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
       }
-      
-      getMonthName(monthIndex) {
-        const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
-                       'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-        return months[monthIndex];
+
+      updateRosesStatsPanel() {
+        // Mettre à jour le total général
+        this.elements.totalRosesAllTime.textContent = this.state.rosesStats.totalAllTime;
+        
+        // Obtenir la date actuelle
+        const now = new Date();
+        const currentMonth = now.getMonth() + '-' + now.getFullYear();
+        const currentWeek = this.getWeekNumber(now) + '-' + now.getFullYear();
+        
+        // Mettre à jour les statistiques du mois en cours
+        const monthRoses = this.state.rosesStats.monthlyStats[currentMonth] || 0;
+        this.elements.totalRosesThisMonth.textContent = monthRoses;
+        
+        const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+        const currentMonthName = monthNames[now.getMonth()];
+        this.elements.currentMonthPeriod.textContent = `${currentMonthName} ${now.getFullYear()}`;
+        
+        // Mettre à jour les statistiques de la semaine en cours
+        const weekRoses = this.state.rosesStats.weeklyStats[currentWeek] || 0;
+        this.elements.totalRosesThisWeek.textContent = weekRoses;
+        
+        // Calculer le début et la fin de la semaine
+        const startOfWeek = new Date(now);
+        startOfWeek.setDate(now.getDate() - now.getDay());
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        
+        const startDay = startOfWeek.getDate();
+        const startMonth = monthNames[startOfWeek.getMonth()];
+        const endDay = endOfWeek.getDate();
+        const endMonth = monthNames[endOfWeek.getMonth()];
+        
+        this.elements.currentWeekPeriod.textContent = `Semaine du ${startDay} ${startMonth} au ${endDay} ${endMonth}`;
       }
 
       updateQueueIndicator() {
@@ -3500,6 +3694,29 @@
             Dettes: ${totalDebtRoses} 🌹
           </div>
         `;
+      }
+
+      updateCurrentTurnsPanel() {
+        const usersWithTurns = Object.entries(this.state.userTurns)
+          .filter(([username, turns]) => turns > 0)
+          .sort((a, b) => b[1] - a[1]);
+        
+        if (usersWithTurns.length === 0) {
+          this.elements.currentTurnsContent.innerHTML = '<div class="no-debts">Aucun tour en attente</div>';
+          return;
+        }
+        
+        let html = '';
+        usersWithTurns.forEach(([username, turns]) => {
+          html += `
+            <div class="current-turns-item">
+              <span class="current-turns-user">${username}</span>
+              <span class="current-turns-count">${turns} tour${turns > 1 ? 's' : ''}</span>
+            </div>
+          `;
+        });
+        
+        this.elements.currentTurnsContent.innerHTML = html;
       }
 
       updateDebtsTable() {
@@ -3589,122 +3806,491 @@
             this.showRoseExchange(username);
           });
         });
+        
+        this.updateStatsPanel();
       }
 
-      // Méthodes Import/Export
-      exportData() {
-        const exportData = this.getExportData();
-        const jsonString = this.storage.exportGameData(exportData);
+      updateDebtsPanel() {
+        let filteredDebts = [...this.state.debts];
         
-        this.elements.exportDataText.value = jsonString;
+        if (this.state.debtFilter) {
+          const filterTerm = this.state.debtFilter.toLowerCase();
+          filteredDebts = filteredDebts.filter(debt => 
+            debt.username.toLowerCase().includes(filterTerm)
+          );
+        }
         
-        this.storage.copyToClipboard(jsonString).then(() => {
-          this.showSaveIndicator('📋 Données copiées dans le presse-papier !');
-        }).catch(err => {
-          console.error('Erreur lors de la copie:', err);
-          this.elements.message.textContent = '❌ Erreur lors de la copie';
+        switch(this.state.debtSort) {
+          case 'amount-desc':
+            filteredDebts.sort((a, b) => b.totalRoses - a.totalRoses);
+            break;
+          case 'amount-asc':
+            filteredDebts.sort((a, b) => a.totalRoses - b.totalRoses);
+            break;
+          case 'date-desc':
+            filteredDebts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            break;
+          case 'date-asc':
+            filteredDebts.sort((a, b) => new Date(a.date) - new Date(b.date));
+            break;
+          case 'name':
+            filteredDebts.sort((a, b) => a.username.localeCompare(b.username));
+            break;
+        }
+        
+        filteredDebts = filteredDebts.filter(debt => debt.totalRoses > 0);
+        
+        const userDebts = {};
+        
+        filteredDebts.forEach(debt => {
+          if (!userDebts[debt.username]) {
+            userDebts[debt.username] = {
+              username: debt.username,
+              totalRoses: 0,
+              reasons: [],
+              lastDate: debt.date
+            };
+          }
+          
+          userDebts[debt.username].totalRoses += debt.totalRoses || 0;
+          userDebts[debt.username].reasons.push(debt.reason);
+          userDebts[debt.username].lastDate = debt.date;
         });
+
+        if (Object.keys(userDebts).length === 0) {
+          this.elements.debtsPanelContent.innerHTML = '<div class="no-debts">Aucune dette enregistrée</div>';
+          return;
+        }
+
+        let html = '';
+        Object.values(userDebts).forEach(userDebt => {
+          html += `
+            <div class="user-turn-item">
+              <span class="user-name">${userDebt.username}</span>
+              <span class="user-turns">${userDebt.totalRoses} 🌹</span>
+              <button class="exchange-rose-btn" data-username="${userDebt.username}" ${userDebt.totalRoses <= 0 ? 'disabled' : ''}>
+                <span>🌹</span> Échanger
+              </button>
+            </div>
+          `;
+        });
+        
+        this.elements.debtsPanelContent.innerHTML = html;
+        
+        document.querySelectorAll('#debtsPanelContent .exchange-rose-btn').forEach(button => {
+          button.addEventListener('click', (e) => {
+            const username = e.target.getAttribute('data-username');
+            this.showRoseExchange(username);
+          });
+        });
+        
+        this.updateDoubleTurnsButton();
+        this.updateStatsPanel();
       }
 
-      downloadData() {
-        const exportData = this.getExportData();
-        const jsonString = this.storage.exportGameData(exportData);
-        const filename = `jackpot-save-${new Date().toISOString().slice(0, 10)}.json`;
+      updateDoubleTurnsButton() {
+        const lastUserDebt = this.getLastUserDebt();
         
-        this.storage.downloadFile(filename, jsonString);
-        this.showSaveIndicator('💾 Fichier téléchargé avec succès !');
+        if (lastUserDebt && lastUserDebt.totalRoses > 0) {
+          const doubleTurns = lastUserDebt.totalRoses * GAME_CONFIG.ROSE_TO_TURNS_RATE;
+          this.elements.doubleTurnsBtn.textContent = `🔄 Relancer ${doubleTurns} tours (${lastUserDebt.totalRoses} roses)`;
+          this.elements.doubleTurnsBtn.disabled = false;
+        } else {
+          this.elements.doubleTurnsBtn.textContent = '🔄 Relancer le double de tours';
+          this.elements.doubleTurnsBtn.disabled = true;
+        }
       }
 
-      importData() {
-        const jsonString = this.elements.importDataText.value.trim();
+      getLastUserDebt() {
+        if (this.state.debts.length === 0) return null;
         
-        if (!jsonString) {
-          this.elements.message.textContent = '❌ Aucune donnée à importer';
+        const userDebts = {};
+        
+        this.state.debts.forEach(debt => {
+          if (!userDebts[debt.username]) {
+            userDebts[debt.username] = {
+              username: debt.username,
+              totalRoses: 0,
+              reasons: [],
+              lastDate: debt.date
+            };
+          }
+          
+          userDebts[debt.username].totalRoses += debt.totalRoses || 0;
+          userDebts[debt.username].reasons.push(debt.reason);
+          userDebts[debt.username].lastDate = debt.date;
+        });
+        
+        let lastUser = null;
+        let lastDate = new Date(0);
+        
+        Object.values(userDebts).forEach(userDebt => {
+          const debtDate = new Date(userDebt.lastDate);
+          if (debtDate > lastDate) {
+            lastDate = debtDate;
+            lastUser = userDebt;
+          }
+        });
+        
+        return lastUser;
+      }
+
+      showRoseExchange(username) {
+        const userDebts = this.state.debts.filter(debt => debt.username === username);
+        
+        if (userDebts.length === 0) {
+          this.elements.message.textContent = `❌ ${username} n'a aucune dette enregistrée !`;
           return;
         }
         
-        const importedData = this.storage.importGameData(jsonString);
+        let totalRoses = 0;
+        userDebts.forEach(debt => {
+          totalRoses += debt.totalRoses || 0;
+        });
         
-        if (importedData) {
-          this.loadImportedData(importedData);
-          this.showSaveIndicator('✅ Données importées avec succès !');
-          this.elements.message.textContent = '✅ Données importées avec succès !';
-          this.elements.importDataText.value = '';
-        } else {
-          this.elements.message.textContent = '❌ Données invalides ou corrompues';
+        if (totalRoses <= 0) {
+          this.elements.message.textContent = `❌ ${username} n'a pas de roses à échanger !`;
+          return;
         }
+        
+        this.state.currentExchangeUser = username;
+        this.state.currentExchangeMaxRoses = totalRoses;
+        
+        this.elements.roseExchangeInfo.textContent = `${username} a ${totalRoses} rose${totalRoses > 1 ? 's' : ''} disponibles`;
+        this.elements.roseExchangeAmount.value = 1;
+        this.elements.roseExchangeAmount.max = totalRoses;
+        this.elements.roseExchangeSlider.value = 1;
+        this.elements.roseExchangeSlider.max = totalRoses;
+        
+        this.updateRoseExchangeResult();
+        
+        this.elements.roseExchangeContainer.style.display = 'flex';
       }
 
-      getExportData() {
-        return {
-          attempts: this.state.attempts,
-          currentGameAttempts: this.state.currentGameAttempts,
-          rosesCount: this.state.rosesCount,
-          bonusCounter: this.state.bonusCounter,
-          gainsHistory: this.state.gainsHistory,
-          lastUsername: this.state.lastUsername,
-          debts: this.state.debts,
-          userTurns: this.state.userTurns,
-          roseCounter: this.state.roseCounter,
-          myBalance: this.state.myBalance,
-          paidRoses: this.state.paidRoses,
-          debugMode: this.state.debugMode,
-          debugSelectedSymbol: this.state.debugSelectedSymbol,
-          debugTurnsRemaining: this.state.debugTurnsRemaining,
-          debugTurnsTarget: this.state.debugTurnsTarget,
-          customTitle: this.state.customTitle,
-          rosesStats: this.state.rosesStats
-        };
+      updateRoseExchangeResult() {
+        const rosesToExchange = parseInt(this.elements.roseExchangeAmount.value) || 1;
+        const turnsToAdd = rosesToExchange * GAME_CONFIG.ROSE_TO_TURNS_RATE;
+        
+        this.elements.exchangeTurns.textContent = turnsToAdd;
       }
 
-      loadImportedData(data) {
-        this.state.attempts = data.attempts || 0;
-        this.state.currentGameAttempts = data.currentGameAttempts || 0;
-        this.state.rosesCount = data.rosesCount || 0;
-        this.state.bonusCounter = data.bonusCounter || 0;
-        this.state.gainsHistory = data.gainsHistory || [];
-        this.state.lastUsername = data.lastUsername || "Personne";
-        this.state.debts = data.debts || [];
-        this.state.userTurns = data.userTurns || {};
-        this.state.roseCounter = data.roseCounter || 0;
-        this.state.myBalance = data.myBalance || 0;
-        this.state.paidRoses = data.paidRoses || 0;
-        this.state.debugMode = data.debugMode || false;
-        this.state.debugSelectedSymbol = data.debugSelectedSymbol || null;
-        this.state.debugTurnsRemaining = data.debugTurnsRemaining || 0;
-        this.state.debugTurnsTarget = data.debugTurnsTarget || 200;
-        this.state.customTitle = data.customTitle || "🎰 Machine à Sous des Symboles Mystères";
-        this.state.rosesStats = data.rosesStats || {
-          totalAllTime: 0,
-          monthlyStats: {},
-          weeklyStats: {}
-        };
+      confirmRoseExchange() {
+        const rosesToExchange = parseInt(this.elements.roseExchangeAmount.value) || 1;
+        
+        if (rosesToExchange <= 0 || rosesToExchange > this.state.currentExchangeMaxRoses) {
+          this.elements.message.textContent = `❌ Nombre de roses invalide !`;
+          return;
+        }
+        
+        const turnsToAdd = rosesToExchange * GAME_CONFIG.ROSE_TO_TURNS_RATE;
+        
+        const userDebts = this.state.debts.filter(debt => debt.username === this.state.currentExchangeUser);
+        const sortedDebts = userDebts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        let remainingRoses = rosesToExchange;
+        
+        for (const debt of sortedDebts) {
+          if (remainingRoses <= 0) break;
+          
+          if (debt.totalRoses > 0) {
+            const rosesToDeduct = Math.min(remainingRoses, debt.totalRoses);
+            debt.totalRoses -= rosesToDeduct;
+            remainingRoses -= rosesToDeduct;
+          }
+        }
         
         this.cleanupZeroRosesDebts();
         
-        this.updateLastUserDisplay();
-        this.updateDebtsTable();
-        this.updateStats();
-        this.elements.currentTitleDisplay.textContent = this.state.customTitle;
-        document.title = this.state.customTitle;
+        const queueItem = {
+          username: this.state.currentExchangeUser,
+          turns: turnsToAdd,
+          timestamp: Date.now()
+        };
+        this.state.spinQueue.push(queueItem);
         
-        if (this.state.debugMode && this.state.debugSelectedSymbol !== null) {
-          const selectedItem = document.querySelector(`.debug-symbol-item[data-symbol-index="${this.state.debugSelectedSymbol}"]`);
-          if (selectedItem) {
-            selectedItem.classList.add('selected');
+        if (!this.state.userTurns[this.state.currentExchangeUser]) {
+          this.state.userTurns[this.state.currentExchangeUser] = 0;
+        }
+        this.state.userTurns[this.state.currentExchangeUser] += turnsToAdd;
+        
+        this.updateQueueIndicator();
+        this.updateCurrentTurnsPanel();
+        this.updateDebtsTable();
+        this.updateDebtsPanel();
+        this.saveGame(true);
+        
+        this.elements.message.textContent = `🔄 ${this.state.currentExchangeUser} a échangé ${rosesToExchange} rose${rosesToExchange > 1 ? 's' : ''} contre ${turnsToAdd} tour${turnsToAdd > 1 ? 's' : ''} !`;
+        
+        this.hideRoseExchange();
+        
+        if (!this.state.isProcessingQueue && this.state.spinQueue.length > 0) {
+          this.processQueue();
+        }
+      }
+
+      hideRoseExchange() {
+        this.elements.roseExchangeContainer.style.display = 'none';
+        this.state.currentExchangeUser = null;
+        this.state.currentExchangeMaxRoses = 0;
+      }
+
+      cleanupZeroRosesDebts() {
+        this.state.debts = this.state.debts.filter(debt => debt.totalRoses > 0);
+        this.updateStatsPanel();
+      }
+
+      doubleTurnsForUser() {
+        const lastUserDebt = this.getLastUserDebt();
+        
+        if (!lastUserDebt || lastUserDebt.totalRoses <= 0) {
+          this.elements.message.textContent = '❌ Aucune rose disponible pour relancer des tours !';
+          return;
+        }
+        
+        const doubleTurns = lastUserDebt.totalRoses * GAME_CONFIG.ROSE_TO_TURNS_RATE;
+        
+        const queueItem = {
+          username: lastUserDebt.username,
+          turns: doubleTurns,
+          timestamp: Date.now()
+        };
+        this.state.spinQueue.push(queueItem);
+        
+        if (!this.state.userTurns[lastUserDebt.username]) {
+          this.state.userTurns[lastUserDebt.username] = 0;
+        }
+        this.state.userTurns[lastUserDebt.username] += doubleTurns;
+        
+        this.updateQueueIndicator();
+        this.updateCurrentTurnsPanel();
+        this.elements.message.textContent = `🔄 ${doubleTurns} tours ajoutés pour ${lastUserDebt.username} (${lastUserDebt.totalRoses} roses converties) !`;
+        
+        if (!this.state.isProcessingQueue && this.state.spinQueue.length > 0) {
+          this.processQueue();
+        }
+      }
+
+      // Méthodes pour gérer le solde personnel
+      addToBalance() {
+        const amount = parseInt(this.elements.balanceAmount.value) || 1;
+        this.state.myBalance += amount;
+        this.updateMyBalanceDisplay();
+        this.updateStatsPanel();
+        this.saveGame(true);
+        this.elements.message.textContent = `💰 ${amount} rose${amount > 1 ? 's' : ''} ajoutée${amount > 1 ? 's' : ''} à votre solde !`;
+      }
+
+      subtractFromBalance() {
+        const amount = parseInt(this.elements.balanceAmount.value) || 1;
+        this.state.myBalance -= amount;
+        this.updateMyBalanceDisplay();
+        this.updateStatsPanel();
+        this.saveGame(true);
+        this.elements.message.textContent = `💰 ${amount} rose${amount > 1 ? 's' : ''} retirée${amount > 1 ? 's' : ''} de votre solde !`;
+      }
+
+      resetBalance() {
+        if (confirm('Voulez-vous vraiment réinitialiser votre solde à 0 ?')) {
+          this.state.myBalance = 0;
+          this.updateMyBalanceDisplay();
+          this.updateStatsPanel();
+          this.saveGame(true);
+          this.elements.message.textContent = '💰 Votre solde a été réinitialisé à 0 !';
+        }
+      }
+
+      updateMyBalanceDisplay() {
+        const balance = this.state.myBalance;
+        this.elements.balanceDisplay.textContent = `${balance} 🌹`;
+        
+        if (balance > 0) {
+          this.elements.balanceDisplay.className = 'balance-display balance-positive';
+        } else if (balance < 0) {
+          this.elements.balanceDisplay.className = 'balance-display balance-negative';
+        } else {
+          this.elements.balanceDisplay.className = 'balance-display balance-zero';
+        }
+      }
+
+      updateBonusDisplay() {
+        this.elements.bonusDisplay.textContent = `${this.state.bonusRoses} 🌹`;
+      }
+
+      // Méthodes pour ouvrir/fermer les panneaux
+      toggleMyBalancePanel() {
+        this.elements.myBalancePanel.classList.toggle('hidden');
+        if (!this.elements.myBalancePanel.classList.contains('hidden')) {
+          this.updateMyBalanceDisplay();
+        }
+      }
+
+      toggleBonusPanel() {
+        this.elements.bonusPanel.classList.toggle('hidden');
+        if (!this.elements.bonusPanel.classList.contains('hidden')) {
+          this.updateBonusDisplay();
+        }
+      }
+
+      toggleStatsPanel() {
+        this.elements.statsPanel.classList.toggle('hidden');
+        if (!this.elements.statsPanel.classList.contains('hidden')) {
+          this.updateStatsPanel();
+        }
+      }
+
+      toggleDebtsPanel() {
+        this.elements.debtsPanel.classList.toggle('hidden');
+        if (!this.elements.debtsPanel.classList.contains('hidden')) {
+          this.updateDebtsPanel();
+        }
+      }
+
+      toggleDebugPanel() {
+        this.elements.debugPanel.classList.toggle('hidden');
+        if (!this.elements.debugPanel.classList.contains('hidden')) {
+          this.elements.debugActivateBtn.disabled = this.state.debugMode;
+          this.elements.debugDeactivateBtn.disabled = !this.state.debugMode;
+          
+          if (this.state.debugMode) {
+            this.elements.debugTurns.value = this.state.debugTurnsRemaining;
+          } else {
+            this.elements.debugTurns.value = this.state.debugTurnsTarget;
           }
         }
       }
 
-      showSaveIndicator(message) {
-        const saveIndicator = document.getElementById('saveIndicator');
-        if (saveIndicator) {
-          saveIndicator.textContent = message;
-          saveIndicator.classList.add('show');
-          setTimeout(() => {
-            saveIndicator.classList.remove('show');
-          }, 3000);
+      toggleCurrentTurnsPanel() {
+        this.elements.currentTurnsPanel.classList.toggle('hidden');
+        if (!this.elements.currentTurnsPanel.classList.contains('hidden')) {
+          this.updateCurrentTurnsPanel();
         }
+      }
+
+      toggleRosesStatsPanel() {
+        this.elements.rosesStatsPanel.classList.toggle('hidden');
+        if (!this.elements.rosesStatsPanel.classList.contains('hidden')) {
+          this.updateRosesStatsPanel();
+        }
+      }
+
+      // Méthodes de gestion des titres
+      showTitleSelector() {
+        this.elements.titleSelectorContainer.style.display = 'flex';
+        this.elements.customTitleInput.value = this.state.customTitle;
+        
+        document.querySelectorAll('.title-option').forEach(option => {
+          if (option.getAttribute('data-title') === this.state.customTitle) {
+            option.classList.add('selected');
+          } else {
+            option.classList.remove('selected');
+          }
+        });
+      }
+
+      hideTitleSelector() {
+        this.elements.titleSelectorContainer.style.display = 'none';
+      }
+
+      confirmTitleSelection() {
+        const newTitle = this.elements.customTitleInput.value.trim();
+        if (newTitle) {
+          this.state.customTitle = newTitle;
+          document.title = newTitle;
+          this.elements.currentTitleDisplay.textContent = newTitle;
+          this.saveGame(true);
+          this.elements.message.textContent = `🎭 Titre changé en: "${newTitle}"`;
+          this.hideTitleSelector();
+        } else {
+          this.elements.message.textContent = '❌ Veuillez saisir un titre valide !';
+        }
+      }
+
+      // Méthodes de gestion des dettes
+      addDebt(username, userId, amount, reason, totalRoses = 0) {
+        const debt = {
+          id: Date.now().toString(),
+          username,
+          userId,
+          amount,
+          reason,
+          totalRoses,
+          date: new Date().toLocaleString('fr-FR')
+        };
+        
+        this.state.debts.push(debt);
+        this.updateDebtsTable();
+        this.updateDebtsPanel();
+        this.updateLastUserDisplay();
+        this.updateStatsPanel();
+        this.saveGame(true);
+        
+        return debt;
+      }
+
+      addDebtManually() {
+        const username = prompt('Nom de l\'utilisateur:');
+        if (!username) return;
+        
+        const totalRoses = parseFloat(prompt('Nombre de roses gagnées:') || 0);
+        if (isNaN(totalRoses) || totalRoses <= 0) {
+          alert('Nombre de roses invalide');
+          return;
+        }
+        
+        const reason = prompt('Raison de la dette:') || 'Dette manuelle';
+        
+        this.addDebt(username, 'manual', 0, reason, totalRoses);
+        this.elements.message.textContent = `✅ Dette de ${totalRoses} roses ajoutée pour ${username}`;
+      }
+
+      markUserDebtAsPaid(username) {
+        const userDebts = this.state.debts.filter(debt => debt.username === username);
+        
+        let totalRosesToPay = 0;
+        userDebts.forEach(debt => {
+          totalRosesToPay += debt.totalRoses || 0;
+        });
+        
+        this.state.myBalance -= totalRosesToPay;
+        this.state.paidRoses += totalRosesToPay;
+        
+        this.state.debts = this.state.debts.filter(debt => debt.username !== username);
+        
+        this.elements.message.textContent = `✅ Toutes les dettes de ${username} ont été marquées comme payées ! ${totalRosesToPay} roses ont été retirées de votre solde.`;
+        this.updateDebtsTable();
+        this.updateDebtsPanel();
+        this.updateLastUserDisplay();
+        this.updateStatsPanel();
+        this.saveGame(true);
+      }
+
+      resetDebts() {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment réinitialiser TOUTES les dettes ?\n\nCette action est IRRÉVERSIBLE !')) {
+          this.state.debts = [];
+          this.updateDebtsTable();
+          this.updateDebtsPanel();
+          this.updateLastUserDisplay();
+          this.updateStatsPanel();
+          this.saveGame(true);
+          this.elements.message.textContent = '🗑️ Toutes les dettes ont été réinitialisées !';
+        }
+      }
+
+      resetRosesStats() {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment réinitialiser les statistiques des roses ?\n\nCette action est IRRÉVERSIBLE !')) {
+          this.state.rosesStats = {
+            totalAllTime: 0,
+            monthlyStats: {},
+            weeklyStats: {}
+          };
+          this.updateRosesStatsPanel();
+          this.saveGame(true);
+          this.elements.message.textContent = '🗑️ Les statistiques des roses ont été réinitialisées !';
+        }
+      }
+
+      toggleDebtsTable() {
+        const debtsHistory = document.querySelector('.debts-history');
+        debtsHistory.style.display = debtsHistory.style.display === 'none' ? 'block' : 'none';
       }
 
       // Méthodes utilitaires
@@ -3756,7 +4342,10 @@
         
         if (this.state.bonusCounter % GAME_CONFIG.BONUS_INTERVAL === 0) {
           this.state.rosesCount += 1;
-          this.elements.message.textContent = `🌹 +1 rose ajoutée !`;
+          this.state.bonusRoses += 1;
+          this.updateStatsPanel();
+          this.updateBonusDisplay();
+          this.elements.message.textContent = `🌹 +1 rose ajoutée au bonus !`;
           
           this.updateStats();
         }
@@ -3767,7 +4356,11 @@
         
         if (this.state.roseCounter % GAME_CONFIG.ROSE_ADD_INTERVAL === 0) {
           this.state.myBalance += 1;
+          this.updateMyBalanceDisplay();
+          this.updateStatsPanel();
           this.elements.message.textContent = `💰 +1 rose ajoutée à votre solde tous les ${GAME_CONFIG.ROSE_ADD_INTERVAL} tours !`;
+          
+          this.saveGame(false);
         }
       }
 
@@ -3827,65 +4420,18 @@
         }
       }
 
-      toggleImportExportPanel() {
-        this.elements.importExportPanel.classList.toggle('hidden');
-        if (!this.elements.importExportPanel.classList.contains('hidden')) {
-          const exportData = this.getExportData();
-          const jsonString = this.storage.exportGameData(exportData);
-          this.elements.exportDataText.value = jsonString;
-        }
-      }
-
-      // Les autres méthodes togglePanel restent inchangées
-      toggleStatsPanel() {
-        document.getElementById('statsPanel').classList.toggle('hidden');
-      }
-
-      toggleCurrentTurnsPanel() {
-        document.getElementById('currentTurnsPanel').classList.toggle('hidden');
-      }
-
-      toggleRosesStatsPanel() {
-        document.getElementById('rosesStatsPanel').classList.toggle('hidden');
-      }
-
-      toggleDebugPanel() {
-        document.getElementById('debugPanel').classList.toggle('hidden');
-      }
-
-      // Les autres méthodes restent inchangées
-      checkDebugMode() {
-        if (this.state.debugMode && this.state.debugSelectedSymbol !== null) {
-          this.state.debugTurnsRemaining--;
-          
-          if (this.state.debugTurnsRemaining <= 0) {
-            for (let i = 0; i < GAME_CONFIG.DIFFICULTY; i++) {
-              this.state.symbols[i] = this.state.debugSelectedSymbol;
-            }
-            
-            this.updateDisplay();
-            this.elements.message.textContent = '🎯 GAIN FORCÉ ! Mode debug activé.';
-            
-            this.state.debugMode = false;
-            this.state.debugTurnsRemaining = 0;
-            this.state.debugSelectedSymbol = null;
-            
-            return true;
-          }
-        }
-        
-        return false;
-      }
-
       resetRewards() {
         if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment réinitialiser TOUTES vos récompenses ?\n\nCela supprimera :\n• ' + this.state.gainsHistory.length + ' gains dans l\'historique\n• L\'historique complet des gains\n\nCette action est IRRÉVERSIBLE !')) {
           this.state.gainsHistory = [];
           this.elements.message.textContent = '🔄 Toutes les récompenses ont été réinitialisées !';
+          this.saveGame(true);
         }
       }
 
       clearSave() {
-        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' gains dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.paidRoses + ' roses payées\n• Toutes vos statistiques de roses\n\nCette action est IRRÉVERSIBLE !')) {
+        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment effacer TOUTES vos données de jeu ?\n\nCela supprimera :\n• ' + this.state.attempts + ' tours joués\n• ' + this.state.rosesCount + ' roses gagnées\n• ' + this.state.gainsHistory.length + ' gains dans l\'historique\n• ' + this.state.debts.length + ' dettes enregistrées\n• ' + Object.keys(this.state.userTurns).length + ' utilisateurs avec des tours en attente\n• Votre solde personnel de ' + this.state.myBalance + ' roses\n• ' + this.state.bonusRoses + ' roses en bonus\n• ' + this.state.paidRoses + ' roses payées\n• Toutes vos statistiques de roses\n\nCette action est IRRÉVERSIBLE !')) {
+          this.storage.clearSave();
+          
           this.state.attempts = 0;
           this.state.currentGameAttempts = 0;
           this.state.rosesCount = 0;
@@ -3903,6 +4449,7 @@
           this.state.sortByDate = false;
           this.state.roseCounter = 0;
           this.state.myBalance = 0;
+          this.state.bonusRoses = 0;
           this.state.paidRoses = 0;
           this.state.debugMode = false;
           this.state.debugSelectedSymbol = null;
@@ -3921,120 +4468,109 @@
           this.updateQueueIndicator();
           this.updateLastUserDisplay();
           this.updateDebtsTable();
+          this.updateDebtsPanel();
+          this.updateStatsPanel();
+          this.updateMyBalanceDisplay();
+          this.updateBonusDisplay();
+          this.updateCurrentTurnsPanel();
+          this.updateRosesStatsPanel();
+          this.elements.currentTitleDisplay.textContent = this.state.customTitle;
           this.removeWinClasses();
           
           this.elements.message.textContent = '🗑️ Toutes les données ont été effacées ! Vous repartez de zéro.';
         }
       }
 
-      // Méthodes de gestion des dettes
-      addDebt(username, userId, amount, reason, totalRoses = 0) {
-        const debt = {
-          id: Date.now().toString(),
-          username,
-          userId,
-          amount,
-          reason,
-          totalRoses,
-          date: new Date().toLocaleString('fr-FR')
+      // Méthodes de sauvegarde
+      saveGame(showNotification = true) {
+        this.cleanupZeroRosesDebts();
+        
+        const saveData = {
+          attempts: this.state.attempts,
+          currentGameAttempts: this.state.currentGameAttempts,
+          rosesCount: this.state.rosesCount,
+          bonusCounter: this.state.bonusCounter,
+          gainsHistory: this.state.gainsHistory,
+          lastUsername: this.state.lastUsername,
+          debts: this.state.debts,
+          userTurns: this.state.userTurns,
+          roseCounter: this.state.roseCounter,
+          myBalance: this.state.myBalance,
+          bonusRoses: this.state.bonusRoses,
+          paidRoses: this.state.paidRoses,
+          debugMode: this.state.debugMode,
+          debugSelectedSymbol: this.state.debugSelectedSymbol,
+          debugTurnsRemaining: this.state.debugTurnsRemaining,
+          debugTurnsTarget: this.state.debugTurnsTarget,
+          customTitle: this.state.customTitle,
+          rosesStats: this.state.rosesStats
         };
         
-        this.state.debts.push(debt);
-        this.updateDebtsTable();
-        this.updateLastUserDisplay();
-        
-        return debt;
+        return this.storage.saveGame(saveData, showNotification);
       }
 
-      addDebtManually() {
-        const username = prompt('Nom de l\'utilisateur:');
-        if (!username) return;
+      loadGame() {
+        const savedData = this.storage.loadGame();
         
-        const totalRoses = parseFloat(prompt('Nombre de roses gagnées:') || 0);
-        if (isNaN(totalRoses) || totalRoses <= 0) {
-          alert('Nombre de roses invalide');
-          return;
-        }
-        
-        const reason = prompt('Raison de la dette:') || 'Dette manuelle';
-        
-        this.addDebt(username, 'manual', 0, reason, totalRoses);
-        this.elements.message.textContent = `✅ Dette de ${totalRoses} roses ajoutée pour ${username}`;
-      }
-
-      markUserDebtAsPaid(username) {
-        const userDebts = this.state.debts.filter(debt => debt.username === username);
-        
-        let totalRosesToPay = 0;
-        userDebts.forEach(debt => {
-          totalRosesToPay += debt.totalRoses || 0;
-        });
-        
-        this.state.myBalance -= totalRosesToPay;
-        this.state.paidRoses += totalRosesToPay;
-        
-        this.state.debts = this.state.debts.filter(debt => debt.username !== username);
-        
-        this.elements.message.textContent = `✅ Toutes les dettes de ${username} ont été marquées comme payées ! ${totalRosesToPay} roses ont été retirées de votre solde.`;
-        this.updateDebtsTable();
-        this.updateLastUserDisplay();
-      }
-
-      resetDebts() {
-        if (confirm('⚠️ ATTENTION ⚠️\n\nVoulez-vous vraiment réinitialiser TOUTES les dettes ?\n\nCette action est IRRÉVERSIBLE !')) {
-          this.state.debts = [];
-          this.updateDebtsTable();
+        if (savedData) {
+          this.state.attempts = savedData.attempts || 0;
+          this.state.currentGameAttempts = savedData.currentGameAttempts || 0;
+          this.state.rosesCount = savedData.rosesCount || 0;
+          this.state.bonusCounter = savedData.bonusCounter || 0;
+          this.state.gainsHistory = savedData.gainsHistory || [];
+          this.state.lastUsername = savedData.lastUsername || "Personne";
+          this.state.debts = savedData.debts || [];
+          this.state.userTurns = savedData.userTurns || {};
+          this.state.roseCounter = savedData.roseCounter || 0;
+          this.state.myBalance = savedData.myBalance || 0;
+          this.state.bonusRoses = savedData.bonusRoses || 0;
+          this.state.paidRoses = savedData.paidRoses || 0;
+          this.state.debugMode = savedData.debugMode || false;
+          this.state.debugSelectedSymbol = savedData.debugSelectedSymbol || null;
+          this.state.debugTurnsRemaining = savedData.debugTurnsRemaining || 0;
+          this.state.debugTurnsTarget = savedData.debugTurnsTarget || 200;
+          this.state.customTitle = savedData.customTitle || "🎰 Machine à Sous des Symboles Mystères";
+          this.state.rosesStats = savedData.rosesStats || {
+            totalAllTime: 0,
+            monthlyStats: {},
+            weeklyStats: {}
+          };
+          
+          this.state.remainingTurns = 0;
+          this.state.spinQueue = [];
+          
+          this.cleanupZeroRosesDebts();
+          
           this.updateLastUserDisplay();
-          this.elements.message.textContent = '🗑️ Toutes les dettes ont été réinitialisées !';
-        }
-      }
-
-      cleanupZeroRosesDebts() {
-        this.state.debts = this.state.debts.filter(debt => debt.totalRoses > 0);
-      }
-
-      getTotalDebts() {
-        return this.state.debts.reduce((total, debt) => total + (debt.totalRoses || 0), 0);
-      }
-
-      showRoseExchange(username) {
-        const userDebts = this.state.debts.filter(debt => debt.username === username);
-        
-        if (userDebts.length === 0) {
-          this.elements.message.textContent = `❌ ${username} n'a aucune dette enregistrée !`;
-          return;
-        }
-        
-        let totalRoses = 0;
-        userDebts.forEach(debt => {
-          totalRoses += debt.totalRoses || 0;
-        });
-        
-        if (totalRoses <= 0) {
-          this.elements.message.textContent = `❌ ${username} n'a pas de roses à échanger !`;
-          return;
+          this.updateDebtsTable();
+          this.updateDebtsPanel();
+          this.updateStatsPanel();
+          this.updateMyBalanceDisplay();
+          this.updateBonusDisplay();
+          this.updateQueueIndicator();
+          this.updateCurrentTurnsPanel();
+          this.updateRosesStatsPanel();
+          this.elements.currentTitleDisplay.textContent = this.state.customTitle;
+          
+          if (this.state.debugMode && this.state.debugSelectedSymbol !== null) {
+            const selectedItem = document.querySelector(`.debug-symbol-item[data-symbol-index="${this.state.debugSelectedSymbol}"]`);
+            if (selectedItem) {
+              selectedItem.classList.add('selected');
+            }
+            this.elements.debugActivateBtn.disabled = true;
+            this.elements.debugDeactivateBtn.disabled = false;
+          }
+          
+          document.title = this.state.customTitle;
+          
+          setTimeout(() => {
+            this.elements.message.textContent = `Bon retour ! Vous avez ${this.state.rosesCount} roses totales et ${this.state.gainsHistory.length} gain(s) gagné(s) !`;
+          }, 500);
+          
+          return true;
         }
         
-        // Ouvrir le panneau d'échange de roses
-        // Cette partie reste inchangée par rapport à votre code original
-        // ...
-      }
-
-      // Les autres méthodes restent inchangées
-      hideRoseExchange() {
-        // Méthode pour cacher le panneau d'échange de roses
-      }
-
-      showTitleSelector() {
-        // Méthode pour afficher le sélecteur de titre
-      }
-
-      hideTitleSelector() {
-        // Méthode pour cacher le sélecteur de titre
-      }
-
-      confirmTitleSelection() {
-        // Méthode pour confirmer la sélection de titre
+        return false;
       }
 
       // Méthodes WebSocket
@@ -4065,14 +4601,6 @@
             queueItem.turns = 100;
             this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 100 tours via TikFinity !`;
             break;
-          case "multi_spin_500":
-            queueItem.turns = 500;
-            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 500 tours via TikFinity !`;
-            break;
-          case "multi_spin_1000":
-            queueItem.turns = 1000;
-            this.elements.message.textContent = `🎯 ${this.state.lastUsername} a déclenché 1000 tours via TikFinity !`;
-            break;
         }
         
         if (queueItem.turns > 0) {
@@ -4084,6 +4612,7 @@
           this.state.userTurns[this.state.lastUsername] += queueItem.turns;
           
           this.updateQueueIndicator();
+          this.updateCurrentTurnsPanel();
           
           if (!this.state.isProcessingQueue && this.state.spinQueue.length > 0) {
             this.processQueue();
@@ -4102,9 +4631,7 @@
 
       // Méthodes audio
       playSymbolSound() {
-        // Jouer le son d'alignement
-        const audio = new Audio('https://files.catbox.moe/goq31j.mp3');
-        audio.play().catch(e => console.log('Erreur de lecture audio:', e));
+        console.log('Jouer le son des symboles');
       }
 
       playSpinSound() {
@@ -4157,18 +4684,28 @@
 
       // Initialisation
       start() {
+        const hasLoadedSave = this.loadGame();
+        
         this.state.symbols = Array(GAME_CONFIG.DIFFICULTY).fill(0).map((_, index) => this.symbols.getRandomSymbol(index));
         this.updateDisplay();
         this.updateStats();
         this.updateQueueIndicator();
         this.updateLastUserDisplay();
         this.updateDebtsTable();
+        this.updateDebtsPanel();
+        this.updateStatsPanel();
+        this.updateMyBalanceDisplay();
+        this.updateBonusDisplay();
+        this.updateCurrentTurnsPanel();
+        this.updateRosesStatsPanel();
         this.removeWinClasses();
         
         this.symbols.preloadImages();
         this.websocket.connect();
         
-        this.elements.message.textContent = `Bienvenue ! Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques pour remporter un gain !`;
+        if (!hasLoadedSave) {
+          this.elements.message.textContent = `Bienvenue ! Alignez ${GAME_CONFIG.DIFFICULTY} symboles identiques pour remporter un gain !`;
+        }
       }
     }
 
